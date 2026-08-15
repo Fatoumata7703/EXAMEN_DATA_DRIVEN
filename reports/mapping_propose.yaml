@@ -1,0 +1,56 @@
+# Proposition automatique — À VALIDER PUIS RECOPIER dans config/config.yaml
+# (section schema_mapping). Généré par `python -m src.pipelines.audit`.
+schema_mapping:
+  ventes:
+    table: fact_ventes
+    date_column: date_key
+    product_key: produit_key
+    client_key: client_key
+    promotion_key: promo_key
+    quantity_column: quantite
+    amount_column: montant_net_xof
+    unit_price_column: null
+    discount_column: null
+    status_column: null
+    return_flag_column: null
+    cancel_flag: null
+    line_id_column: vente_id
+    order_id: null
+  produit:
+    table: dim_produit
+    key: product_id
+    label: product_name
+    category: categorie
+    subcategory: null
+    brand: marque
+    unit_price: prix_base_xof
+    launch_date: null
+  date:
+    table: dim_date
+    date_column: jour
+    line_id: null
+  promotion:
+    table: dim_promotion
+    key: promotion_id
+    product_key: null
+    start_date: date_debut
+    end_date: date_fin
+    discount_rate: remise_pct
+    label: null
+  web:
+    table: fact_evenements_web
+    date_column: date_key
+    product_key: produit_key
+    client_key: client_key
+    event_type_column: type_event
+    session_column: null
+    line_id: event_id
+  client:
+    table: dim_client
+    client_key: client_key
+    label: null
+  stock:
+    table: fact_stock
+    product_key: produit_key
+    date_column: date_key
+    level_column: niveau_stock

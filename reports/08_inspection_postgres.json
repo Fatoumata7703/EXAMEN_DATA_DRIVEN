@@ -1,0 +1,750 @@
+{
+  "contexte": {
+    "version": "PostgreSQL 17.6",
+    "role": "postgres",
+    "schema_courant": "public",
+    "read_only": "on",
+    "port": 5432
+  },
+  "role": {
+    "role": "postgres",
+    "superuser": false,
+    "bypass_rls": true,
+    "membre_de": [
+      "pg_monitor",
+      "pg_signal_backend",
+      "pg_read_all_data",
+      "pg_create_subscription",
+      "anon",
+      "authenticated",
+      "service_role",
+      "authenticator",
+      "supabase_privileged_role"
+    ]
+  },
+  "schemas": {
+    "applicatifs": [
+      "public"
+    ],
+    "tous": [
+      {
+        "schema": "auth",
+        "usage": true,
+        "objets": 23
+      },
+      {
+        "schema": "extensions",
+        "usage": true,
+        "objets": 2
+      },
+      {
+        "schema": "graphql",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "graphql_public",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "information_schema",
+        "usage": true,
+        "objets": 69
+      },
+      {
+        "schema": "pg_catalog",
+        "usage": true,
+        "objets": 142
+      },
+      {
+        "schema": "pg_temp_10",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_11",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_15",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_16",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_18",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_19",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_2",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_20",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_21",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_23",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_24",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_25",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_31",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_32",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_36",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_4",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_40",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_42",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_44",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_46",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_48",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_5",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_50",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_51",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_54",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_55",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_56",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_57",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_59",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_7",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_8",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_temp_9",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_10",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_11",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_15",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_16",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_18",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_19",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_2",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_20",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_21",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_23",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_24",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_25",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_31",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_32",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_36",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_4",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_40",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_42",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_44",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_46",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_48",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_5",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_50",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_51",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_54",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_55",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_56",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_57",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_59",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_7",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_8",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pg_toast_temp_9",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "pgbouncer",
+        "usage": true,
+        "objets": 0
+      },
+      {
+        "schema": "public",
+        "usage": true,
+        "objets": 7
+      },
+      {
+        "schema": "realtime",
+        "usage": true,
+        "objets": 3
+      },
+      {
+        "schema": "storage",
+        "usage": true,
+        "objets": 8
+      },
+      {
+        "schema": "vault",
+        "usage": true,
+        "objets": 2
+      }
+    ]
+  },
+  "objets_recherches": [
+    {
+      "schema": "auth",
+      "objet": "audit_log_entries",
+      "type": "table",
+      "lignes_estimees": -1
+    },
+    {
+      "schema": "public",
+      "objet": "fact_stock",
+      "type": "table",
+      "lignes_estimees": 117763
+    }
+  ],
+  "colonnes_recherchees": [
+    {
+      "schema": "auth",
+      "objet": "audit_log_entries",
+      "colonne": "payload",
+      "type": "json"
+    },
+    {
+      "schema": "auth",
+      "objet": "mfa_amr_claims",
+      "colonne": "session_id",
+      "type": "uuid"
+    },
+    {
+      "schema": "auth",
+      "objet": "refresh_tokens",
+      "colonne": "session_id",
+      "type": "uuid"
+    },
+    {
+      "schema": "auth",
+      "objet": "saml_providers",
+      "colonne": "metadata_url",
+      "type": "text"
+    },
+    {
+      "schema": "auth",
+      "objet": "saml_providers",
+      "colonne": "metadata_xml",
+      "type": "text"
+    },
+    {
+      "schema": "public",
+      "objet": "fact_stock",
+      "colonne": "niveau_stock",
+      "type": "integer"
+    },
+    {
+      "schema": "realtime",
+      "objet": "messages",
+      "colonne": "binary_payload",
+      "type": "bytea"
+    },
+    {
+      "schema": "realtime",
+      "objet": "messages",
+      "colonne": "payload",
+      "type": "jsonb"
+    },
+    {
+      "schema": "storage",
+      "objet": "objects",
+      "colonne": "metadata",
+      "type": "jsonb"
+    },
+    {
+      "schema": "storage",
+      "objet": "objects",
+      "colonne": "user_metadata",
+      "type": "jsonb"
+    },
+    {
+      "schema": "storage",
+      "objet": "s3_multipart_uploads",
+      "colonne": "metadata",
+      "type": "jsonb"
+    },
+    {
+      "schema": "storage",
+      "objet": "s3_multipart_uploads",
+      "colonne": "user_metadata",
+      "type": "jsonb"
+    },
+    {
+      "schema": "storage",
+      "objet": "vector_indexes",
+      "colonne": "metadata_configuration",
+      "type": "jsonb"
+    }
+  ],
+  "objets_par_schema": {
+    "public": [
+      {
+        "objet": "dim_client",
+        "type": "table",
+        "lignes_estimees": 5000,
+        "rls": true,
+        "select_ok": true,
+        "commentaire": null,
+        "n_colonnes": 8
+      },
+      {
+        "objet": "dim_date",
+        "type": "table",
+        "lignes_estimees": 546,
+        "rls": true,
+        "select_ok": true,
+        "commentaire": null,
+        "n_colonnes": 7
+      },
+      {
+        "objet": "dim_produit",
+        "type": "table",
+        "lignes_estimees": 300,
+        "rls": true,
+        "select_ok": true,
+        "commentaire": null,
+        "n_colonnes": 10
+      },
+      {
+        "objet": "dim_promotion",
+        "type": "table",
+        "lignes_estimees": 120,
+        "rls": true,
+        "select_ok": true,
+        "commentaire": null,
+        "n_colonnes": 7
+      },
+      {
+        "objet": "fact_evenements_web",
+        "type": "table",
+        "lignes_estimees": 374792,
+        "rls": true,
+        "select_ok": true,
+        "commentaire": null,
+        "n_colonnes": 6
+      },
+      {
+        "objet": "fact_stock",
+        "type": "table",
+        "lignes_estimees": 117763,
+        "rls": true,
+        "select_ok": true,
+        "commentaire": null,
+        "n_colonnes": 3
+      },
+      {
+        "objet": "fact_ventes",
+        "type": "table",
+        "lignes_estimees": 85419,
+        "rls": true,
+        "select_ok": true,
+        "commentaire": null,
+        "n_colonnes": 7
+      }
+    ]
+  },
+  "contraintes": [
+    {
+      "schema": "public",
+      "objet": "dim_client",
+      "contrainte": "dim_client_pkey",
+      "type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (client_key)"
+    },
+    {
+      "schema": "public",
+      "objet": "dim_date",
+      "contrainte": "dim_date_pkey",
+      "type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (date_key)"
+    },
+    {
+      "schema": "public",
+      "objet": "dim_produit",
+      "contrainte": "dim_produit_pkey",
+      "type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (produit_key)"
+    },
+    {
+      "schema": "public",
+      "objet": "dim_promotion",
+      "contrainte": "dim_promotion_pkey",
+      "type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (promo_key)"
+    },
+    {
+      "schema": "public",
+      "objet": "fact_evenements_web",
+      "contrainte": "fact_evenements_web_produit_key_fkey",
+      "type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (produit_key) REFERENCES dim_produit(produit_key)"
+    },
+    {
+      "schema": "public",
+      "objet": "fact_evenements_web",
+      "contrainte": "fact_evenements_web_date_key_fkey",
+      "type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (date_key) REFERENCES dim_date(date_key)"
+    },
+    {
+      "schema": "public",
+      "objet": "fact_evenements_web",
+      "contrainte": "fact_evenements_web_client_key_fkey",
+      "type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (client_key) REFERENCES dim_client(client_key)"
+    },
+    {
+      "schema": "public",
+      "objet": "fact_evenements_web",
+      "contrainte": "fact_evenements_web_pkey",
+      "type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (event_id)"
+    },
+    {
+      "schema": "public",
+      "objet": "fact_stock",
+      "contrainte": "fact_stock_produit_key_fkey",
+      "type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (produit_key) REFERENCES dim_produit(produit_key)"
+    },
+    {
+      "schema": "public",
+      "objet": "fact_stock",
+      "contrainte": "fact_stock_date_key_fkey",
+      "type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (date_key) REFERENCES dim_date(date_key)"
+    },
+    {
+      "schema": "public",
+      "objet": "fact_stock",
+      "contrainte": "fact_stock_pkey",
+      "type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (produit_key, date_key)"
+    },
+    {
+      "schema": "public",
+      "objet": "fact_ventes",
+      "contrainte": "fact_ventes_produit_key_fkey",
+      "type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (produit_key) REFERENCES dim_produit(produit_key)"
+    },
+    {
+      "schema": "public",
+      "objet": "fact_ventes",
+      "contrainte": "fact_ventes_promo_key_fkey",
+      "type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (promo_key) REFERENCES dim_promotion(promo_key)"
+    },
+    {
+      "schema": "public",
+      "objet": "fact_ventes",
+      "contrainte": "fact_ventes_client_key_fkey",
+      "type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (client_key) REFERENCES dim_client(client_key)"
+    },
+    {
+      "schema": "public",
+      "objet": "fact_ventes",
+      "contrainte": "fact_ventes_date_key_fkey",
+      "type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (date_key) REFERENCES dim_date(date_key)"
+    },
+    {
+      "schema": "public",
+      "objet": "fact_ventes",
+      "contrainte": "fact_ventes_pkey",
+      "type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (vente_id)"
+    }
+  ],
+  "fonctions": [],
+  "storage": {
+    "statut": "lisible",
+    "n_buckets": 0,
+    "buckets": [],
+    "objets": []
+  },
+  "statuts_sources": {
+    "stock_daily (table)": {
+      "statut": "PRÉSENT ET LISIBLE",
+      "localisation": "public.fact_stock"
+    },
+    "launch_date (colonne)": {
+      "statut": "ABSENT DE L'INSTANCE",
+      "localisation": "—"
+    },
+    "order_id (colonne)": {
+      "statut": "ABSENT DE L'INSTANCE",
+      "localisation": "—"
+    },
+    "session_id (colonne)": {
+      "statut": "PRÉSENT ET LISIBLE",
+      "localisation": "auth.mfa_amr_claims.session_id, auth.refresh_tokens.session_id"
+    },
+    "event_timestamp (colonne)": {
+      "statut": "ABSENT DE L'INSTANCE",
+      "localisation": "—"
+    },
+    "referral_source (colonne)": {
+      "statut": "ABSENT DE L'INSTANCE",
+      "localisation": "—"
+    },
+    "initial_stock (colonne)": {
+      "statut": "ABSENT DE L'INSTANCE",
+      "localisation": "—"
+    },
+    "signup_date (colonne)": {
+      "statut": "ABSENT DE L'INSTANCE",
+      "localisation": "—"
+    },
+    "popularity_score (colonne)": {
+      "statut": "ABSENT DE L'INSTANCE",
+      "localisation": "—"
+    },
+    "quarantaine / rejets": {
+      "statut": "ABSENT DE L'INSTANCE",
+      "localisation": "—"
+    },
+    "zones raw/bronze/silver/gold": {
+      "statut": "ABSENT DE L'INSTANCE",
+      "localisation": "—"
+    }
+  },
+  "public_counts": {
+    "dim_client": 5000,
+    "dim_date": 546,
+    "dim_produit": 300,
+    "dim_promotion": 120,
+    "fact_evenements_web": 374792,
+    "fact_stock": 117763,
+    "fact_ventes": 85419
+  },
+  "rls_policies": []
+}

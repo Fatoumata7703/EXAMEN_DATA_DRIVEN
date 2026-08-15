@@ -1,0 +1,71 @@
+{
+  "quotidien": [
+    {
+      "modele": "WindowAverage28",
+      "n_lignes": 49860,
+      "WAPE_quotidien": 1.0833849770138146,
+      "MAE_quotidien": 1.3452138773952118,
+      "biais_moyen_quotidien_unites": 0.006947140497999379,
+      "biais_normalise_quotidien": 0.005594967294948296
+    },
+    {
+      "modele": "AutoETS",
+      "n_lignes": 49860,
+      "WAPE_quotidien": 1.0947268068047595,
+      "MAE_quotidien": 1.3592967631223958,
+      "biais_moyen_quotidien_unites": 0.08362335710580919,
+      "biais_normalise_quotidien": 0.06734712623640197
+    },
+    {
+      "modele": "CrostonOptimized",
+      "n_lignes": 49860,
+      "WAPE_quotidien": 1.1000819533381394,
+      "MAE_quotidien": 1.3659461237698398,
+      "biais_moyen_quotidien_unites": 0.07333805566941691,
+      "biais_normalise_quotidien": 0.05906372889157046
+    },
+    {
+      "modele": "LightGBM_Hurdle",
+      "n_lignes": 49860,
+      "WAPE_quotidien": 1.1191227824836547,
+      "MAE_quotidien": 1.389588677568453,
+      "biais_moyen_quotidien_unites": 0.15587689672988564,
+      "biais_normalise_quotidien": 0.12553742644083504
+    }
+  ],
+  "cumule_30j": [
+    {
+      "modele": "AutoETS",
+      "n_produits_fenetres": 1662,
+      "WAPE_cumule_30j": 0.2771792417889409,
+      "MAE_cumule_30j": 10.325010143894904,
+      "biais_total_30j_unites": 2.508700713174276,
+      "biais_normalise_cumule": 0.06734712623640197
+    },
+    {
+      "modele": "LightGBM_Hurdle",
+      "n_produits_fenetres": 1662,
+      "WAPE_cumule_30j": 0.30820993974800703,
+      "MAE_cumule_30j": 11.48091297821848,
+      "biais_total_30j_unites": 4.676306901896569,
+      "biais_normalise_cumule": 0.12553742644083504
+    },
+    {
+      "modele": "CrostonOptimized",
+      "n_produits_fenetres": 1662,
+      "WAPE_cumule_30j": 0.3139137965839576,
+      "MAE_cumule_30j": 11.693383361319384,
+      "biais_total_30j_unites": 2.2001416700825076,
+      "biais_normalise_cumule": 0.059063728891570466
+    },
+    {
+      "modele": "WindowAverage28",
+      "n_produits_fenetres": 1662,
+      "WAPE_cumule_30j": 0.3161282282079145,
+      "MAE_cumule_30j": 11.775871605506609,
+      "biais_total_30j_unites": 0.20841421493998114,
+      "biais_normalise_cumule": 0.005594967294948291
+    }
+  ],
+  "concordance_avec_rapports_publies": true
+}

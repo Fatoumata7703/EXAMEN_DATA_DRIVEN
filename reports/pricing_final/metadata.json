@@ -1,0 +1,40 @@
+{
+  "pricing_version": "pricing_v1_exploratory",
+  "model": "challenger_ml_lightgbm",
+  "catalog_price_changes": 0,
+  "catalog_prices_fixed_products": 300,
+  "causal": false,
+  "optimal_price_claim_allowed": false,
+  "automatic_application_allowed": false,
+  "human_validation_required": true,
+  "quantity_wape": 1.0713207916807077,
+  "off_policy_evaluation_validated": false,
+  "primary_objective": "margin_scenario_simulation",
+  "minimum_margin_floor": 0.05,
+  "genere_le": "2026-08-14T16:07:23.776393+00:00",
+  "positionnement": "aide a la decision exploratoire (analyse promotions, uplift observationnel, simulation de remises sous contrainte de marge) - PAS un moteur de prix optimal causal, PAS pret pour la production",
+  "biais_quantite_methode_retenue": 0.0100050902964778,
+  "objectif_prix_optimal_continu_hors_promo": "non_calculable_structurellement",
+  "regle_selection_methode": "biais_quantite_abs < 0.15 sinon min(abs_biais)",
+  "n_produits_eligible_individuel": 218,
+  "n_produits_eligible_pooling_categorie": 70,
+  "n_produits_non_eligible": 12,
+  "marges_minimales_testees": [
+    0.0,
+    0.05,
+    0.1,
+    0.15
+  ],
+  "objectifs_simules": [
+    "marge",
+    "chiffre_affaires",
+    "ecoulement_stock",
+    "compromis_marge_volume"
+  ],
+  "n_lignes_marge_negative_historique": 679,
+  "n_produits_marge_negative_historique": 73,
+  "confidence_haute_atteignable": false,
+  "cible": "quantite_vendue_observee (identique au forecasting) et chiffre_affaires_net_xof / marge_totale_xof",
+  "aucune_publication_supabase": true,
+  "aucun_deploiement": true
+}

@@ -1,0 +1,65 @@
+{
+  "genere_le": "2026-08-14T12:02:35.984253+00:00",
+  "artefacts": {
+    "configuration": {
+      "chemin": "config\\config.yaml",
+      "sha256": "e3f5cecd7de3280751d6ebd6a26c83e7b73b2f6bb9a4741bde3e5d088cc96a17",
+      "taille_octets": 8044
+    },
+    "metadonnees_modele": {
+      "chemin": "models\\forecast_final\\metadata.json",
+      "sha256": "3b7ba903a524fd496258b69b8e8918ef63573226295e5331ccf6fa6c5f7eae54",
+      "taille_octets": 1885
+    },
+    "snapshot_metriques": {
+      "chemin": "reports\\forecast_final\\v1_metrics_snapshot.json",
+      "sha256": "ce382df5da9124394c17138f4532862e711945b3d29fe7fd10b6bbb8bb9d3356",
+      "taille_octets": 9376
+    },
+    "previsions_parquet": {
+      "chemin": "reports\\forecast_final\\previsions_finales.parquet",
+      "sha256": "b6564d0d5af50abc0f9bf419f043603228dc7a591738eaebdbe7978276818804",
+      "taille_octets": 107051
+    },
+    "previsions_csv": {
+      "chemin": "reports\\forecast_final\\previsions_finales.csv",
+      "sha256": "1b9bc848d5afd22fd884eb7f69afc209f3ca2fffc7eebd58b160a4d4f454755c",
+      "taille_octets": 5367983
+    },
+    "dependances": {
+      "chemin": "requirements.txt",
+      "sha256": "90dc089bf460da0e1a279aa7e5cb2d0ddd3391f8c1554d34c4fa832c3ee7dfad",
+      "taille_octets": 858
+    },
+    "rapport_18_baselines": {
+      "chemin": "reports\\18_backtest_rapport_final.md",
+      "sha256": "da0f769a796d7d65ff38208bbdfd77771ca15e4264e29215608535365243bbc1",
+      "taille_octets": 21754
+    },
+    "rapport_21_lightgbm": {
+      "chemin": "reports\\21_rapport_final_lightgbm.md",
+      "sha256": "c19736a52d7cc450f5bc8f4d25fa05d57284395e4f14e7a4e3b84025d5fda9f5",
+      "taille_octets": 20341
+    },
+    "rapport_22_verification_independante": {
+      "chemin": "reports\\22_verification_independante_metriques.json",
+      "sha256": "9f6a180b42754fb257b6667a7b0506a6349ce83187d55e0a890cf0a489c8e529",
+      "taille_octets": 2348
+    },
+    "rapport_23_forecasting_final": {
+      "chemin": "reports\\23_rapport_final_forecasting.md",
+      "sha256": "ac115e6b4982d6e197ad6acf72cd3302cdd0afb4fe1a62720bfdf59f245df1a4",
+      "taille_octets": 21901
+    },
+    "rapport_24_entrainement_final": {
+      "chemin": "reports\\24_entrainement_final.md",
+      "sha256": "f1a99560a67a279612d46f4a15056ab6997d0cad014599c89c58f9a74a4b0fe3",
+      "taille_octets": 1226
+    },
+    "registre_v2": {
+      "chemin": "reports\\forecast_final\\forecasting_v2_objectives.md",
+      "sha256": "981051a8caa50679710acbd24c629afeb84b3ffa0f63ac55cfeb0da1a7f8c235",
+      "taille_octets": 15983
+    }
+  }
+}

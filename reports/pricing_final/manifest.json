@@ -1,0 +1,90 @@
+{
+  "genere_le": "2026-08-14T16:07:23.780419+00:00",
+  "artefacts": {
+    "eligibilite": {
+      "chemin": "reports\\28_pricing_eligibilite.md",
+      "sha256": "17da2dbd8622ec8af6b15be3407091da08cfd38197f0147870d71d6917d91a0e",
+      "taille_octets": 3909
+    },
+    "baselines_confusion": {
+      "chemin": "reports\\29_pricing_baselines_confusion.md",
+      "sha256": "c92f161b6777609fb2978ea33b1b7ed923ab3b40a40d6dabbee015448ee9196a",
+      "taille_octets": 7769
+    },
+    "validation_temporelle": {
+      "chemin": "reports\\30_pricing_validation_temporelle.md",
+      "sha256": "f8a20760d1c390d7847efe1c86a0757ef7be5cb30870863e8e9da3ba63271e18",
+      "taille_octets": 5407
+    },
+    "marges_negatives": {
+      "chemin": "reports\\31_pricing_marges_negatives.md",
+      "sha256": "60300dcf3e4bd06c52b78238ed13b548ba9f8f201c4cf9131966b1c478714e24",
+      "taille_octets": 6620
+    },
+    "simulateur": {
+      "chemin": "reports\\32_pricing_simulateur.md",
+      "sha256": "e268b719a4a2aa50dc6af5c1b7f8e3664dc26aa795442dba79556fc32d21c80f",
+      "taille_octets": 5833
+    },
+    "comparaison_politiques": {
+      "chemin": "reports\\34_pricing_comparaison_politiques.md",
+      "sha256": "9da1a856cd6d066f9d554dcce1e78cc5a89390214c7475307d4edb42016b0121",
+      "taille_octets": 6739
+    },
+    "comparaison_rapport_final": {
+      "chemin": "reports\\33_pricing_comparaison_rapport_final.md",
+      "sha256": "3e2b7312e41c724236c01bb6aa5558d1e4feeb092a16ffce58405b6b3ec7ae20",
+      "taille_octets": 8291
+    },
+    "audit_pricing": {
+      "chemin": "reports\\26_audit_pricing.md",
+      "sha256": "b4c35df05aba5a8961afd338ae615aa91d3ba3564d588d6c991093f2e83ab289",
+      "taille_octets": 9720
+    },
+    "livrable_intermediaire": {
+      "chemin": "reports\\27_livrable_intermediaire_pricing.md",
+      "sha256": "8f7848316a2148de8e7fd577d5eca703c115c71922158cf3c4592e485c5a3e41",
+      "taille_octets": 9711
+    },
+    "objectifs_v2": {
+      "chemin": "reports\\pricing_final\\pricing_v2_objectives.md",
+      "sha256": "a37520ecf10ffb5f2ecf5ce0910062993d06d9ece0828a6b5171bdf57cd3d687",
+      "taille_octets": 10341
+    },
+    "simulateur_sorties_csv": {
+      "chemin": "reports\\pricing_final\\simulateur_sorties.csv",
+      "sha256": "f33e15e55758bf9a1e5f578a8c105f86292d7e3bcea0c0438a5f3b17449a5c6f",
+      "taille_octets": 1335133
+    },
+    "comparaison_methodes_csv": {
+      "chemin": "reports\\pricing_final\\comparaison_methodes.csv",
+      "sha256": "24e19890428f7c49f62566a4f7731a1839cc5024fbaa5097bf86d1a121128107",
+      "taille_octets": 1207
+    },
+    "comparaison_politiques_csv": {
+      "chemin": "reports\\pricing_final\\comparaison_politiques.csv",
+      "sha256": "360c90b0ad1a7992effd1454188385048350fe92407173aaa7ec77e3d642065f",
+      "taille_octets": 2003
+    },
+    "eligibilite_csv": {
+      "chemin": "reports\\pricing_final\\eligibilite_produits.csv",
+      "sha256": "8b8046e95c41120b096e9711cb990a66a9972e7d7bba2982786a894bd97d86df",
+      "taille_octets": 46934
+    },
+    "baselines_csv": {
+      "chemin": "reports\\pricing_final\\baselines.csv",
+      "sha256": "ecafd9ccbe006920405e9bbe1f8db2dc84f5426617306ae464e702ed3f3d5734",
+      "taille_octets": 14614
+    },
+    "dataset_pricing": {
+      "chemin": "data\\processed\\table_pricing.parquet",
+      "sha256": "dcd98efbb92c01d458f4bd459b97a37f438cc2e0a50ae031309a5e6955f381b6",
+      "taille_octets": 2706086
+    },
+    "dependances": {
+      "chemin": "requirements.txt",
+      "sha256": "f61be2276c255357f4592cef3c516ff6535b8d5f0c34a2d5105844ff03b42226",
+      "taille_octets": 946
+    }
+  }
+}

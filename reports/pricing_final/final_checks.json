@@ -1,0 +1,36 @@
+{
+  "genere_le": "2026-08-14T16:07:23.933215+00:00",
+  "prix_simule_negatif": {
+    "n": 0,
+    "ok": true
+  },
+  "prix_simule_sous_le_cout": {
+    "n": 0,
+    "ok": true
+  },
+  "nan_dans_simulations_ok": {
+    "n": 0,
+    "ok": true
+  },
+  "extrapolation_hors_grille": {
+    "n": 0,
+    "ok": true
+  },
+  "insufficient_evidence_sans_fausse_simulation": {
+    "n": 0,
+    "ok": true
+  },
+  "aucune_confiance_haute_si_wape_eleve": {
+    "n_haute": 0,
+    "ok": true
+  },
+  "tests": {
+    "resume": "148 passed in 29.81s",
+    "ok": true
+  },
+  "absence_secrets": {
+    "ok": true,
+    "detail": {}
+  },
+  "verdict_global": "TOUS LES CONTROLES PASSENT"
+}

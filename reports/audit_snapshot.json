@@ -1,0 +1,785 @@
+{
+  "genere_le": "2026-08-13T21:37:13.550595+00:00",
+  "backend": "postgres",
+  "schema": "public",
+  "tables": {
+    "dim_client": 5000,
+    "dim_date": 546,
+    "dim_produit": 300,
+    "dim_promotion": 120,
+    "fact_evenements_web": 374792,
+    "fact_stock": 117763,
+    "fact_ventes": 85419
+  },
+  "frequence_detectee": "D",
+  "frequence_details": {
+    "ecart_modal_jours": 1,
+    "part_ecarts_1j": 1.0,
+    "densite_jours_couverts": 1.0,
+    "n_jours_distincts": 546
+  },
+  "n_produits_series": 300,
+  "span_jours": 546,
+  "densite_produit_jour": 0.3539499389499389,
+  "part_points_nuls_observes": 0.0,
+  "mapping": {
+    "ventes": {
+      "table": "fact_ventes",
+      "date": "date_key",
+      "product_key": "produit_key",
+      "client_key": "client_key",
+      "promotion_key": "promo_key",
+      "quantity": "quantite",
+      "amount": "montant_net_xof",
+      "unit_price": null,
+      "discount": null,
+      "status": null,
+      "return_flag": null,
+      "cancel_flag": null,
+      "line_id": "vente_id",
+      "order_id": null
+    },
+    "produit": {
+      "table": "dim_produit",
+      "product_key": "product_id",
+      "label": "product_name",
+      "category": "categorie",
+      "subcategory": null,
+      "brand": "marque",
+      "unit_price": "prix_base_xof",
+      "launch_date": null
+    },
+    "date": {
+      "table": "dim_date",
+      "date": "jour",
+      "line_id": null
+    },
+    "promotion": {
+      "table": "dim_promotion",
+      "promotion_key": "promotion_id",
+      "product_key": null,
+      "start_date": "date_debut",
+      "end_date": "date_fin",
+      "discount_rate": "remise_pct",
+      "label": null
+    },
+    "web": {
+      "table": "fact_evenements_web",
+      "date": "date_key",
+      "product_key": "produit_key",
+      "client_key": "client_key",
+      "event_type": "type_event",
+      "session_key": null,
+      "line_id": "event_id"
+    },
+    "client": {
+      "table": "dim_client",
+      "client_key": "client_key",
+      "label": null
+    },
+    "stock": {
+      "table": "fact_stock",
+      "product_key": "produit_key",
+      "date": "date_key",
+      "stock_level": "niveau_stock"
+    }
+  },
+  "notes_dates": [
+    "Date lue directement depuis `fact_ventes.date_key`.",
+    "Clé de jointure produit retenue : `dim_produit.produit_key` (recouvrement des valeurs : 100.0%).",
+    "Ventes enrichies par `dim_produit` sur `produit_key` : ['prix_base_xof', 'categorie', 'marque', 'product_name', 'valid_from'].",
+    "Clé de jointure promotion retenue : `dim_promotion.promo_key` (recouvrement des valeurs : 100.0%).",
+    "Ventes enrichies par `dim_promotion` sur `promo_key` : ['remise_pct', 'date_debut', 'date_fin']."
+  ],
+  "notes_quantite_nette": [
+    "Aucune colonne de statut exploitable : quantité nette = quantité brute (les quantités négatives éventuelles sont conservées telles quelles)."
+  ],
+  "notes_schema": [],
+  "checks": [
+    {
+      "name": "valeurs_manquantes[dim_client]",
+      "status": "alerte",
+      "summary": "1 colonne(s) entièrement vide(s) — valid_to — sans impact sur la cible, mais inutilisable(s) comme variable.",
+      "details": {
+        "n_colonnes_avec_na": 1,
+        "colonnes_obligatoires_incompletes": [],
+        "colonnes_entierement_vides": [
+          "valid_to"
+        ]
+      },
+      "table_preview": [
+        {
+          "colonne": "valid_to",
+          "taux_na": 1.0,
+          "n_na": 5000,
+          "interpretation": "colonne entièrement vide (structurel)"
+        },
+        {
+          "colonne": "client_key",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "region",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "customer_id",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "age_bracket",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "segment_fidelite",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "valid_from",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "is_current",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        }
+      ]
+    },
+    {
+      "name": "doublons[dim_client]",
+      "status": "ok",
+      "summary": "0 doublon(s) sur la ligne entière. Clé ['client_key'] unique.",
+      "details": {
+        "doublons_ligne_entiere": 0,
+        "n_lignes": 5000,
+        "cle_testee": [
+          "client_key"
+        ],
+        "doublons_sur_cle": 0
+      }
+    },
+    {
+      "name": "valeurs_manquantes[dim_date]",
+      "status": "ok",
+      "summary": "Aucune valeur manquante.",
+      "details": {
+        "n_colonnes_avec_na": 0,
+        "colonnes_obligatoires_incompletes": [],
+        "colonnes_entierement_vides": []
+      },
+      "table_preview": [
+        {
+          "colonne": "date_key",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "date_complete",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "annee",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "mois",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "jour",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "jour_semaine",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "est_weekend",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        }
+      ]
+    },
+    {
+      "name": "doublons[dim_date]",
+      "status": "ok",
+      "summary": "0 doublon(s) sur la ligne entière. Clé ['date_key'] unique.",
+      "details": {
+        "doublons_ligne_entiere": 0,
+        "n_lignes": 546,
+        "cle_testee": [
+          "date_key"
+        ],
+        "doublons_sur_cle": 0
+      }
+    },
+    {
+      "name": "valeurs_manquantes[dim_produit]",
+      "status": "alerte",
+      "summary": "1 colonne(s) entièrement vide(s) — valid_to — sans impact sur la cible, mais inutilisable(s) comme variable.",
+      "details": {
+        "n_colonnes_avec_na": 1,
+        "colonnes_obligatoires_incompletes": [],
+        "colonnes_entierement_vides": [
+          "valid_to"
+        ]
+      },
+      "table_preview": [
+        {
+          "colonne": "valid_to",
+          "taux_na": 1.0,
+          "n_na": 300,
+          "interpretation": "colonne entièrement vide (structurel)"
+        },
+        {
+          "colonne": "produit_key",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "product_id",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "product_name",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "marque",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "categorie",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "prix_base_xof",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "cout_xof",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "valid_from",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "is_current",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        }
+      ]
+    },
+    {
+      "name": "doublons[dim_produit]",
+      "status": "ok",
+      "summary": "0 doublon(s) sur la ligne entière. Clé ['produit_key'] unique.",
+      "details": {
+        "doublons_ligne_entiere": 0,
+        "n_lignes": 300,
+        "cle_testee": [
+          "produit_key"
+        ],
+        "doublons_sur_cle": 0
+      }
+    },
+    {
+      "name": "valeurs_manquantes[dim_promotion]",
+      "status": "ok",
+      "summary": "Aucune valeur manquante.",
+      "details": {
+        "n_colonnes_avec_na": 0,
+        "colonnes_obligatoires_incompletes": [],
+        "colonnes_entierement_vides": []
+      },
+      "table_preview": [
+        {
+          "colonne": "promo_key",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "promotion_id",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "portee",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "cible",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "remise_pct",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "date_debut",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "date_fin",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        }
+      ]
+    },
+    {
+      "name": "doublons[dim_promotion]",
+      "status": "ok",
+      "summary": "0 doublon(s) sur la ligne entière. Clé ['promo_key'] unique.",
+      "details": {
+        "doublons_ligne_entiere": 0,
+        "n_lignes": 120,
+        "cle_testee": [
+          "promo_key"
+        ],
+        "doublons_sur_cle": 0
+      }
+    },
+    {
+      "name": "valeurs_manquantes[fact_evenements_web]",
+      "status": "ok",
+      "summary": "Aucune valeur manquante.",
+      "details": {
+        "n_colonnes_avec_na": 0,
+        "colonnes_obligatoires_incompletes": [],
+        "colonnes_entierement_vides": []
+      },
+      "table_preview": [
+        {
+          "colonne": "event_id",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "produit_key",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "client_key",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "date_key",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "type_event",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "appareil",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        }
+      ]
+    },
+    {
+      "name": "doublons[fact_evenements_web]",
+      "status": "ok",
+      "summary": "0 doublon(s) sur la ligne entière. Clé ['event_id'] unique.",
+      "details": {
+        "doublons_ligne_entiere": 0,
+        "n_lignes": 374792,
+        "cle_testee": [
+          "event_id"
+        ],
+        "doublons_sur_cle": 0
+      }
+    },
+    {
+      "name": "valeurs_manquantes[fact_stock]",
+      "status": "ok",
+      "summary": "Aucune valeur manquante.",
+      "details": {
+        "n_colonnes_avec_na": 0,
+        "colonnes_obligatoires_incompletes": [],
+        "colonnes_entierement_vides": []
+      },
+      "table_preview": [
+        {
+          "colonne": "produit_key",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "date_key",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "niveau_stock",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        }
+      ]
+    },
+    {
+      "name": "doublons[fact_stock]",
+      "status": "ok",
+      "summary": "0 doublon(s) sur la ligne entière. Clé ['produit_key', 'date_key'] unique.",
+      "details": {
+        "doublons_ligne_entiere": 0,
+        "n_lignes": 117763,
+        "cle_testee": [
+          "produit_key",
+          "date_key"
+        ],
+        "doublons_sur_cle": 0
+      }
+    },
+    {
+      "name": "valeurs_manquantes[fact_ventes]",
+      "status": "ok",
+      "summary": "1 colonne(s) avec des manquants ; pire cas promo_key = 84.3% (vide attendu (clé optionnelle)).",
+      "details": {
+        "n_colonnes_avec_na": 1,
+        "colonnes_obligatoires_incompletes": [],
+        "colonnes_entierement_vides": []
+      },
+      "table_preview": [
+        {
+          "colonne": "promo_key",
+          "taux_na": 0.8433603764970323,
+          "n_na": 72039,
+          "interpretation": "vide attendu (clé optionnelle)"
+        },
+        {
+          "colonne": "produit_key",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "colonne obligatoire"
+        },
+        {
+          "colonne": "vente_id",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "client_key",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "—"
+        },
+        {
+          "colonne": "date_key",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "colonne obligatoire"
+        },
+        {
+          "colonne": "quantite",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "colonne obligatoire"
+        },
+        {
+          "colonne": "montant_net_xof",
+          "taux_na": 0.0,
+          "n_na": 0,
+          "interpretation": "colonne obligatoire"
+        }
+      ]
+    },
+    {
+      "name": "doublons[fact_ventes]",
+      "status": "ok",
+      "summary": "0 doublon(s) sur la ligne entière. Clé ['vente_id'] unique.",
+      "details": {
+        "doublons_ligne_entiere": 0,
+        "n_lignes": 85419,
+        "cle_testee": [
+          "vente_id"
+        ],
+        "doublons_sur_cle": 0
+      }
+    },
+    {
+      "name": "couverture_temporelle",
+      "status": "ok",
+      "summary": "Historique du 2025-02-01 au 2026-07-31 (546 j), 546 jours distincts avec ventes (100.0% de couverture), écart modal entre jours = 1 j.",
+      "details": {
+        "date_min": "2025-02-01T00:00:00",
+        "date_max": "2026-07-31T00:00:00",
+        "span_days": 546,
+        "jours_distincts": 546,
+        "taux_couverture_jours": 1.0,
+        "ecart_modal_jours": 1,
+        "n_dates_invalides": 0
+      }
+    },
+    {
+      "name": "ruptures_calendrier",
+      "status": "ok",
+      "summary": "Aucune rupture de plus d'un jour dans le calendrier global.",
+      "details": {}
+    },
+    {
+      "name": "valeurs_negatives",
+      "status": "ok",
+      "summary": "0 valeur(s) négative(s) au total sur les colonnes numériques clés.",
+      "details": {
+        "total_negatifs": 0
+      },
+      "table_preview": [
+        {
+          "role": "quantite",
+          "colonne": "quantite",
+          "n_negatifs": 0,
+          "n_zeros": 0,
+          "n_non_numerique": 0,
+          "min": 1.0,
+          "max": 5.0,
+          "moyenne": 1.823376532153268
+        },
+        {
+          "role": "montant",
+          "colonne": "montant_net_xof",
+          "n_negatifs": 0,
+          "n_zeros": 0,
+          "n_non_numerique": 0,
+          "min": 499.0,
+          "max": 2283860.0,
+          "moyenne": 145945.08437232935
+        },
+        {
+          "role": "prix_unitaire",
+          "colonne": "prix_dim",
+          "n_negatifs": 0,
+          "n_zeros": 0,
+          "n_non_numerique": 0,
+          "min": 660.0,
+          "max": 448970.0,
+          "moyenne": 82215.01914094054
+        },
+        {
+          "role": "remise",
+          "colonne": "remise_pct_dim",
+          "n_negatifs": 0,
+          "n_zeros": 0,
+          "n_non_numerique": 0,
+          "min": 5.0,
+          "max": 40.0,
+          "moyenne": 14.952914798206278
+        }
+      ]
+    },
+    {
+      "name": "retours_annulations",
+      "status": "non_applicable",
+      "summary": "Aucune colonne de statut/retour identifiée : impossible de distinguer ventes valides, annulations et retours sans information métier complémentaire.",
+      "details": {}
+    },
+    {
+      "name": "coherence_montants",
+      "status": "ok",
+      "summary": "Meilleure formule : « quantite x prix x (1 - remise/100) » — 100.0% des lignes concordent à ±5 %. Le ratio réel/attendu s'étale de 0.9800 à 1.0200 autour d'une médiane de 1.0000 : l'écart résiduel est un bruit multiplicatif borné, pas une incohérence de définition.",
+      "details": {
+        "meilleure_formule": "quantite x prix x (1 - remise/100)",
+        "taux_concordance_5pct": 1.0,
+        "ratio_reel_sur_attendu": {
+          "p0.1": 0.9800340522133939,
+          "mediane": 1.0,
+          "p99.9": 1.0199616122840691
+        }
+      },
+      "table_preview": [
+        {
+          "formule": "quantite x prix x (1 - remise/100)",
+          "≤0.5%": 0.24934733490207098,
+          "≤1.0%": 0.49933855465411675,
+          "≤2.0%": 0.9902129502803826,
+          "≤5.0%": 1.0,
+          "≤10.0%": 1.0,
+          "err_rel_mediane": 0.010015154510113988
+        },
+        {
+          "formule": "quantite x prix",
+          "≤0.5%": 0.21023425701541812,
+          "≤1.0%": 0.4205972910008312,
+          "≤2.0%": 0.8350718224282654,
+          "≤5.0%": 0.8570107353164986,
+          "≤10.0%": 0.8842295039745256,
+          "err_rel_mediane": 0.011865832009716902
+        },
+        {
+          "formule": "quantite x prix x (1 - remise)",
+          "≤0.5%": 0.21023425701541812,
+          "≤1.0%": 0.4205972910008312,
+          "≤2.0%": 0.8350718224282654,
+          "≤5.0%": 0.8433603764970323,
+          "≤10.0%": 0.8433603764970323,
+          "err_rel_mediane": 0.011865832009716902
+        },
+        {
+          "formule": "quantite x prix - remise",
+          "≤0.5%": 0.21023425701541812,
+          "≤1.0%": 0.4205972910008312,
+          "≤2.0%": 0.8350718224282654,
+          "≤5.0%": 0.8570575633055878,
+          "≤10.0%": 0.8849202168135895,
+          "err_rel_mediane": 0.011865832009716902
+        }
+      ]
+    },
+    {
+      "name": "integrite[ventes->produit]",
+      "status": "ok",
+      "summary": "0 clé(s) de fait sur 300 sans correspondance dans la dimension (0.00%).",
+      "details": {
+        "n_cles_faits": 300,
+        "n_orphelines": 0,
+        "exemples": [],
+        "n_cles_dimension": 300
+      }
+    },
+    {
+      "name": "integrite[ventes->client]",
+      "status": "ok",
+      "summary": "0 clé(s) de fait sur 5000 sans correspondance dans la dimension (0.00%).",
+      "details": {
+        "n_cles_faits": 5000,
+        "n_orphelines": 0,
+        "exemples": [],
+        "n_cles_dimension": 5000
+      }
+    },
+    {
+      "name": "integrite[ventes->promotion]",
+      "status": "ok",
+      "summary": "0 clé(s) de fait sur 97 sans correspondance dans la dimension (0.00%).",
+      "details": {
+        "n_cles_faits": 97,
+        "n_orphelines": 0,
+        "exemples": [],
+        "n_cles_dimension": 120
+      }
+    },
+    {
+      "name": "dates_lancement",
+      "status": "ok",
+      "summary": "Aucune vente antérieure à la date de mise en vente déclarée : la colonne est une véritable date de lancement, exploitable comme borne de début de série et comme variable d'âge produit. Délai médian entre lancement et première vente : 2 jour(s).",
+      "details": {
+        "n_ventes_avant_lancement": 0,
+        "taux": 0.0,
+        "delai_median_jours": 2.0,
+        "delai_max_jours": 372.0
+      }
+    },
+    {
+      "name": "fenetres_promotions",
+      "status": "ok",
+      "summary": "100.00% des ventes promues tombent dans la fenêtre déclarée (13380 / 13380). La dimension promotion est donc fiable pour reconstruire un calendrier promotionnel produit×jour, y compris sur l'horizon futur.",
+      "details": {
+        "taux_dans_fenetre": 1.0,
+        "n_ventes_promues": 13380
+      }
+    },
+    {
+      "name": "periodes_atypiques",
+      "status": "ok",
+      "summary": "1 jour(s) atypique(s) sur 546 (|z robuste| > 3.0), soit 0.2% de l'historique.",
+      "details": {
+        "n_atypiques": 1,
+        "n_jours": 546
+      },
+      "table_preview": [
+        {
+          "date": "2025-12-28T00:00:00",
+          "total": 587,
+          "z_robuste": 3.0327883211678834
+        }
+      ]
+    },
+    {
+      "name": "couverture_promotions",
+      "status": "ok",
+      "summary": "15.7% des lignes de vente sont en promotion ; 76.0% des jours et 96.0% des produits sont concernés au moins une fois.",
+      "details": {
+        "part_lignes_promo": 0.15663962350296773,
+        "part_jours_avec_promo": 0.76007326007326,
+        "part_produits_promus": 0.96
+      }
+    }
+  ],
+  "repartition_profils": {
+    "grumeleux": 166,
+    "intermittent": 129,
+    "erratique": 4,
+    "regulier": 1
+  },
+  "repartition_cycle_vie": {
+    "actif": 283,
+    "nouveau_ou_trop_court": 17
+  }
+}

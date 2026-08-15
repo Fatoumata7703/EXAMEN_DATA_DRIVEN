@@ -1,0 +1,5 @@
+fenetre,label,train_end,test_start,test_end,n_lignes_train,n_lignes_test,n_clients_cold_start_pur,n_clients_evaluables_test,pct_clients_evaluables
+0,cold_start_dediee,2025-05-01,2025-05-02,2025-06-30,8296,7034,971,3781,0.7562
+1,principale_1,2026-02-01,2026-02-02,2026-04-02,50883,10555,0,4396,0.8792
+2,principale_2,2026-04-02,2026-04-03,2026-06-01,61438,11997,0,4531,0.9062
+3,principale_3,2026-06-01,2026-06-02,2026-07-31,73435,11984,0,4538,0.9076

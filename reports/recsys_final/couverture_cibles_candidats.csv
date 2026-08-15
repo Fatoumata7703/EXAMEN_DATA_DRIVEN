@@ -1,0 +1,13 @@
+fenetre,policy_combo,n_cibles_totales,n_cibles_dans_candidats,taux_couverture_cibles
+0,defaut_exclut_achats_stock_filtre,6999,6273,0.8962708958422632
+0,inclut_produits_deja_achetes,6999,6358,0.9084154879268467
+0,sans_filtre_stock,6999,6914,0.9878554079154165
+1,defaut_exclut_achats_stock_filtre,10521,9524,0.9052371447581028
+1,inclut_produits_deja_achetes,10521,10000,0.9504799923961601
+1,sans_filtre_stock,10521,10045,0.9547571523619428
+2,defaut_exclut_achats_stock_filtre,11926,10976,0.9203421096763374
+2,inclut_produits_deja_achetes,11926,11542,0.9678014422270669
+2,sans_filtre_stock,11926,11360,0.9525406674492705
+3,defaut_exclut_achats_stock_filtre,11922,10967,0.9198959906056031
+3,inclut_produits_deja_achetes,11922,11654,0.9775205502432478
+3,sans_filtre_stock,11922,11235,0.9423754403623553

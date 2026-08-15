@@ -1,0 +1,56 @@
+{
+  "genere_le": "2026-08-14T12:02:36.068363+00:00",
+  "reproductibilite_echantillon_5_series": {
+    "ok": true,
+    "detail": [
+      {
+        "unique_id": "PRD000000",
+        "modele_effectif": "AutoETS",
+        "identique_sur_2_runs": true
+      },
+      {
+        "unique_id": "PRD000001",
+        "modele_effectif": "AutoETS",
+        "identique_sur_2_runs": true
+      },
+      {
+        "unique_id": "PRD000002",
+        "modele_effectif": "AutoETS",
+        "identique_sur_2_runs": true
+      },
+      {
+        "unique_id": "PRD000003",
+        "modele_effectif": "AutoETS",
+        "identique_sur_2_runs": true
+      },
+      {
+        "unique_id": "PRD000004",
+        "modele_effectif": "AutoETS",
+        "identique_sur_2_runs": true
+      }
+    ]
+  },
+  "nan_inf_negatifs": {
+    "n_nan": 0,
+    "n_inf": 0,
+    "n_negatifs": 0,
+    "ok": true
+  },
+  "coherence_horizons_1_a_90": {
+    "n_produits_incoherents": 0,
+    "ok": true
+  },
+  "bornes_ordonnees": {
+    "ok": true
+  },
+  "metadonnees": {
+    "present": true,
+    "cles_manquantes": [],
+    "ok": true
+  },
+  "absence_secrets": {
+    "ok": true,
+    "detail": {}
+  },
+  "verdict_global": "TOUS LES CONTROLES PASSENT"
+}

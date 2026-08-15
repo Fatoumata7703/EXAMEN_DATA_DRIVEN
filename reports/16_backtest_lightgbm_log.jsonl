@@ -1,0 +1,8 @@
+{"modele": "LightGBM_direct", "fenetre": 1, "statut": "succes", "exception": null, "duree_s": 26.28, "n_test": 50}
+{"modele": "LightGBM_Poisson", "fenetre": 1, "statut": "succes", "exception": null, "duree_s": 2.93, "n_test": 50}
+{"modele": "LightGBM_Tweedie", "fenetre": 1, "statut": "succes", "exception": null, "duree_s": 3.02, "n_test": 50}
+{"modele": "LightGBM_Hurdle", "fenetre": 1, "statut": "succes", "exception": null, "duree_s": 4.7, "n_test": 50}
+{"modele": "LightGBM_direct", "fenetre": 2, "statut": "succes", "exception": null, "duree_s": 3.23, "n_test": 50}
+{"modele": "LightGBM_Poisson", "fenetre": 2, "statut": "succes", "exception": null, "duree_s": 3.21, "n_test": 50}
+{"modele": "LightGBM_Tweedie", "fenetre": 2, "statut": "succes", "exception": null, "duree_s": 3.22, "n_test": 50}
+{"modele": "LightGBM_Hurdle", "fenetre": 2, "statut": "succes", "exception": null, "duree_s": 4.95, "n_test": 50}

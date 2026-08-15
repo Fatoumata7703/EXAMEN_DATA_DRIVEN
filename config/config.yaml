@@ -1,0 +1,213 @@
+# =============================================================================
+# Configuration centrale du projet de forecasting de la demande.
+# Aucun secret ici : les identifiants viennent exclusivement de .env
+# =============================================================================
+
+project:
+  name: forecasting-demande
+  # Fuseau de référence pour les dates calendaires
+  timezone: Africa/Dakar
+  country_holidays: SN          # code pays pour la librairie `holidays`
+  random_seed: 42
+
+database:
+  schema: public
+  # Tables attendues du modèle en étoile. La liste réelle est découverte
+  # dynamiquement par l'audit ; celle-ci ne sert que de point de départ.
+  fact_tables:
+    - fact_ventes
+    - fact_evenements_web
+    # Ajoutée le 2026-08-13 : livraison mise à jour par le data engineer.
+    # Grain produit x jour, PK composite (produit_key, date_key).
+    - fact_stock
+  dim_tables:
+    - dim_client
+    - dim_date
+    - dim_produit
+    - dim_promotion
+  # Taille des pages pour l'extraction (l'API REST Supabase plafonne
+  # généralement les réponses à 1000 lignes).
+  page_size: 1000
+
+# -----------------------------------------------------------------------------
+# Mapping du schéma réel -> rôles métier.
+# TOUTES ces valeurs sont laissées à `null` volontairement : elles sont
+# renseignées APRÈS l'audit du schéma (phase 1), jamais devinées à l'avance.
+# `scripts/propose_mapping.py` produit une proposition à valider à la main.
+# -----------------------------------------------------------------------------
+schema_mapping:
+  ventes:
+    table: fact_ventes
+    date_column: null           # ex: date_vente / date_id
+    product_key: null           # ex: produit_id
+    client_key: null
+    promotion_key: null
+    quantity_column: null       # quantité vendue (brute)
+    amount_column: null         # chiffre d'affaires ligne
+    unit_price_column: null
+    discount_column: null
+    status_column: null         # statut ligne (annulée / retour / validée)
+    return_flag_column: null
+    line_id_column: null        # clé primaire de la ligne (détection doublons)
+  produit:
+    # `key` = clé de JOINTURE (substitution), résolue par recouvrement de
+    # valeurs avec la table de faits — jamais par ressemblance de nom.
+    table: dim_produit
+    key: null                   # détecté : `produit_key`
+    label: null
+    category: null
+    subcategory: null           # ABSENTE de ce schéma (aucun proxy inventé)
+    brand: null
+    # Début de validité de la ligne de dimension. Sa signification métier
+    # exacte n'a PAS pu être prouvée (aucun commentaire de colonne, aucune
+    # migration, aucune documentation). Exposée sous le nom neutre
+    # `date_debut_validite`, jamais `date_lancement`.
+    validity_start: null        # détecté : `valid_from`
+  date:
+    table: dim_date
+    key: null
+    date_column: null
+  promotion:
+    table: dim_promotion
+    key: null
+    start_date: null
+    end_date: null
+    discount_rate: null
+    product_key: null
+  web:
+    table: fact_evenements_web
+    date_column: null
+    product_key: null
+    event_type_column: null
+    session_column: null
+  # Ajoutée le 2026-08-13 : livraison mise à jour par le data engineer.
+  # ATTENTION : le dictionnaire décrit `stock_level` comme un stock de FIN
+  # de journée. Seul stock(J-1) peut donc être utilisé pour prévoir J — voir
+  # src/features/stock.py. Non confirmée par un commentaire de colonne dans
+  # la base (aucun commentaire n'existe sur aucune table).
+  stock:
+    table: fact_stock
+    product_key: null           # détecté : `produit_key`
+    date_column: null           # détecté : `date_key`
+    level_column: null          # détecté : `niveau_stock`
+
+# -----------------------------------------------------------------------------
+# Définition de la tâche de prévision.
+# Valeurs par défaut = CANDIDATES ; confirmées ou corrigées par l'audit.
+# -----------------------------------------------------------------------------
+target:
+  # ATTENTION à la formulation : il s'agit de la QUANTITÉ VENDUE OBSERVÉE, et
+  # non de la demande. Aucune donnée de stock, de disponibilité ni de rupture
+  # n'existe dans la source : un y=0 ne peut pas être distingué d'une demande
+  # non servie. Cf. README §Limites et reports/04_diagnostic.md §13.
+  name: quantite_vendue_observee
+  granularity: produit_jour     # produit_jour | produit_semaine | categorie_jour
+  frequency: D                  # confirmé par l'audit : 546 jours consécutifs
+  seasonality: 7                # effet week-end mesuré à +25 %
+  # Politique de complétion (règle A, validée le 2026-08-13) :
+  #   borne gauche = max(début de validité produit, première date des données),
+  #                  plafonnée par la première vente observée ;
+  #   borne droite = dernière date globale, identique pour toutes les séries.
+  # Hors de cette fenêtre : aucune ligne (et non « vente = 0 »).
+  fill_policy: active_window
+  min_history_days: 90          # historique minimal pour une série "modélisable"
+  min_nonzero_points: 12        # points non nuls minimaux
+
+# -----------------------------------------------------------------------------
+# Reconstruction du calendrier promotionnel depuis la dimension promotion.
+# Laisser à `null` pour laisser la résolution automatique opérer (chaque portée
+# est résolue avec ses seules cibles, et une portée « produit » exige une
+# colonne unique dans la dimension).
+# -----------------------------------------------------------------------------
+promotions:
+  scope_column: null            # détecté : `scope`
+  target_column: null           # détecté : `cible`
+  scope_to_attribute: null      # détecté : {category: categorie, product: product_id}
+  product_natural_id: null      # détecté : `product_id`
+  # Règle en cas de promotions concurrentes sur un même produit-jour.
+  concurrent_rule: remise_max
+
+horizons: [7, 14, 30, 90]
+primary_horizon: 30
+
+backtest:
+  n_windows: 6
+  step_size: null               # null => step_size = primary_horizon
+  refit: false                  # ré-entraînement à chaque fenêtre
+  min_train_days: 180
+
+# Classification des séries
+segmentation:
+  # Seuils ADI / CV² (Syntetos-Boylan-Croston)
+  adi_threshold: 1.32
+  cv2_threshold: 0.49
+  abc_thresholds: [0.8, 0.95]   # A jusqu'à 80% du CA, B jusqu'à 95%
+  xyz_thresholds: [0.5, 1.0]    # coefficient de variation
+
+models:
+  baselines:
+    - Naive
+    - SeasonalNaive
+    - WindowAverage
+    - AutoETS
+    - AutoARIMA
+    - CrostonOptimized
+    - TSB
+  lightgbm:
+    enabled: true
+    params:
+      objective: tweedie
+      tweedie_variance_power: 1.1
+      learning_rate: 0.05
+      num_leaves: 63
+      min_data_in_leaf: 40
+      feature_fraction: 0.85
+      bagging_fraction: 0.85
+      bagging_freq: 1
+      lambda_l2: 1.0
+      n_estimators: 600
+      verbosity: -1
+  optuna:
+    enabled: true
+    n_trials: 40
+    timeout_seconds: 1800
+  catboost:
+    enabled: true
+  neural:
+    # N'est activé qu'après validation des critères documentés dans le README.
+    enabled: false
+
+features:
+  lags: [1, 2, 3, 7, 14, 21, 28, 56]
+  rolling_windows: [7, 14, 28, 56]
+  rolling_stats: [mean, std, min, max, median, sum]
+  diff_lags: [7, 28]
+  # Décalage minimal appliqué à toute variable dérivée de l'historique
+  # (protection anti-fuite) : au moins 1 pas de temps.
+  min_shift: 1
+
+uncertainty:
+  method: conformal             # conformal | quantile
+  levels: [80, 95]
+  n_conformal_windows: 6
+
+guardrails:
+  # Contrôles anti-prévision aberrante
+  non_negative: true
+  # Plafond = facteur x max historique observé sur la série
+  max_ratio_vs_history: 3.0
+  # Alerte si la prévision totale s'écarte de plus de X% de la moyenne récente
+  total_deviation_alert: 0.5
+
+paths:
+  data_raw: data/raw
+  data_interim: data/interim
+  data_processed: data/processed
+  artifacts: artifacts
+  reports: reports
+  figures: reports/figures
+
+logging:
+  level: INFO
+  json: false
+  file: reports/logs/pipeline.log

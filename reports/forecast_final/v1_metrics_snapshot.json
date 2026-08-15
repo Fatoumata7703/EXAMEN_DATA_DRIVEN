@@ -1,0 +1,253 @@
+{
+  "genere_le": "2026-08-14T11:55:30.235102+00:00",
+  "model_version": "forecasting_v1",
+  "data_version_sha256_16": "b51d2f04f125f230",
+  "schema_version_sha256_16": "c3343261f134a1e9",
+  "periode_entrainement": {
+    "debut": "2025-02-01",
+    "fin": "2026-07-31"
+  },
+  "metriques_quotidiennes_grain_produit_jour": {
+    "AutoETS": {
+      "WAPE_quotidien": 1.0947268068047595,
+      "biais_normalise": 0.06734712623640197,
+      "biais_moyen_quotidien_unites": 0.08362335710580919,
+      "MAE_quotidien": 1.3592967631223958,
+      "n_lignes": 49860
+    },
+    "WindowAverage28": {
+      "WAPE_quotidien": 1.0833849770138146,
+      "biais_normalise": 0.005594967294948296,
+      "biais_moyen_quotidien_unites": 0.006947140497999379,
+      "MAE_quotidien": 1.3452138773952118,
+      "n_lignes": 49860
+    },
+    "CrostonOptimized": {
+      "WAPE_quotidien": 1.1000819533381394,
+      "biais_normalise": 0.05906372889157046,
+      "biais_moyen_quotidien_unites": 0.07333805566941691,
+      "MAE_quotidien": 1.3659461237698398,
+      "n_lignes": 49860
+    },
+    "LightGBM_Hurdle": {
+      "WAPE_quotidien": 1.1191227824836547,
+      "biais_normalise": 0.12553742644083504,
+      "biais_moyen_quotidien_unites": 0.15587689672988564,
+      "MAE_quotidien": 1.389588677568453,
+      "n_lignes": 49860
+    }
+  },
+  "metriques_cumulees_7_14_30j": {
+    "AutoETS": {
+      "7": {
+        "jours": 7,
+        "n_produits_fenetres": 1662,
+        "WAPE": 0.46186430439989756,
+        "biais_normalise": 0.07552300164675786,
+        "MAE": 3.98726175663642,
+        "biais_total_unites": 0.6519879829288097,
+        "volume_reel_total": 14348.0,
+        "volume_prevu_total": 15431.604027627682
+      },
+      "14": {
+        "jours": 14,
+        "n_produits_fenetres": 1662,
+        "WAPE": 0.3507939288519248,
+        "biais_normalise": 0.06937915510155594,
+        "MAE": 6.090348265356371,
+        "biais_total_unites": 1.204534007494222,
+        "volume_reel_total": 28855.0,
+        "volume_prevu_total": 30856.935520455394
+      },
+      "30": {
+        "jours": 30,
+        "n_produits_fenetres": 1662,
+        "WAPE": 0.2771792417889409,
+        "biais_normalise": 0.06734712623640197,
+        "MAE": 10.325010143894904,
+        "biais_total_unites": 2.508700713174276,
+        "volume_reel_total": 61910.0,
+        "volume_prevu_total": 66079.46058529566
+      }
+    },
+    "WindowAverage28": {
+      "7": {
+        "jours": 7,
+        "n_produits_fenetres": 1662,
+        "WAPE": 0.4720685575783285,
+        "biais_normalise": 0.012440040369416741,
+        "MAE": 4.075354791897627,
+        "biais_total_unites": 0.10739452419999483,
+        "volume_reel_total": 14348.0,
+        "volume_prevu_total": 14526.489699220392
+      },
+      "14": {
+        "jours": 14,
+        "n_produits_fenetres": 1662,
+        "WAPE": 0.38317776499183215,
+        "biais_normalise": 0.006861181716887295,
+        "MAE": 6.652583880168061,
+        "biais_total_unites": 0.11912117836388864,
+        "volume_reel_total": 28855.0,
+        "volume_prevu_total": 29052.979398440784
+      },
+      "30": {
+        "jours": 30,
+        "n_produits_fenetres": 1662,
+        "WAPE": 0.3161282282079145,
+        "biais_normalise": 0.005594967294948291,
+        "MAE": 11.775871605506609,
+        "biais_total_unites": 0.20841421493998114,
+        "volume_reel_total": 61910.0,
+        "volume_prevu_total": 62256.38442523025
+      }
+    }
+  },
+  "resultats_par_fenetre": {
+    "AutoETS": [
+      {
+        "fenetre": 1,
+        "WAPE_cumule_30j": 0.3336926305587027,
+        "biais_normalise": 0.1603311444401506
+      },
+      {
+        "fenetre": 2,
+        "WAPE_cumule_30j": 0.29644629535011463,
+        "biais_normalise": 0.10292586470420982
+      },
+      {
+        "fenetre": 3,
+        "WAPE_cumule_30j": 0.2583978074112043,
+        "biais_normalise": -0.011820909953421393
+      },
+      {
+        "fenetre": 4,
+        "WAPE_cumule_30j": 0.25323218933996594,
+        "biais_normalise": 0.04336378845785573
+      },
+      {
+        "fenetre": 5,
+        "WAPE_cumule_30j": 0.26202199195598713,
+        "biais_normalise": 0.0660929134797814
+      },
+      {
+        "fenetre": 6,
+        "WAPE_cumule_30j": 0.2700518167961554,
+        "biais_normalise": 0.061081830358981584
+      }
+    ],
+    "WindowAverage28": [
+      {
+        "fenetre": 1,
+        "WAPE_cumule_30j": 0.3205648686464036,
+        "biais_normalise": 0.0073130615692760265
+      },
+      {
+        "fenetre": 2,
+        "WAPE_cumule_30j": 0.313068569736888,
+        "biais_normalise": 0.03122558419019875
+      },
+      {
+        "fenetre": 3,
+        "WAPE_cumule_30j": 0.29917810169865283,
+        "biais_normalise": -0.07299555681197128
+      },
+      {
+        "fenetre": 4,
+        "WAPE_cumule_30j": 0.32120749894115236,
+        "biais_normalise": 0.022361473645182543
+      },
+      {
+        "fenetre": 5,
+        "WAPE_cumule_30j": 0.32257984415228774,
+        "biais_normalise": 0.031341900738517815
+      },
+      {
+        "fenetre": 6,
+        "WAPE_cumule_30j": 0.320322485881219,
+        "biais_normalise": 0.017181222087860926
+      }
+    ]
+  },
+  "fallback_autoets": {
+    "n_eligible": 1662,
+    "n_natif": 1649,
+    "n_repli_exception": 13,
+    "taux_repli": 0.007821901323706379,
+    "modele_repli": "Naive"
+  },
+  "cold_start": {
+    "strategie": "ColdStartZero",
+    "n_produits": 53,
+    "n_lignes": 875,
+    "WAPE": 1.0,
+    "justification": "Meilleure WAPE poolée parmi les stratégies testées sur données réelles (cf. rapport 21 §5) — pas une hypothèse par défaut non testée."
+  },
+  "intervalles_conformes_residus_lo_hi": {
+    "J+1_0.80": {
+      "lo_residual": -1.6935981151456612,
+      "hi_residual": 2.2867218722992977
+    },
+    "J+1_0.95": {
+      "lo_residual": -2.4292958375480476,
+      "hi_residual": 4.189439637686247
+    },
+    "J+2 a J+7_0.80": {
+      "lo_residual": -1.6750450798872834,
+      "hi_residual": 2.3476994979525228
+    },
+    "J+2 a J+7_0.95": {
+      "lo_residual": -2.299975745010652,
+      "hi_residual": 4.72562089136502
+    },
+    "J+8 a J+14_0.80": {
+      "lo_residual": -1.6704894017090386,
+      "hi_residual": 2.431615032586078
+    },
+    "J+8 a J+14_0.95": {
+      "lo_residual": -2.312867366828816,
+      "hi_residual": 4.686007495151265
+    },
+    "J+15 a J+30_0.80": {
+      "lo_residual": -1.667723845670115,
+      "hi_residual": 2.41126516385269
+    },
+    "J+15 a J+30_0.95": {
+      "lo_residual": -2.297128319066729,
+      "hi_residual": 4.776823686267872
+    }
+  },
+  "fichiers_previsions": {
+    "parquet": "reports\\forecast_final\\previsions_finales.parquet",
+    "csv": "reports\\forecast_final\\previsions_finales.csv"
+  },
+  "rapports": [
+    "reports\\15_backtest_baselines.md",
+    "reports\\15_backtest_log.jsonl",
+    "reports\\15_predictions_completes.parquet",
+    "reports\\16_backtest_lightgbm_log.jsonl",
+    "reports\\17_verification_checkpoints.md",
+    "reports\\18_backtest_rapport_final.md",
+    "reports\\19_verification_operationnelle.md",
+    "reports\\20_backtest_lightgbm_log.jsonl",
+    "reports\\20_cold_start_lightgbm.csv",
+    "reports\\20_hurdle_classifier_eval.csv",
+    "reports\\20_predictions_lightgbm.parquet",
+    "reports\\21_rapport_final_lightgbm.md",
+    "reports\\22_verification_independante_metriques.json",
+    "reports\\23_class_a_weighted.csv",
+    "reports\\23_horizon.csv",
+    "reports\\23_intervals_ae.csv",
+    "reports\\23_intervals_wa.csv",
+    "reports\\23_rapport_final_forecasting.md",
+    "reports\\24_entrainement_final.md"
+  ],
+  "tests": {
+    "resume": "148 passed in 23.40s",
+    "tous_verts": true
+  },
+  "dependances_requirements_txt": "# --- Accès données -----------------------------------------------------------\npsycopg2-binary>=2.9\nSQLAlchemy>=2.0\nsupabase>=2.0\npython-dotenv>=1.0\n\n# --- Manipulation / calcul ----------------------------------------------------\npandas>=2.2\nnumpy>=1.26\npyarrow>=15.0\nPyYAML>=6.0\n\n# --- Modélisation -------------------------------------------------------------\nscikit-learn>=1.4  # aussi utilisé pour les métriques du classifieur hurdle (PR-AUC, Brier, log loss)\nlightgbm>=4.3\ncatboost>=1.2\nstatsforecast>=1.7\nmlforecast>=0.13\nutilsforecast>=0.2\noptuna>=3.6\nholidays>=0.50\n\n# --- Visualisation / restitution ---------------------------------------------\nmatplotlib>=3.8\nplotly>=5.20\ndash>=2.17\ndash-bootstrap-components>=1.6\nXlsxWriter>=3.2\n\n# --- Qualité / tests ----------------------------------------------------------\npytest>=8.0\ntabulate>=0.9\n",
+  "commande_reentrainement": "python -m src.pipelines.train_final_forecast",
+  "commande_generation_previsions": "python -m src.pipelines.train_final_forecast  # entraînement et prévision sont une seule commande (modèles stateless, refit à chaque appel)",
+  "commande_backtest_complet": "python -m src.pipelines.backtest_baselines && python -m src.pipelines.backtest_postprocess && python -m src.pipelines.backtest_lightgbm && python -m src.pipelines.backtest_report_final && python -m src.pipelines.backtest_report_lightgbm && python -m src.pipelines.backtest_report_forecasting_final"
+}

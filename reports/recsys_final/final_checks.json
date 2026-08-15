@@ -1,0 +1,45 @@
+{
+  "genere_le": "2026-08-14T21:51:47.755781+00:00",
+  "stock_min_reconfirme_21": {
+    "ok": true,
+    "detail": "voir reconciliation_cibles_exclues.csv : stock_j1_reellement_nul=0 sur toutes les fenetres"
+  },
+  "aucune_exclusion_inexpliquee": {
+    "ok": true,
+    "detail": [
+      {
+        "fenetre": 0,
+        "autre": 0
+      },
+      {
+        "fenetre": 1,
+        "autre": 0
+      },
+      {
+        "fenetre": 2,
+        "autre": 0
+      },
+      {
+        "fenetre": 3,
+        "autre": 0
+      }
+    ]
+  },
+  "hybrid_model_construit": {
+    "ok": true,
+    "detail": "aucun modele hybride construit, conformement a la consigne"
+  },
+  "forecasting_pricing_non_modifies": {
+    "ok": true,
+    "detail": "aucun fichier sous src/pipelines/backtest_*.py, src/pipelines/train_final_forecast.py, src/pipelines/pricing_*.py ni src/pricing/ modifie durant cette phase"
+  },
+  "tests": {
+    "resume": "156 passed in 27.88s",
+    "ok": true
+  },
+  "absence_secrets": {
+    "ok": true,
+    "detail": {}
+  },
+  "verdict_global": "TOUS LES CONTROLES PASSENT"
+}

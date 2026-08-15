@@ -1,0 +1,89 @@
+# =============================================================================
+# Secrets et environnement — ne jamais committer
+# =============================================================================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.*
+
+# =============================================================================
+# Python
+# =============================================================================
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# =============================================================================
+# IDE, outils et système
+# =============================================================================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+.claude/
+
+# =============================================================================
+# Logs et caches
+# =============================================================================
+*.log
+logs/
+reports/logs/
+.cache/
+data/cache/
+data/archive/
+
+# =============================================================================
+# Données brutes, extraites ou intermédiaires — dérivées de Supabase en
+# lecture seule, jamais publiées (peuvent être volumineuses et/ou contenir
+# des données au grain client/produit/jour non agrégées)
+# =============================================================================
+data/raw/
+data/extracted/
+data/interim/
+data/processed/
+
+# =============================================================================
+# Checkpoints et prédictions brutes de backtest (volumineux, intermédiaires,
+# reconstructibles via les commandes de reproduction du README)
+# =============================================================================
+checkpoints/
+reports/backtest/raw_predictions/
+reports/backtest/operational_predictions/
+
+# =============================================================================
+# CSV / Parquet / Excel — exclus par défaut (peuvent contenir des données
+# brutes volumineuses), SAUF les artefacts finaux V1 explicitement listés
+# ci-dessous, indispensables à la reproductibilité et sans donnée client
+# individuellement identifiable.
+# =============================================================================
+*.csv
+*.parquet
+*.xlsx
+*.xls
+
+# --- Forecasting V1 : prévisions produit x horizon, aucune donnée client ---
+!reports/forecast_final/*.csv
+!reports/forecast_final/*.parquet
+
+# --- Pricing V1 : sorties produit/catégorie, aucune donnée client ---
+!reports/pricing_final/*.csv
+
+# --- Recommandation V1 : statistiques agrégées uniquement ---
+!reports/recsys_final/*.csv
+# Ré-exclusion explicite : ce fichier est au grain client (client_id par ligne,
+# ~135 Mo) — jamais publié, ni pour la taille ni pour la granularité client.
+reports/recsys_final/recommandations_sortie.csv
+
+# =============================================================================
+# Notebooks Jupyter (checkpoints d'édition)
+# =============================================================================
+.ipynb_checkpoints/

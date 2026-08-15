@@ -1,0 +1,74 @@
+{
+  "recommendation_version": "recommendation_v1_baseline",
+  "personalization_validated": false,
+  "hybrid_model_authorized": false,
+  "web_signal_enabled": false,
+  "automatic_recommendation_allowed": true,
+  "automatic_recommendation_scope": "liste generique de popularite uniquement (popularite_globale/popularite_recente) - jamais une liste personnalisee par client",
+  "human_validation_required": true,
+  "human_validation_condition": "si les recommandations influencent une campagne commerciale (ciblage, promotion, communication)",
+  "modele_principal": "popularite_globale",
+  "modele_secours": "popularite_recente",
+  "modele_cold_start": "popularite_globale",
+  "regle_selection": "priorite NDCG@10 moyen, puis Recall@10 moyen, puis stabilite inter-fenetres (ecart-type), puis couverture catalogue, puis biais envers produits populaires (dernier critere)",
+  "ndcg_at_10_moyen_principal": 0.04411357123583948,
+  "recall_at_10_moyen_principal": 0.07586820930337992,
+  "recall_at_5_moyen_principal": 0.0402728189550731,
+  "precision_at_10_moyen_principal": 0.017354778467313627,
+  "ecart_relatif_ndcg_principal_vs_secours": 0.014621851224250035,
+  "performance_modeste": true,
+  "performance_modeste_detail": "NDCG@10 moyen=0.0441, Recall@10 moyen=0.0759 sur la politique par defaut (echelle 0-1) — des scores faibles en absolu, coherents avec un catalogue de 300 produits et l'absence de signal de personnalisation valide (cf. rapport 40).",
+  "couverture_catalogue_faible": true,
+  "couverture_catalogue_faible_detail": "couverture catalogue moyenne=0.0542 (~5,4% des 300 produits apparaissent au moins une fois dans les recommandations, toutes fenetres et tous clients confondus) — une popularite globale concentre mecaniquement les recommandations sur une poignee de produits, cf. rapport 41 §2.",
+  "ne_jamais_presenter_comme": "un moteur de recommandation personnalise. Cette V1 est une liste de popularite generique (memes produits recommandes a tous les clients d'un meme segment de fallback), pas un systeme qui apprend les preferences individuelles — personalization_validated=false.",
+  "dates_entrainement_par_fenetre": {
+    "0": {
+      "train_end": "2025-05-01",
+      "test_start": "2025-05-02",
+      "test_end": "2025-06-30"
+    },
+    "1": {
+      "train_end": "2026-02-01",
+      "test_start": "2026-02-02",
+      "test_end": "2026-04-02"
+    },
+    "2": {
+      "train_end": "2026-04-02",
+      "test_start": "2026-04-03",
+      "test_end": "2026-06-01"
+    },
+    "3": {
+      "train_end": "2026-06-01",
+      "test_start": "2026-06-02",
+      "test_end": "2026-07-31"
+    }
+  },
+  "n_fenetres": 4,
+  "fenetre_cold_start_dediee": 0,
+  "politique_candidats_defaut": "exclut produits deja achetes (train) + filtre stock connu a J-1 (niveau_stock > 0)",
+  "grille_candidats": "300 produits du catalogue (dim_produit), filtres par politique",
+  "taux_couverture_cibles_par_fenetre": {
+    "0": 0.8963,
+    "1": 0.9052,
+    "2": 0.9203,
+    "3": 0.9199
+  },
+  "raisons_exclusion_cibles": [
+    "deja_achete_exclu_volontairement",
+    "stock_j1_reellement_nul",
+    "produit_non_encore_disponible",
+    "produit_absent_table_produit",
+    "autre"
+  ],
+  "stock_min_observe_unites": 21,
+  "aucune_rupture_stock_reelle_dans_les_exclusions": true,
+  "fallback_chain": "modele_demande -> contenu_categorie_prix (si collaboratif impossible, aucun achat train) -> popularite_globale (si aucun signal contenu ni achat ni web)",
+  "web_signal_ablation_resultat": "le signal web (view/add_to_cart) degrade le recall cold-start (0.0846 vs 0.1110 sans) - non active en V1 (web_signal_enabled=false)",
+  "scenario_reachat_par_defaut": "decouverte (achats deja faits exclus)",
+  "scenario_reachat_alternatif_documente": "reapprovisionnement (achats deja faits autorises) - ameliore la couverture des cibles de ~5-8 points, choix metier a trancher selon usage",
+  "cible": "produit_key achete par client_key (evenement de vente, fact_ventes) - jamais un panier (vente_id = une ligne, pas une commande)",
+  "personnalisation_desactivee_car": "aucun modele personnalise (collaboratif, contenu, popularite par categorie) ne bat clairement popularite_recente sur plusieurs fenetres (rapport 40)",
+  "aucune_publication_supabase": true,
+  "aucun_deploiement": true,
+  "genere_le": "2026-08-14T21:51:47.490172+00:00"
+}

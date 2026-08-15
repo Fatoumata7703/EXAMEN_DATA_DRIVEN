@@ -1,0 +1,104 @@
+{
+  "1_zeros": {
+    "source_quantite_zero": 0,
+    "source_quantite_negative": 0,
+    "zeros_crees": 59786,
+    "zeros_avec_transaction": 0,
+    "taux_zeros": 0.5076806806891808
+  },
+  "2_conservation": {
+    "somme_source": 155751.0,
+    "somme_table": 155751.0,
+    "difference": 0.0,
+    "produits_en_ecart": 0,
+    "mois_en_ecart": 0
+  },
+  "3_unicite": {
+    "n_lignes": 117763,
+    "n_couples": 117763,
+    "n_doublons": 0,
+    "n_produits": 300
+  },
+  "4_activite": {
+    "lignes_avant_valid_from": 0,
+    "ventes_avant_valid_from": 0,
+    "produits_sans_valid_from": 0,
+    "queue_zeros_max": 14.0
+  },
+  "6_calendrier": {
+    "jours_attendus": 546,
+    "jours_presents": 546,
+    "dates_manquantes": [],
+    "jours_avec_vente": 546
+  },
+  "8_promotions": {
+    "promo_y0": 7035,
+    "promo_ypos": 8489,
+    "sans_promo_y0": 52751,
+    "sans_promo_ypos": 49488
+  },
+  "9_exemples": [
+    {
+      "index": "PRD000024",
+      "valid_from": "2024-02-02T00:00:00.000",
+      "1ere_ligne_table": "2025-02-01T00:00:00.000",
+      "1ere_vente": "2025-02-02T00:00:00.000",
+      "derniere_ligne": "2026-07-31T00:00:00.000",
+      "n_lignes": 546
+    },
+    {
+      "index": "PRD000276",
+      "valid_from": "2025-04-26T00:00:00.000",
+      "1ere_ligne_table": "2025-04-26T00:00:00.000",
+      "1ere_vente": "2025-04-26T00:00:00.000",
+      "derniere_ligne": "2026-07-31T00:00:00.000",
+      "n_lignes": 462
+    },
+    {
+      "index": "PRD000141",
+      "valid_from": "2026-06-27T00:00:00.000",
+      "1ere_ligne_table": "2026-06-27T00:00:00.000",
+      "1ere_vente": "2026-06-27T00:00:00.000",
+      "derniere_ligne": "2026-07-31T00:00:00.000",
+      "n_lignes": 35
+    }
+  ],
+  "10_historique": {
+    "min": 35,
+    "mediane": 464.5,
+    "moyenne": 392.54333333333335,
+    "max": 546,
+    "moins_30j": 0,
+    "moins_60j": 8,
+    "moins_90j": 17,
+    "inactifs_30j": 0,
+    "inactifs_60j": 0,
+    "inactifs_90j": 0
+  },
+  "11_sequences": {
+    "n_sequences": 27364,
+    "moyenne": 2.184841397456512,
+    "mediane": 2.0,
+    "p90": 4.0,
+    "max": 27,
+    "sup_7": 581,
+    "sup_14": 35,
+    "sup_30": 0,
+    "sup_60": 0
+  },
+  "12_sensibilite": {
+    "A": {
+      "lignes": 117763,
+      "taux_zeros": 0.5076806806891808
+    },
+    "B": {
+      "lignes": 117362,
+      "taux_zeros": 0.5059985344489699
+    },
+    "C": {
+      "lignes": 117763,
+      "taux_zeros": 0.5076806806891808
+    }
+  },
+  "echecs": []
+}

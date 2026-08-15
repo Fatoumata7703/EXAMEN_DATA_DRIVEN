@@ -1,0 +1,325 @@
+{"ts": "2026-08-13T23:12:12.987577+00:00", "type": "resume_modele_fenetre", "modele": "Naive", "fenetre": 1, "n_series": 247, "n_succes": 247, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.25, "budget_depasse": false}
+{"ts": "2026-08-13T23:12:15.294974+00:00", "type": "resume_modele_fenetre", "modele": "SeasonalNaive7", "fenetre": 1, "n_series": 247, "n_succes": 247, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.09, "budget_depasse": false}
+{"ts": "2026-08-13T23:12:17.591456+00:00", "type": "resume_modele_fenetre", "modele": "WindowAverage28", "fenetre": 1, "n_series": 247, "n_succes": 247, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.11, "budget_depasse": false}
+{"ts": "2026-08-13T23:12:28.512299+00:00", "type": "repli", "modele": "AutoETS", "fenetre": 1, "serie": "PRD000099", "exception": "IndexError: too many indices for array: array is 1-dimensional, but 2 were indexed", "repli": "Naive", "raison": "exception_modele"}
+{"ts": "2026-08-13T23:12:36.537198+00:00", "type": "repli", "modele": "AutoETS", "fenetre": 1, "serie": "PRD000175", "exception": "NotImplementedError: tiny datasets", "repli": "Naive", "raison": "exception_modele"}
+{"ts": "2026-08-13T23:12:51.369602+00:00", "type": "resume_modele_fenetre", "modele": "AutoETS", "fenetre": 1, "n_series": 247, "n_succes": 245, "n_repli_exception": 2, "n_repli_budget": 0, "duree_s": 33.59, "budget_depasse": false}
+{"ts": "2026-08-13T23:25:21.641425+00:00", "type": "resume_modele_fenetre", "modele": "AutoARIMA", "fenetre": 1, "n_series": 247, "n_succes": 247, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 750.06, "budget_depasse": false}
+{"ts": "2026-08-13T23:25:24.166456+00:00", "type": "resume_modele_fenetre", "modele": "CrostonOptimized", "fenetre": 1, "n_series": 247, "n_succes": 247, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.3, "budget_depasse": false}
+{"ts": "2026-08-13T23:25:26.686035+00:00", "type": "resume_modele_fenetre", "modele": "TSB", "fenetre": 1, "n_series": 247, "n_succes": 247, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.33, "budget_depasse": false}
+{"ts": "2026-08-13T23:25:29.597572+00:00", "type": "resume_modele_fenetre", "modele": "Naive", "fenetre": 2, "n_series": 265, "n_succes": 265, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.48, "budget_depasse": false}
+{"ts": "2026-08-13T23:25:32.296293+00:00", "type": "resume_modele_fenetre", "modele": "SeasonalNaive7", "fenetre": 2, "n_series": 265, "n_succes": 265, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.5, "budget_depasse": false}
+{"ts": "2026-08-13T23:25:35.004928+00:00", "type": "resume_modele_fenetre", "modele": "WindowAverage28", "fenetre": 2, "n_series": 265, "n_succes": 265, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.52, "budget_depasse": false}
+{"ts": "2026-08-13T23:25:40.503906+00:00", "type": "repli", "modele": "AutoETS", "fenetre": 2, "serie": "PRD000044", "exception": "NotImplementedError: tiny datasets", "repli": "Naive", "raison": "exception_modele"}
+{"ts": "2026-08-13T23:26:11.008879+00:00", "type": "resume_modele_fenetre", "modele": "AutoETS", "fenetre": 2, "n_series": 265, "n_succes": 264, "n_repli_exception": 1, "n_repli_budget": 0, "duree_s": 35.8, "budget_depasse": false}
+{"ts": "2026-08-13T23:38:11.487969+00:00", "type": "resume_modele_fenetre", "modele": "AutoARIMA", "fenetre": 2, "n_series": 265, "n_succes": 265, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 720.22, "budget_depasse": false}
+{"ts": "2026-08-13T23:38:13.806271+00:00", "type": "resume_modele_fenetre", "modele": "CrostonOptimized", "fenetre": 2, "n_series": 265, "n_succes": 265, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.14, "budget_depasse": false}
+{"ts": "2026-08-13T23:38:16.104080+00:00", "type": "resume_modele_fenetre", "modele": "TSB", "fenetre": 2, "n_series": 265, "n_succes": 265, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.13, "budget_depasse": false}
+{"ts": "2026-08-13T23:38:18.837503+00:00", "type": "resume_modele_fenetre", "modele": "Naive", "fenetre": 3, "n_series": 275, "n_succes": 275, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.45, "budget_depasse": false}
+{"ts": "2026-08-13T23:38:21.420620+00:00", "type": "resume_modele_fenetre", "modele": "SeasonalNaive7", "fenetre": 3, "n_series": 275, "n_succes": 275, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.4, "budget_depasse": false}
+{"ts": "2026-08-13T23:38:23.978473+00:00", "type": "resume_modele_fenetre", "modele": "WindowAverage28", "fenetre": 3, "n_series": 275, "n_succes": 275, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.38, "budget_depasse": false}
+{"ts": "2026-08-13T23:38:39.560701+00:00", "type": "repli", "modele": "AutoETS", "fenetre": 3, "serie": "PRD000133", "exception": "NotImplementedError: tiny datasets", "repli": "Naive", "raison": "exception_modele"}
+{"ts": "2026-08-13T23:38:44.266558+00:00", "type": "repli", "modele": "AutoETS", "fenetre": 3, "serie": "PRD000170", "exception": "NotImplementedError: tiny datasets", "repli": "Naive", "raison": "exception_modele"}
+{"ts": "2026-08-13T23:38:57.085296+00:00", "type": "repli", "modele": "AutoETS", "fenetre": 3, "serie": "PRD000270", "exception": "NotImplementedError: tiny datasets", "repli": "Naive", "raison": "exception_modele"}
+{"ts": "2026-08-13T23:39:01.046189+00:00", "type": "resume_modele_fenetre", "modele": "AutoETS", "fenetre": 3, "n_series": 275, "n_succes": 272, "n_repli_exception": 3, "n_repli_budget": 0, "duree_s": 36.89, "budget_depasse": false}
+{"ts": "2026-08-13T23:49:10.058270+00:00", "type": "resume_modele_fenetre", "modele": "AutoARIMA", "fenetre": 3, "n_series": 275, "n_succes": 275, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 608.83, "budget_depasse": false}
+{"ts": "2026-08-13T23:49:12.913925+00:00", "type": "resume_modele_fenetre", "modele": "CrostonOptimized", "fenetre": 3, "n_series": 275, "n_succes": 275, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.64, "budget_depasse": false}
+{"ts": "2026-08-13T23:49:15.585861+00:00", "type": "resume_modele_fenetre", "modele": "TSB", "fenetre": 3, "n_series": 275, "n_succes": 275, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.47, "budget_depasse": false}
+{"ts": "2026-08-13T23:49:18.478484+00:00", "type": "resume_modele_fenetre", "modele": "Naive", "fenetre": 4, "n_series": 283, "n_succes": 283, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.59, "budget_depasse": false}
+{"ts": "2026-08-13T23:49:21.339344+00:00", "type": "resume_modele_fenetre", "modele": "SeasonalNaive7", "fenetre": 4, "n_series": 283, "n_succes": 283, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.68, "budget_depasse": false}
+{"ts": "2026-08-13T23:49:24.178062+00:00", "type": "resume_modele_fenetre", "modele": "WindowAverage28", "fenetre": 4, "n_series": 283, "n_succes": 283, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.63, "budget_depasse": false}
+{"ts": "2026-08-13T23:49:30.468964+00:00", "type": "repli", "modele": "AutoETS", "fenetre": 4, "serie": "PRD000042", "exception": "NotImplementedError: tiny datasets", "repli": "Naive", "raison": "exception_modele"}
+{"ts": "2026-08-13T23:49:39.789513+00:00", "type": "repli", "modele": "AutoETS", "fenetre": 4, "serie": "PRD000115", "exception": "NotImplementedError: tiny datasets", "repli": "Naive", "raison": "exception_modele"}
+{"ts": "2026-08-13T23:49:48.232174+00:00", "type": "repli", "modele": "AutoETS", "fenetre": 4, "serie": "PRD000179", "exception": "NotImplementedError: tiny datasets", "repli": "Naive", "raison": "exception_modele"}
+{"ts": "2026-08-13T23:50:05.359015+00:00", "type": "resume_modele_fenetre", "modele": "AutoETS", "fenetre": 4, "n_series": 283, "n_succes": 280, "n_repli_exception": 3, "n_repli_budget": 0, "duree_s": 40.99, "budget_depasse": false}
+{"ts": "2026-08-14T07:57:15.612265+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000013", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.623621+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000014", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.634324+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000015", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.645760+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000016", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.660925+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000018", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.672806+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000019", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.684527+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000020", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.728270+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000021", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.742173+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000022", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.760116+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000023", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.787579+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000024", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.802000+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000025", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.826901+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000026", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.843709+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000027", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.867741+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000028", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.894554+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000029", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.915597+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000030", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.942898+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000031", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.963371+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000032", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.974853+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000033", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:15.994654+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000035", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.035832+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000037", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.049285+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000038", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.064130+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000039", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.082702+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000041", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.096402+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000042", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.109334+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000043", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.126674+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000044", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.143142+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000046", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.158727+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000047", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.179338+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000048", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.191122+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000049", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.211693+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000050", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.233710+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000051", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.250213+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000052", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.263289+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000053", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.278682+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000054", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.289934+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000055", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.301359+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000056", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.312741+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000057", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.323509+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000058", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.333850+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000059", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.346421+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000060", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.357467+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000061", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.370567+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000062", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.381535+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000063", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.391655+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000064", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.408645+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000065", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.419469+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000066", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.432536+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000067", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.443906+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000068", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.455587+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000069", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.465174+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000070", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.476242+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000071", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.488023+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000072", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.495528+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000073", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.503889+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000074", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.511214+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000075", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.518012+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000076", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.527888+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000077", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.538380+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000078", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.549772+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000079", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.560912+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000080", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.571571+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000081", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.581880+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000082", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.593126+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000083", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.604374+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000084", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.615414+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000085", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.626151+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000086", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.637383+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000088", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.648930+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000089", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.661899+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000090", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.672229+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000091", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.682789+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000092", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.700125+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000093", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.715216+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000094", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.730438+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000095", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.741169+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000096", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.753397+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000097", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.760788+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000098", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.772162+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000099", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.781706+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000100", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.792424+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000101", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.801443+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000102", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.814707+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000103", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.825807+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000104", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.836220+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000105", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.849963+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000106", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.861450+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000107", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.871886+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000108", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.883999+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000109", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.894573+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000110", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.906925+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000111", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.922246+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000112", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.934503+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000113", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.945248+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000114", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.955794+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000115", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.965614+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000116", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.975581+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000118", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:16.988371+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000119", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.001033+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000120", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.010643+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000121", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.021227+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000122", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.030019+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000123", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.038394+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000124", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.056686+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000125", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.072757+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000126", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.085023+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000127", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.097030+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000128", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.106112+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000129", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.116580+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000130", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.127955+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000131", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.138985+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000132", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.150077+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000133", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.163239+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000134", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.173483+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000135", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.184251+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000136", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.198625+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000137", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.210357+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000138", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.221206+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000139", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.229378+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000140", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.251327+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000143", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.267269+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000144", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.281466+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000145", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.294261+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000146", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.307469+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000147", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.317959+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000148", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.328865+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000149", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.337998+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000150", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.347928+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000151", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.355085+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000152", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.364611+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000153", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.375435+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000154", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.387831+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000155", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.398557+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000156", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.408440+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000157", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.417992+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000159", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.426143+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000160", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.436173+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000161", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.447240+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000162", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.456808+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000163", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.467040+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000164", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.477752+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000165", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.486807+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000166", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.495872+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000167", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.505672+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000168", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.514100+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000169", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.524511+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000170", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.534967+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000171", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.544990+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000172", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.555898+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000173", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.565395+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000174", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.575906+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000175", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.582298+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000176", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.591087+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000178", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.600524+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000179", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.606973+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000180", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.614591+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000181", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.622058+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000182", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.631235+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000183", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.643159+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000184", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.653861+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000185", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.665456+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000187", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.678488+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000188", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.688129+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000189", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.698211+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000190", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.707656+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000191", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.715931+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000192", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.724037+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000193", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.730821+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000194", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.738124+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000195", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.746052+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000196", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.754086+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000197", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.761504+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000198", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.770164+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000199", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.777571+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000200", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.787232+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000201", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.794812+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000203", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.801702+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000204", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.807373+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000205", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.814404+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000206", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.823006+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000207", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.832989+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000208", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.843994+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000209", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.852544+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000210", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.860551+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000211", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.869890+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000212", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.878559+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000213", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.885155+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000214", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.894164+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000215", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.902056+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000216", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.907969+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000217", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.913596+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000218", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.919276+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000219", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.929047+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000220", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.936342+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000221", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.945395+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000222", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.951573+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000223", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.963196+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000224", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.976459+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000225", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.984824+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000226", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:17.995834+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000227", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.006036+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000228", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.017456+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000229", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.026984+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000230", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.036477+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000231", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.044213+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000232", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.052368+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000233", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.061997+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000234", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.072449+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000235", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.082869+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000236", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.094224+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000237", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.107970+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000238", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.115201+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000239", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.122989+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000240", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.128916+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000241", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.134207+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000243", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.143518+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000244", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.153846+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000245", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.160860+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000246", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.171312+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000247", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.179597+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000248", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.190287+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000249", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.198211+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000250", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.208228+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000251", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.218130+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000252", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.230267+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000254", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.244149+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000255", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.256420+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000257", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.266751+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000258", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.275818+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000259", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.282387+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000260", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.289476+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000261", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.298521+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000262", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.308142+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000263", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.318206+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000264", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.329351+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000265", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.338822+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000266", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.350132+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000267", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.361164+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000269", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.367767+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000270", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.376441+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000271", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.383666+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000272", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.390352+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000273", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.397963+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000274", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.405463+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000275", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.412317+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000276", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.418690+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000277", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.425363+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000278", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.432516+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000279", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.438694+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000280", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.446850+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000281", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.453832+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000282", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.460397+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000283", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.466346+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000284", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.474071+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000285", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.479738+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000286", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.484778+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000287", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.491947+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000288", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.498186+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000289", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.506055+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000290", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.512300+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000291", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.517819+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000292", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.526332+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000293", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.537121+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000294", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.543767+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000295", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.549773+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000296", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.557280+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000297", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.562924+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000298", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.570103+00:00", "type": "repli", "modele": "AutoARIMA", "fenetre": 4, "serie": "PRD000299", "exception": null, "repli": "Naive", "raison": "budget_temps_depasse"}
+{"ts": "2026-08-14T07:57:18.652448+00:00", "type": "resume_modele_fenetre", "modele": "AutoARIMA", "fenetre": 4, "n_series": 283, "n_succes": 13, "n_repli_exception": 0, "n_repli_budget": 270, "duree_s": 29237.65, "budget_depasse": true}
+{"ts": "2026-08-14T07:57:20.985485+00:00", "type": "resume_modele_fenetre", "modele": "CrostonOptimized", "fenetre": 4, "n_series": 283, "n_succes": 283, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.11, "budget_depasse": false}
+{"ts": "2026-08-14T07:57:23.278749+00:00", "type": "resume_modele_fenetre", "modele": "TSB", "fenetre": 4, "n_series": 283, "n_succes": 283, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.02, "budget_depasse": false}
+{"ts": "2026-08-14T07:57:26.823486+00:00", "type": "resume_modele_fenetre", "modele": "Naive", "fenetre": 5, "n_series": 292, "n_succes": 292, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 3.18, "budget_depasse": false}
+{"ts": "2026-08-14T07:57:29.184579+00:00", "type": "resume_modele_fenetre", "modele": "SeasonalNaive7", "fenetre": 5, "n_series": 292, "n_succes": 292, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.22, "budget_depasse": false}
+{"ts": "2026-08-14T07:57:31.577564+00:00", "type": "resume_modele_fenetre", "modele": "WindowAverage28", "fenetre": 5, "n_series": 292, "n_succes": 292, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 2.28, "budget_depasse": false}
+{"ts": "2026-08-14T07:57:35.209515+00:00", "type": "repli", "modele": "AutoETS", "fenetre": 5, "serie": "PRD000045", "exception": "NotImplementedError: tiny datasets", "repli": "Naive", "raison": "exception_modele"}
+{"ts": "2026-08-14T07:57:58.581028+00:00", "type": "repli", "modele": "AutoETS", "fenetre": 5, "serie": "PRD000242", "exception": "NotImplementedError: tiny datasets", "repli": "Naive", "raison": "exception_modele"}
+{"ts": "2026-08-14T07:58:05.781181+00:00", "type": "resume_modele_fenetre", "modele": "AutoETS", "fenetre": 5, "n_series": 292, "n_succes": 290, "n_repli_exception": 2, "n_repli_budget": 0, "duree_s": 34.07, "budget_depasse": false}
+{"ts": "2026-08-14T08:07:37.426078+00:00", "type": "resume_modele_fenetre", "modele": "AutoARIMA", "fenetre": 5, "n_series": 292, "n_succes": 292, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 571.46, "budget_depasse": false}
+{"ts": "2026-08-14T08:07:40.751938+00:00", "type": "resume_modele_fenetre", "modele": "CrostonOptimized", "fenetre": 5, "n_series": 292, "n_succes": 292, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 3.11, "budget_depasse": false}
+{"ts": "2026-08-14T08:07:44.130294+00:00", "type": "resume_modele_fenetre", "modele": "TSB", "fenetre": 5, "n_series": 292, "n_succes": 292, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 3.17, "budget_depasse": false}
+{"ts": "2026-08-14T08:07:48.622755+00:00", "type": "resume_modele_fenetre", "modele": "Naive", "fenetre": 6, "n_series": 300, "n_succes": 300, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 4.1, "budget_depasse": false}
+{"ts": "2026-08-14T08:07:53.358247+00:00", "type": "resume_modele_fenetre", "modele": "SeasonalNaive7", "fenetre": 6, "n_series": 300, "n_succes": 300, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 4.5, "budget_depasse": false}
+{"ts": "2026-08-14T08:07:58.306298+00:00", "type": "resume_modele_fenetre", "modele": "WindowAverage28", "fenetre": 6, "n_series": 300, "n_succes": 300, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 4.66, "budget_depasse": false}
+{"ts": "2026-08-14T08:08:20.097848+00:00", "type": "repli", "modele": "AutoETS", "fenetre": 6, "serie": "PRD000141", "exception": "NotImplementedError: tiny datasets", "repli": "Naive", "raison": "exception_modele"}
+{"ts": "2026-08-14T08:08:37.948786+00:00", "type": "repli", "modele": "AutoETS", "fenetre": 6, "serie": "PRD000268", "exception": "NotImplementedError: tiny datasets", "repli": "Naive", "raison": "exception_modele"}
+{"ts": "2026-08-14T08:08:42.764855+00:00", "type": "resume_modele_fenetre", "modele": "AutoETS", "fenetre": 6, "n_series": 300, "n_succes": 298, "n_repli_exception": 2, "n_repli_budget": 0, "duree_s": 44.28, "budget_depasse": false}
+{"ts": "2026-08-14T08:18:38.802551+00:00", "type": "resume_modele_fenetre", "modele": "AutoARIMA", "fenetre": 6, "n_series": 300, "n_succes": 300, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 595.87, "budget_depasse": false}
+{"ts": "2026-08-14T08:18:41.972577+00:00", "type": "resume_modele_fenetre", "modele": "CrostonOptimized", "fenetre": 6, "n_series": 300, "n_succes": 300, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 3.0, "budget_depasse": false}
+{"ts": "2026-08-14T08:18:45.514689+00:00", "type": "resume_modele_fenetre", "modele": "TSB", "fenetre": 6, "n_series": 300, "n_succes": 300, "n_repli_exception": 0, "n_repli_budget": 0, "duree_s": 3.35, "budget_depasse": false}

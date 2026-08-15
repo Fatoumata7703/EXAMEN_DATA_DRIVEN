@@ -1,0 +1,8 @@
+remise_pct,produits_exposes,jours,ventes_totales,n_categories,categories,mois_couverts,support_commun_avec_hors_promo,pct_support_commun
+5.0,218,3801,4525.0,8,"['Alimentation & Epicerie', 'Beaute & Soins', 'Bebe & Enfant', 'Electronique & High-Tech', 'Maison & Cuisine', 'Mode & Vetements', 'Sport & Loisirs', 'Telephonie & Accessoires']",14,218,1.0
+10.0,207,3501,6240.0,8,"['Alimentation & Epicerie', 'Beaute & Soins', 'Bebe & Enfant', 'Electronique & High-Tech', 'Maison & Cuisine', 'Mode & Vetements', 'Sport & Loisirs', 'Telephonie & Accessoires']",16,207,1.0
+15.0,227,3573,5159.0,8,"['Alimentation & Epicerie', 'Beaute & Soins', 'Bebe & Enfant', 'Electronique & High-Tech', 'Maison & Cuisine', 'Mode & Vetements', 'Sport & Loisirs', 'Telephonie & Accessoires']",15,227,1.0
+20.0,132,2024,3178.0,5,"['Bebe & Enfant', 'Electronique & High-Tech', 'Maison & Cuisine', 'Mode & Vetements', 'Telephonie & Accessoires']",8,132,1.0
+25.0,116,1405,3130.0,6,"['Alimentation & Epicerie', 'Beaute & Soins', 'Bebe & Enfant', 'Electronique & High-Tech', 'Mode & Vetements', 'Telephonie & Accessoires']",12,116,1.0
+30.0,111,1209,2038.0,4,"['Beaute & Soins', 'Bebe & Enfant', 'Mode & Vetements', 'Sport & Loisirs']",6,111,1.0
+40.0,1,11,21.0,1,['Bebe & Enfant'],1,1,1.0

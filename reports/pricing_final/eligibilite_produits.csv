@@ -1,0 +1,301 @@
+unique_id,categorie,groupe,raison,n_jours_promo,n_jours_hors_promo,n_niveaux_reels,volume_total,etalement_jours,mois_couverts,jours_promo_ok,jours_hors_promo_ok,niveaux_reels_ok,volume_ok,etalement_ok,mois_couverts_ok
+PRD000000,Electronique & High-Tech,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok), catégorie utilisée",14,294,1,253.0,14,2,False,True,False,True,False,True
+PRD000001,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,33,144,4,136.0,96,4,True,True,True,True,True,True
+PRD000002,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,101,439,5,759.0,455,11,True,True,True,True,True,True
+PRD000003,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,106,440,4,498.0,455,10,True,True,True,True,True,True
+PRD000004,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,805.0,460,7,True,True,True,True,True,True
+PRD000005,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,724.0,460,7,True,True,True,True,True,True
+PRD000006,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,580.0,412,9,True,True,True,True,True,True
+PRD000007,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,42,328,4,587.0,137,5,True,True,True,True,True,True
+PRD000008,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,73,473,4,588.0,355,7,True,True,True,True,True,True
+PRD000009,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,42,190,4,530.0,137,5,True,True,True,True,True,True
+PRD000010,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,70,476,5,505.0,513,6,True,True,True,True,True,True
+PRD000011,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,37,383,3,791.0,348,6,True,True,True,True,True,True
+PRD000012,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,588.0,460,7,True,True,True,True,True,True
+PRD000013,Beaute & Soins,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, etalement_ok), catégorie utilisée",19,144,2,172.0,50,2,False,True,True,True,False,True
+PRD000014,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,36,302,3,402.0,276,5,True,True,True,True,True,True
+PRD000015,Sport & Loisirs,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,218,2,235.0,63,3,False,True,True,True,True,True
+PRD000016,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,30,279,2,493.0,239,5,True,True,True,True,True,True
+PRD000017,Beaute & Soins,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok, mois_couverts_ok), catégorie utilisée",6,61,1,52.0,6,1,False,True,False,True,False,False
+PRD000018,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,74,472,5,1152.0,513,6,True,True,True,True,True,True
+PRD000019,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,73,473,4,743.0,355,7,True,True,True,True,True,True
+PRD000020,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,67,349,5,508.0,317,7,True,True,True,True,True,True
+PRD000021,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,73,473,4,550.0,355,7,True,True,True,True,True,True
+PRD000022,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,793.0,460,7,True,True,True,True,True,True
+PRD000023,Mode & Vetements,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,198,2,420.0,97,2,False,True,True,True,True,True
+PRD000024,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,838.0,412,9,True,True,True,True,True,True
+PRD000025,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,36,296,3,653.0,276,5,True,True,True,True,True,True
+PRD000026,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,103,443,5,995.0,457,11,True,True,True,True,True,True
+PRD000027,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,404,4,600.0,360,6,True,True,True,True,True,True
+PRD000028,Mode & Vetements,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",28,314,2,624.0,271,3,False,True,True,True,True,True
+PRD000029,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,73,473,4,496.0,355,7,True,True,True,True,True,True
+PRD000030,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,106,440,4,786.0,455,10,True,True,True,True,True,True
+PRD000031,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,79,467,5,424.0,513,7,True,True,True,True,True,True
+PRD000032,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,30,231,2,525.0,97,3,True,True,True,True,True,True
+PRD000033,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,530.0,412,9,True,True,True,True,True,True
+PRD000034,Bebe & Enfant,non_eligible,aucune promotion observée,0,88,0,56.0,0,0,False,True,False,True,False,False
+PRD000035,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,1117.0,460,7,True,True,True,True,True,True
+PRD000036,Electronique & High-Tech,non_eligible,aucune promotion observée,0,56,0,85.0,0,0,False,True,False,True,False,False
+PRD000037,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,103,443,5,509.0,457,11,True,True,True,True,True,True
+PRD000038,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,82,464,5,986.0,513,7,True,True,True,True,True,True
+PRD000039,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,37,390,3,709.0,348,6,True,True,True,True,True,True
+PRD000040,Bebe & Enfant,non_eligible,aucune promotion observée,0,71,0,49.0,0,0,False,True,False,False,False,False
+PRD000041,Bebe & Enfant,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, etalement_ok), catégorie utilisée",28,148,3,113.0,56,3,False,True,True,True,False,True
+PRD000042,Alimentation & Epicerie,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok, mois_couverts_ok), catégorie utilisée",11,81,1,208.0,11,1,False,True,False,True,False,False
+PRD000043,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,501,4,911.0,360,6,True,True,True,True,True,True
+PRD000044,Beaute & Soins,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, etalement_ok), catégorie utilisée",19,133,2,204.0,50,2,False,True,True,True,False,True
+PRD000045,Beaute & Soins,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok, mois_couverts_ok), catégorie utilisée",6,59,1,87.0,6,1,False,True,False,True,False,False
+PRD000046,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,43,156,3,121.0,107,5,True,True,True,True,True,True
+PRD000047,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,542.0,460,7,True,True,True,True,True,True
+PRD000048,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,93,453,6,334.0,440,10,True,True,True,True,True,True
+PRD000049,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,850.0,460,7,True,True,True,True,True,True
+PRD000050,Sport & Loisirs,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,123,2,184.0,63,3,False,True,True,True,True,True
+PRD000051,Electronique & High-Tech,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok), catégorie utilisée",24,334,1,510.0,264,3,False,True,False,True,True,True
+PRD000052,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,70,476,5,1036.0,513,6,True,True,True,True,True,True
+PRD000053,Electronique & High-Tech,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok), catégorie utilisée",14,199,1,364.0,14,2,False,True,False,True,False,True
+PRD000054,Mode & Vetements,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,211,2,261.0,97,2,False,True,True,True,True,True
+PRD000055,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,43,185,3,296.0,107,5,True,True,True,True,True,True
+PRD000056,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,103,443,5,772.0,457,11,True,True,True,True,True,True
+PRD000057,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,70,476,5,596.0,513,6,True,True,True,True,True,True
+PRD000058,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,78,468,4,521.0,460,8,True,True,True,True,True,True
+PRD000059,Sport & Loisirs,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,223,2,178.0,63,3,False,True,True,True,True,True
+PRD000060,Telephonie & Accessoires,eligible_pooling_categorie,"historique individuel insuffisant (etalement_ok), catégorie utilisée",31,127,3,175.0,46,3,True,True,True,True,False,True
+PRD000061,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,101,366,4,282.0,398,9,True,True,True,True,True,True
+PRD000062,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,36,194,4,314.0,99,4,True,True,True,True,True,True
+PRD000063,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,65,405,6,299.0,341,7,True,True,True,True,True,True
+PRD000064,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,80,388,5,1056.0,369,8,True,True,True,True,True,True
+PRD000065,Sport & Loisirs,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,150,2,93.0,63,3,False,True,True,True,True,True
+PRD000066,Alimentation & Epicerie,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok), catégorie utilisée",24,213,1,462.0,143,3,False,True,False,True,True,True
+PRD000067,Mode & Vetements,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,196,2,244.0,97,2,False,True,True,True,True,True
+PRD000068,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,75,470,6,721.0,513,7,True,True,True,True,True,True
+PRD000069,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,30,355,2,694.0,239,5,True,True,True,True,True,True
+PRD000070,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,44,502,3,1457.0,393,8,True,True,True,True,True,True
+PRD000071,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,37,411,3,889.0,348,6,True,True,True,True,True,True
+PRD000072,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,44,497,3,795.0,393,8,True,True,True,True,True,True
+PRD000073,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,501.0,412,9,True,True,True,True,True,True
+PRD000074,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,43,294,3,380.0,284,4,True,True,True,True,True,True
+PRD000075,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,72,459,3,1087.0,460,8,True,True,True,True,True,True
+PRD000076,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,73,473,4,247.0,355,7,True,True,True,True,True,True
+PRD000077,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,457.0,460,7,True,True,True,True,True,True
+PRD000078,Alimentation & Epicerie,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",28,279,2,825.0,237,5,False,True,True,True,True,True
+PRD000079,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,48,404,3,715.0,388,7,True,True,True,True,True,True
+PRD000080,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,620.0,460,7,True,True,True,True,True,True
+PRD000081,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,44,502,3,595.0,393,8,True,True,True,True,True,True
+PRD000082,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,103,443,5,622.0,457,11,True,True,True,True,True,True
+PRD000083,Bebe & Enfant,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, etalement_ok), catégorie utilisée",19,128,2,90.0,20,2,False,True,True,True,False,True
+PRD000084,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,42,264,4,660.0,137,5,True,True,True,True,True,True
+PRD000085,Bebe & Enfant,non_eligible,aucune promotion observée,0,110,0,61.0,0,0,False,True,False,True,False,False
+PRD000086,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,537.0,412,9,True,True,True,True,True,True
+PRD000087,Alimentation & Epicerie,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok, mois_couverts_ok), catégorie utilisée",7,70,1,117.0,7,1,False,True,False,True,False,False
+PRD000088,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,746.0,412,9,True,True,True,True,True,True
+PRD000089,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,79,303,4,517.0,358,8,True,True,True,True,True,True
+PRD000090,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,70,476,5,752.0,513,6,True,True,True,True,True,True
+PRD000091,Alimentation & Epicerie,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok), catégorie utilisée",24,251,1,667.0,143,3,False,True,False,True,True,True
+PRD000092,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,103,443,5,522.0,457,11,True,True,True,True,True,True
+PRD000093,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,73,427,4,291.0,355,7,True,True,True,True,True,True
+PRD000094,Electronique & High-Tech,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok), catégorie utilisée",14,148,1,159.0,14,2,False,True,False,True,False,True
+PRD000095,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,90,397,5,1311.0,402,9,True,True,True,True,True,True
+PRD000096,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,31,269,2,292.0,225,3,True,True,True,True,True,True
+PRD000097,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,44,475,3,683.0,393,8,True,True,True,True,True,True
+PRD000098,Beaute & Soins,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, etalement_ok), catégorie utilisée",19,159,2,296.0,50,2,False,True,True,True,False,True
+PRD000099,Telephonie & Accessoires,eligible_pooling_categorie,"historique individuel insuffisant (etalement_ok), catégorie utilisée",31,150,3,242.0,46,3,True,True,True,True,False,True
+PRD000100,Beaute & Soins,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, etalement_ok), catégorie utilisée",19,97,2,61.0,50,2,False,True,True,True,False,True
+PRD000101,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,42,242,4,297.0,137,5,True,True,True,True,True,True
+PRD000102,Mode & Vetements,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",28,324,2,538.0,271,3,False,True,True,True,True,True
+PRD000103,Sport & Loisirs,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,117,2,170.0,63,3,False,True,True,True,True,True
+PRD000104,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,56,428,3,936.0,393,6,True,True,True,True,True,True
+PRD000105,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,43,127,3,94.0,107,5,True,True,True,True,True,True
+PRD000106,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,669.0,460,7,True,True,True,True,True,True
+PRD000107,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,103,443,5,1098.0,457,11,True,True,True,True,True,True
+PRD000108,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,65,301,4,579.0,327,7,True,True,True,True,True,True
+PRD000109,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,102,373,4,630.0,451,10,True,True,True,True,True,True
+PRD000110,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,43,233,3,252.0,107,5,True,True,True,True,True,True
+PRD000111,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,106,440,4,606.0,455,10,True,True,True,True,True,True
+PRD000112,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,726.0,412,9,True,True,True,True,True,True
+PRD000113,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,501,4,899.0,360,6,True,True,True,True,True,True
+PRD000114,Alimentation & Epicerie,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok, mois_couverts_ok), catégorie utilisée",11,88,1,245.0,11,1,False,True,False,True,False,False
+PRD000115,Electronique & High-Tech,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok), catégorie utilisée",14,79,1,167.0,14,2,False,True,False,True,False,True
+PRD000116,Alimentation & Epicerie,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok), catégorie utilisée",24,189,1,230.0,143,3,False,True,False,True,True,True
+PRD000117,Telephonie & Accessoires,non_eligible,aucune promotion observée,0,75,0,126.0,0,0,False,True,False,True,False,False
+PRD000118,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,54,277,4,210.0,307,6,True,True,True,True,True,True
+PRD000119,Sport & Loisirs,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,274,2,246.0,63,3,False,True,True,True,True,True
+PRD000120,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,627.0,460,7,True,True,True,True,True,True
+PRD000121,Alimentation & Epicerie,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok), catégorie utilisée",24,212,1,318.0,143,3,False,True,False,True,True,True
+PRD000122,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,35,366,2,530.0,316,5,True,True,True,True,True,True
+PRD000123,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,387.0,412,9,True,True,True,True,True,True
+PRD000124,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,106,440,4,535.0,455,10,True,True,True,True,True,True
+PRD000125,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,395.0,412,9,True,True,True,True,True,True
+PRD000126,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,43,224,3,252.0,107,5,True,True,True,True,True,True
+PRD000127,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,44,502,3,1451.0,393,8,True,True,True,True,True,True
+PRD000128,Electronique & High-Tech,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok), catégorie utilisée",14,215,1,355.0,14,2,False,True,False,True,False,True
+PRD000129,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,286,4,559.0,276,7,True,True,True,True,True,True
+PRD000130,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,36,312,3,553.0,276,5,True,True,True,True,True,True
+PRD000131,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,43,226,3,178.0,107,5,True,True,True,True,True,True
+PRD000132,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,44,430,3,599.0,388,6,True,True,True,True,True,True
+PRD000133,Electronique & High-Tech,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok), catégorie utilisée",14,110,1,108.0,14,2,False,True,False,True,False,True
+PRD000134,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,327.0,412,9,True,True,True,True,True,True
+PRD000135,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,73,473,4,499.0,355,7,True,True,True,True,True,True
+PRD000136,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,106,440,4,383.0,455,10,True,True,True,True,True,True
+PRD000137,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,501,4,384.0,360,6,True,True,True,True,True,True
+PRD000138,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,501,4,437.0,360,6,True,True,True,True,True,True
+PRD000139,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,663.0,412,9,True,True,True,True,True,True
+PRD000140,Beaute & Soins,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, etalement_ok), catégorie utilisée",19,149,2,109.0,50,2,False,True,True,True,False,True
+PRD000141,Sport & Loisirs,non_eligible,aucune promotion observée,0,35,0,34.0,0,0,False,True,False,False,False,False
+PRD000142,Telephonie & Accessoires,non_eligible,aucune promotion observée,0,45,0,58.0,0,0,False,True,False,True,False,False
+PRD000143,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,73,473,4,479.0,355,7,True,True,True,True,True,True
+PRD000144,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,44,502,3,530.0,393,8,True,True,True,True,True,True
+PRD000145,Telephonie & Accessoires,eligible_pooling_categorie,"historique individuel insuffisant (etalement_ok), catégorie utilisée",31,159,3,397.0,46,3,True,True,True,True,False,True
+PRD000146,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,42,270,4,379.0,137,5,True,True,True,True,True,True
+PRD000147,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,112,328,4,553.0,398,10,True,True,True,True,True,True
+PRD000148,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,46,409,5,653.0,360,6,True,True,True,True,True,True
+PRD000149,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,75,471,5,998.0,513,7,True,True,True,True,True,True
+PRD000150,Telephonie & Accessoires,eligible_pooling_categorie,"historique individuel insuffisant (etalement_ok), catégorie utilisée",31,115,3,161.0,46,3,True,True,True,True,False,True
+PRD000151,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,109,350,4,532.0,398,9,True,True,True,True,True,True
+PRD000152,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,41,434,2,296.0,393,4,True,True,True,True,True,True
+PRD000153,Sport & Loisirs,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,217,2,199.0,63,3,False,True,True,True,True,True
+PRD000154,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,103,443,5,749.0,457,11,True,True,True,True,True,True
+PRD000155,Sport & Loisirs,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,118,2,169.0,63,3,False,True,True,True,True,True
+PRD000156,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,39,238,2,704.0,178,4,True,True,True,True,True,True
+PRD000157,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,43,115,3,82.0,107,5,True,True,True,True,True,True
+PRD000158,Electronique & High-Tech,non_eligible,aucune promotion observée,0,50,0,63.0,0,0,False,True,False,True,False,False
+PRD000159,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,44,502,3,1068.0,393,8,True,True,True,True,True,True
+PRD000160,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,55,463,4,533.0,360,6,True,True,True,True,True,True
+PRD000161,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,501,4,585.0,360,6,True,True,True,True,True,True
+PRD000162,Electronique & High-Tech,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok), catégorie utilisée",14,242,1,619.0,14,2,False,True,False,True,False,True
+PRD000163,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,70,476,5,544.0,513,6,True,True,True,True,True,True
+PRD000164,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,42,307,4,647.0,137,5,True,True,True,True,True,True
+PRD000165,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,1008.0,460,7,True,True,True,True,True,True
+PRD000166,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,399.0,460,7,True,True,True,True,True,True
+PRD000167,Mode & Vetements,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,244,2,367.0,97,2,False,True,True,True,True,True
+PRD000168,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,43,123,3,182.0,107,5,True,True,True,True,True,True
+PRD000169,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,55,491,4,1221.0,393,10,True,True,True,True,True,True
+PRD000170,Electronique & High-Tech,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok), catégorie utilisée",14,112,1,91.0,14,2,False,True,False,True,False,True
+PRD000171,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,70,476,5,597.0,513,6,True,True,True,True,True,True
+PRD000172,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,558.0,412,9,True,True,True,True,True,True
+PRD000173,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,113,433,5,1234.0,457,12,True,True,True,True,True,True
+PRD000174,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,41,414,2,618.0,393,4,True,True,True,True,True,True
+PRD000175,Telephonie & Accessoires,eligible_pooling_categorie,"historique individuel insuffisant (etalement_ok), catégorie utilisée",31,151,3,202.0,46,3,True,True,True,True,False,True
+PRD000176,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,70,476,5,450.0,513,6,True,True,True,True,True,True
+PRD000177,Bebe & Enfant,non_eligible,aucune promotion observée,0,57,0,42.0,0,0,False,True,False,False,False,False
+PRD000178,Alimentation & Epicerie,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok), catégorie utilisée",24,243,1,520.0,143,3,False,True,False,True,True,True
+PRD000179,Telephonie & Accessoires,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok), catégorie utilisée",8,85,1,177.0,8,2,False,True,False,True,False,True
+PRD000180,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,44,502,3,1368.0,393,8,True,True,True,True,True,True
+PRD000181,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,501,4,387.0,360,6,True,True,True,True,True,True
+PRD000182,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,36,331,3,366.0,276,5,True,True,True,True,True,True
+PRD000183,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,610.0,412,9,True,True,True,True,True,True
+PRD000184,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,1005.0,460,7,True,True,True,True,True,True
+PRD000185,Sport & Loisirs,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,241,2,404.0,63,3,False,True,True,True,True,True
+PRD000186,Beaute & Soins,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, etalement_ok), catégorie utilisée",17,62,2,72.0,48,2,False,True,True,True,False,True
+PRD000187,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,30,376,2,978.0,239,5,True,True,True,True,True,True
+PRD000188,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,70,476,5,732.0,513,6,True,True,True,True,True,True
+PRD000189,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,48,227,4,350.0,207,6,True,True,True,True,True,True
+PRD000190,Bebe & Enfant,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, etalement_ok), catégorie utilisée",19,139,2,124.0,20,2,False,True,True,True,False,True
+PRD000191,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,44,502,3,1168.0,393,8,True,True,True,True,True,True
+PRD000192,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,47,257,5,480.0,99,4,True,True,True,True,True,True
+PRD000193,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,43,246,3,240.0,107,5,True,True,True,True,True,True
+PRD000194,Beaute & Soins,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, etalement_ok), catégorie utilisée",19,126,2,180.0,50,2,False,True,True,True,False,True
+PRD000195,Beaute & Soins,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, etalement_ok), catégorie utilisée",26,136,2,156.0,50,2,False,True,True,True,False,True
+PRD000196,Beaute & Soins,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, etalement_ok), catégorie utilisée",19,91,2,237.0,50,2,False,True,True,True,False,True
+PRD000197,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,73,473,4,453.0,355,7,True,True,True,True,True,True
+PRD000198,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,44,502,3,697.0,393,8,True,True,True,True,True,True
+PRD000199,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,114,432,4,369.0,493,11,True,True,True,True,True,True
+PRD000200,Mode & Vetements,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,156,2,137.0,97,2,False,True,True,True,True,True
+PRD000201,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,73,473,4,308.0,355,7,True,True,True,True,True,True
+PRD000202,Electronique & High-Tech,non_eligible,aucune promotion observée,0,48,0,39.0,0,0,False,True,False,False,False,False
+PRD000203,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,103,443,5,591.0,457,11,True,True,True,True,True,True
+PRD000204,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,37,404,3,878.0,348,6,True,True,True,True,True,True
+PRD000205,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,44,502,3,634.0,393,8,True,True,True,True,True,True
+PRD000206,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,44,480,3,882.0,393,8,True,True,True,True,True,True
+PRD000207,Electronique & High-Tech,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok), catégorie utilisée",24,299,1,697.0,264,3,False,True,False,True,True,True
+PRD000208,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,36,176,4,189.0,99,4,True,True,True,True,True,True
+PRD000209,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,639.0,412,9,True,True,True,True,True,True
+PRD000210,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,70,476,5,990.0,513,6,True,True,True,True,True,True
+PRD000211,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,71,475,3,1133.0,460,7,True,True,True,True,True,True
+PRD000212,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,70,476,5,612.0,513,6,True,True,True,True,True,True
+PRD000213,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,37,416,3,852.0,348,6,True,True,True,True,True,True
+PRD000214,Mode & Vetements,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,236,2,225.0,97,2,False,True,True,True,True,True
+PRD000215,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,1182.0,460,7,True,True,True,True,True,True
+PRD000216,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,73,473,4,668.0,355,7,True,True,True,True,True,True
+PRD000217,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,68,445,6,382.0,400,8,True,True,True,True,True,True
+PRD000218,Mode & Vetements,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,166,2,236.0,97,2,False,True,True,True,True,True
+PRD000219,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,35,344,2,585.0,316,5,True,True,True,True,True,True
+PRD000220,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,85,461,6,611.0,513,7,True,True,True,True,True,True
+PRD000221,Maison & Cuisine,eligible_pooling_categorie,"historique individuel insuffisant (volume_ok), catégorie utilisée",43,130,3,49.0,107,5,True,True,True,False,True,True
+PRD000222,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,79,467,3,1155.0,460,8,True,True,True,True,True,True
+PRD000223,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,60,486,4,831.0,387,7,True,True,True,True,True,True
+PRD000224,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,501,4,475.0,360,6,True,True,True,True,True,True
+PRD000225,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,501,4,565.0,360,6,True,True,True,True,True,True
+PRD000226,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,52,335,5,538.0,302,6,True,True,True,True,True,True
+PRD000227,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,696.0,412,9,True,True,True,True,True,True
+PRD000228,Beaute & Soins,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, etalement_ok), catégorie utilisée",19,177,2,203.0,50,2,False,True,True,True,False,True
+PRD000229,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,72,445,6,587.0,404,8,True,True,True,True,True,True
+PRD000230,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,65,425,6,613.0,341,7,True,True,True,True,True,True
+PRD000231,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,71,445,6,480.0,403,8,True,True,True,True,True,True
+PRD000232,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,67,340,5,662.0,317,7,True,True,True,True,True,True
+PRD000233,Beaute & Soins,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, etalement_ok), catégorie utilisée",19,193,2,192.0,50,2,False,True,True,True,False,True
+PRD000234,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,73,450,4,586.0,355,7,True,True,True,True,True,True
+PRD000235,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,101,358,4,341.0,398,9,True,True,True,True,True,True
+PRD000236,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,101,330,4,592.0,398,9,True,True,True,True,True,True
+PRD000237,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,82,464,6,448.0,513,7,True,True,True,True,True,True
+PRD000238,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,35,381,3,479.0,346,6,True,True,True,True,True,True
+PRD000239,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,93,453,5,1102.0,460,10,True,True,True,True,True,True
+PRD000240,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,42,184,4,298.0,137,5,True,True,True,True,True,True
+PRD000241,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,36,295,4,441.0,99,4,True,True,True,True,True,True
+PRD000242,Telephonie & Accessoires,non_eligible,aucune promotion observée,0,64,0,148.0,0,0,False,True,False,True,False,False
+PRD000243,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,103,443,5,1395.0,457,11,True,True,True,True,True,True
+PRD000244,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,87,303,4,353.0,366,8,True,True,True,True,True,True
+PRD000245,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,85,461,5,576.0,513,7,True,True,True,True,True,True
+PRD000246,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,44,426,3,885.0,393,8,True,True,True,True,True,True
+PRD000247,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,31,191,2,246.0,143,4,True,True,True,True,True,True
+PRD000248,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,118,428,4,390.0,455,12,True,True,True,True,True,True
+PRD000249,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,78,468,5,1165.0,513,7,True,True,True,True,True,True
+PRD000250,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,42,324,4,593.0,137,5,True,True,True,True,True,True
+PRD000251,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,463,4,318.0,360,6,True,True,True,True,True,True
+PRD000252,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,103,443,5,1453.0,457,11,True,True,True,True,True,True
+PRD000253,Sport & Loisirs,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, etalement_ok), catégorie utilisée",13,75,2,70.0,23,2,False,True,True,True,False,True
+PRD000254,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,474,3,491.0,460,7,True,True,True,True,True,True
+PRD000255,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,370.0,412,9,True,True,True,True,True,True
+PRD000256,Alimentation & Epicerie,non_eligible,aucune promotion observée,0,53,0,145.0,0,0,False,True,False,True,False,False
+PRD000257,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,93,453,6,818.0,433,9,True,True,True,True,True,True
+PRD000258,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,94,434,5,885.0,443,11,True,True,True,True,True,True
+PRD000259,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,41,385,2,603.0,393,4,True,True,True,True,True,True
+PRD000260,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,103,443,5,719.0,457,11,True,True,True,True,True,True
+PRD000261,Bebe & Enfant,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, etalement_ok), catégorie utilisée",19,130,2,92.0,20,2,False,True,True,True,False,True
+PRD000262,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,106,440,4,614.0,455,10,True,True,True,True,True,True
+PRD000263,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,65,417,6,574.0,341,7,True,True,True,True,True,True
+PRD000264,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,44,502,3,817.0,393,8,True,True,True,True,True,True
+PRD000265,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,501,4,436.0,360,6,True,True,True,True,True,True
+PRD000266,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,106,440,4,435.0,455,10,True,True,True,True,True,True
+PRD000267,Alimentation & Epicerie,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok, mois_couverts_ok), catégorie utilisée",11,182,1,373.0,11,1,False,True,False,True,False,False
+PRD000268,Maison & Cuisine,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, jours_hors_promo_ok, volume_ok, etalement_ok), catégorie utilisée",11,24,2,44.0,11,2,False,False,True,False,False,True
+PRD000269,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,501,4,793.0,360,6,True,True,True,True,True,True
+PRD000270,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,37,88,3,163.0,101,5,True,True,True,True,True,True
+PRD000271,Electronique & High-Tech,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok), catégorie utilisée",14,105,1,144.0,14,2,False,True,False,True,False,True
+PRD000272,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,42,298,4,768.0,137,5,True,True,True,True,True,True
+PRD000273,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,739.0,412,9,True,True,True,True,True,True
+PRD000274,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,501,4,427.0,360,6,True,True,True,True,True,True
+PRD000275,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,37,394,3,1194.0,348,6,True,True,True,True,True,True
+PRD000276,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,73,389,4,634.0,355,7,True,True,True,True,True,True
+PRD000277,Sport & Loisirs,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,203,2,140.0,63,3,False,True,True,True,True,True
+PRD000278,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,397,4,703.0,360,6,True,True,True,True,True,True
+PRD000279,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,762.0,460,7,True,True,True,True,True,True
+PRD000280,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,501,4,638.0,360,6,True,True,True,True,True,True
+PRD000281,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,501,4,421.0,360,6,True,True,True,True,True,True
+PRD000282,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,481,3,1073.0,460,7,True,True,True,True,True,True
+PRD000283,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,40,335,5,431.0,238,5,True,True,True,True,True,True
+PRD000284,Beaute & Soins,eligible_individuel,tous les critères individuels satisfaits,45,479,4,421.0,360,6,True,True,True,True,True,True
+PRD000285,Electronique & High-Tech,eligible_individuel,tous les critères individuels satisfaits,65,468,3,731.0,460,7,True,True,True,True,True,True
+PRD000286,Alimentation & Epicerie,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok), catégorie utilisée",24,196,1,552.0,143,3,False,True,False,True,True,True
+PRD000287,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,489.0,412,9,True,True,True,True,True,True
+PRD000288,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,73,363,4,310.0,355,7,True,True,True,True,True,True
+PRD000289,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,42,203,4,610.0,137,5,True,True,True,True,True,True
+PRD000290,Electronique & High-Tech,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok, niveaux_reels_ok, etalement_ok), catégorie utilisée",14,189,1,179.0,14,2,False,True,False,True,False,True
+PRD000291,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,80,466,6,532.0,412,9,True,True,True,True,True,True
+PRD000292,Mode & Vetements,eligible_individuel,tous les critères individuels satisfaits,70,476,5,496.0,513,6,True,True,True,True,True,True
+PRD000293,Sport & Loisirs,eligible_pooling_categorie,"historique individuel insuffisant (jours_promo_ok), catégorie utilisée",22,154,2,71.0,63,3,False,True,True,True,True,True
+PRD000294,Maison & Cuisine,eligible_individuel,tous les critères individuels satisfaits,106,440,4,553.0,455,10,True,True,True,True,True,True
+PRD000295,Sport & Loisirs,eligible_individuel,tous les critères individuels satisfaits,77,469,4,372.0,355,7,True,True,True,True,True,True
+PRD000296,Telephonie & Accessoires,eligible_pooling_categorie,"historique individuel insuffisant (etalement_ok), catégorie utilisée",31,126,3,290.0,46,3,True,True,True,True,False,True
+PRD000297,Alimentation & Epicerie,eligible_individuel,tous les critères individuels satisfaits,44,502,3,762.0,393,8,True,True,True,True,True,True
+PRD000298,Bebe & Enfant,eligible_individuel,tous les critères individuels satisfaits,73,445,6,357.0,405,8,True,True,True,True,True,True
+PRD000299,Telephonie & Accessoires,eligible_individuel,tous les critères individuels satisfaits,103,443,5,1276.0,457,11,True,True,True,True,True,True

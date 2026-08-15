@@ -1,0 +1,80 @@
+{
+  "genere_le": "2026-08-14T21:51:47.492456+00:00",
+  "artefacts": {
+    "eligibilite": {
+      "chemin": "reports\\36_recsys_eligibilite.md",
+      "sha256": "976125e779bcee685cae7d84870c98362ffc62bfa39c1c1586fc3c903b9a7d79",
+      "taille_octets": 7132
+    },
+    "resultats_baselines": {
+      "chemin": "reports\\37_recsys_baselines_resultats.md",
+      "sha256": "a79d550694357554cefa33e133aaae6cf4525d7381d745b331588f82ff875af6",
+      "taille_octets": 14526
+    },
+    "verifications": {
+      "chemin": "reports\\39_recsys_verifications.md",
+      "sha256": "5692b592d9d839befb609ff982515b4dd24e87da8612747ba6971a3a9bf857f0",
+      "taille_octets": 8116
+    },
+    "rapport_final_baselines": {
+      "chemin": "reports\\40_recsys_rapport_final_baselines.md",
+      "sha256": "50c5015b15953477a93d63764d954a99479ad7763fd3845c1910a5b4283c6622",
+      "taille_octets": 10110
+    },
+    "consolidation_finale": {
+      "chemin": "reports\\41_recsys_consolidation_finale.md",
+      "sha256": "d19c2177186a3195e8990db7143890830d54b541d069e9363f43add8ac3da350",
+      "taille_octets": 15362
+    },
+    "objectifs_v2": {
+      "chemin": "reports\\recsys_final\\recommendation_v2_objectives.md",
+      "sha256": "5089ebdaa8805dece8087377f4e3477b26ba2a11c47e66043aebf7e101c8f8b2",
+      "taille_octets": 9328
+    },
+    "baselines_summaries_csv": {
+      "chemin": "reports\\recsys_final\\baselines_summaries.csv",
+      "sha256": "ec6e16737803dfa8404190791f04bb56b5ad75b13dd27cab80c8a97cf1f52e2a",
+      "taille_octets": 14391
+    },
+    "baselines_segments_csv": {
+      "chemin": "reports\\recsys_final\\baselines_segments.csv",
+      "sha256": "e17fd19d9169f7eb8284ce158e97453fe97cdfb0fefcd85e53fb1ad6c20148cf",
+      "taille_octets": 27535
+    },
+    "recommandations_sortie_csv": {
+      "chemin": "reports\\recsys_final\\recommandations_sortie.csv",
+      "sha256": "f119ce04572f6c3de716971d76b7d571f25f7441b683737a81d1c693d4b6fe3c",
+      "taille_octets": 135432019
+    },
+    "reconciliation_cibles_csv": {
+      "chemin": "reports\\recsys_final\\reconciliation_cibles_exclues.csv",
+      "sha256": "dd45b040872d72e6e0b8320d5a48d9063d84f237f427998d7bcddcc7e3d343d4",
+      "taille_octets": 277
+    },
+    "metriques_end_to_end_vs_eligible_csv": {
+      "chemin": "reports\\recsys_final\\metriques_end_to_end_vs_eligible.csv",
+      "sha256": "b8b6d82f5900b945e56831731e896b57cf03e8e78447997dc21b5f34c88358e1",
+      "taille_octets": 10439
+    },
+    "scenarios_reachat_csv": {
+      "chemin": "reports\\recsys_final\\scenarios_reachat.csv",
+      "sha256": "c824e5f1bd23c43f42dda15aeda938576061ec6a6aea771579b710b58efd379a",
+      "taille_octets": 205
+    },
+    "journal_jsonl": {
+      "chemin": "reports\\38_recsys_log.jsonl",
+      "sha256": "97c01b9ec41ef1379e6f8867a015a52339bdb2c4579acfa1e717a305f68e5b1d",
+      "taille_octets": 19669
+    },
+    "eligibilite_fenetres_csv": {
+      "chemin": "reports\\recsys_final\\eligibilite_fenetres.csv",
+      "sha256": "26cfcbcda3a105737666b70ccc0787bf3ef3ab7cb62ea360ad6089d68f2c4c39",
+      "taille_octets": 453
+    },
+    "dependances": {
+      "chemin": "requirements.txt",
+      "sha256": "f61be2276c255357f4592cef3c516ff6535b8d5f0c34a2d5105844ff03b42226",
+      "taille_octets": 946
+    }
+  }
+}
