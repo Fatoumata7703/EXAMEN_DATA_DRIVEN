@@ -1,0 +1,10 @@
+{"ts": "2026-08-15T03:37:35.512187+00:00", "type": "debut", "candidat": "candidat_A_blend_autoets_wa28", "memoire_rss_mb": 79.7}
+{"ts": "2026-08-15T03:37:45.407934+00:00", "type": "fin", "candidat": "candidat_A_blend_autoets_wa28", "statut": "experiment_not_retained", "duree_totale_s": 9.93, "memoire_rss_mb": 286.0, "wape_30j": 0.27530829333277274}
+{"ts": "2026-08-15T03:39:12.547843+00:00", "type": "debut", "candidat": "candidat_A_blend_autoets_wa28", "memoire_rss_mb": 79.8}
+{"ts": "2026-08-15T03:39:21.001785+00:00", "type": "fin", "candidat": "candidat_A_blend_autoets_wa28", "statut": "experiment_not_retained", "duree_totale_s": 8.47, "memoire_rss_mb": 281.8, "wape_30j": 0.27530829333277274}
+{"ts": "2026-08-15T03:41:55.615518+00:00", "type": "debut", "candidat": "candidat_B", "memoire_rss_mb": 79.8}
+{"ts": "2026-08-15T03:42:12.086529+00:00", "type": "fin", "candidat": "candidat_B", "statut": "experiment_not_retained", "duree_totale_s": 16.51, "memoire_rss_mb": 270.6}
+{"ts": "2026-08-15T03:43:33.561647+00:00", "type": "debut", "candidat": "candidat_C", "memoire_rss_mb": 79.7}
+{"ts": "2026-08-15T03:43:44.533685+00:00", "type": "fin", "candidat": "candidat_C", "statut": "experiment_retained", "duree_totale_s": 11.01}
+{"ts": "2026-08-15T03:45:15.738517+00:00", "type": "debut", "candidat": "candidat_C", "memoire_rss_mb": 79.6}
+{"ts": "2026-08-15T03:45:27.220971+00:00", "type": "fin", "candidat": "candidat_C", "statut": "experiment_retained", "duree_totale_s": 11.51}
