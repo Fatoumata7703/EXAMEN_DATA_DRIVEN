@@ -28,3 +28,7 @@
 {"ts": "2026-08-15T12:12:46.399008+00:00", "type": "ablation_fenetre", "candidat": "candidat_E_pilote", "niveau": "E4", "fenetre": 1, "repris_depuis_checkpoint": true, "memoire_rss_mb": 251.6}
 {"ts": "2026-08-15T12:12:46.423687+00:00", "type": "ablation_fenetre", "candidat": "candidat_E_pilote", "niveau": "E4", "fenetre": 2, "repris_depuis_checkpoint": true, "memoire_rss_mb": 251.8}
 {"ts": "2026-08-15T12:12:46.826821+00:00", "type": "fin", "candidat": "candidat_E_pilote", "statut": "experiment_not_promising", "duree_totale_s": 5.8, "meilleur_gain": 0.012753995550001368}
+{"ts": "2026-08-15T12:35:19.180024+00:00", "type": "debut", "candidat": "recsys_R1_R2", "memoire_rss_mb": 82.1}
+{"ts": "2026-08-15T12:36:32.789387+00:00", "type": "fin", "candidat": "recsys_R1_R2", "duree_totale_s": 73.63}
+{"ts": "2026-08-15T13:13:20.691518+00:00", "type": "debut", "candidat": "recsys_R1_R2", "memoire_rss_mb": 81.8}
+{"ts": "2026-08-15T13:14:39.063690+00:00", "type": "fin", "candidat": "recsys_R1_R2", "duree_totale_s": 78.44}
