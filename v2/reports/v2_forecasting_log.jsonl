@@ -32,3 +32,5 @@
 {"ts": "2026-08-15T12:36:32.789387+00:00", "type": "fin", "candidat": "recsys_R1_R2", "duree_totale_s": 73.63}
 {"ts": "2026-08-15T13:13:20.691518+00:00", "type": "debut", "candidat": "recsys_R1_R2", "memoire_rss_mb": 81.8}
 {"ts": "2026-08-15T13:14:39.063690+00:00", "type": "fin", "candidat": "recsys_R1_R2", "duree_totale_s": 78.44}
+{"ts": "2026-08-15T13:34:43.893028+00:00", "type": "debut", "candidat": "R3_pilote", "memoire_rss_mb": 82.0}
+{"ts": "2026-08-15T13:35:05.136153+00:00", "type": "fin", "candidat": "R3_pilote", "statut": "experiment_not_retained", "duree_totale_s": 21.28}
