@@ -1,0 +1,47 @@
+{
+  "selected": "LightGBM_calibre",
+  "summary": [
+    {
+      "model": "LightGBM_calibre",
+      "wape": 0.4166845347741183,
+      "std": 0.005581733772568062,
+      "bias": -0.0008533133665854075
+    },
+    {
+      "model": "GLM_Tweedie",
+      "wape": 0.4206899708463419,
+      "std": 0.00261459942135064,
+      "bias": -0.00399472754009863
+    },
+    {
+      "model": "GLM_Poisson",
+      "wape": 0.4221121895564839,
+      "std": 0.0037769232446096686,
+      "bias": -0.0011718589205036462
+    },
+    {
+      "model": "panel_effets_fixes",
+      "wape": 0.4229867715583973,
+      "std": 0.0033084509514012266,
+      "bias": -0.0018562339229171044
+    },
+    {
+      "model": "hierarchique_categorie",
+      "wape": 0.562723225919172,
+      "std": 0.005543438125860371,
+      "bias": 0.033283153924571075
+    },
+    {
+      "model": "descriptif_intra_produit",
+      "wape": 0.5660611200973441,
+      "std": 0.008059615753403165,
+      "bias": 0.03721652356318601
+    }
+  ],
+  "catalog_price_varies": false,
+  "scope": "commandes confirmees",
+  "causal": false,
+  "automatic_application_allowed": false,
+  "human_validation_required": true,
+  "margin_floor": 0.05
+}
