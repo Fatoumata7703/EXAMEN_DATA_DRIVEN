@@ -10,7 +10,7 @@ OUT = ROOT / "models" / "advanced" / "recommendation_ranking"
 def test_candidate_gate_and_official_baseline_are_explicit():
     metadata = json.loads((OUT / "metadata.json").read_text(encoding="utf-8"))
     assert metadata["official_baseline"] == "popularite_globale"
-    assert metadata["ranking_started"] is False
+    assert metadata["ranking_started"] is True
     assert min(metadata["next_purchase_candidate_recall_at50_lower_bound"]) >= 0.50
     assert metadata["complement_panier_reference"]["status"] == "systeme_metier_separe"
 

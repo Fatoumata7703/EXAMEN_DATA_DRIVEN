@@ -1,0 +1,154 @@
+{
+  "metrics": [
+    {
+      "scenario": "complement_panier",
+      "window": 1,
+      "model": "cooccurrence_item_item",
+      "n_orders": 5338,
+      "n_targets": 13519,
+      "candidate_recall_at50": 0.0
+    },
+    {
+      "scenario": "complement_panier",
+      "window": 1,
+      "model": "association_support_confidence_lift",
+      "n_orders": 5338,
+      "n_targets": 13519,
+      "candidate_recall_at50": 0.0
+    },
+    {
+      "scenario": "complement_panier",
+      "window": 1,
+      "model": "bm25_panier",
+      "n_orders": 5338,
+      "n_targets": 13519,
+      "candidate_recall_at50": 0.0
+    },
+    {
+      "scenario": "complement_panier",
+      "window": 1,
+      "model": "popularite_categorie",
+      "n_orders": 5338,
+      "n_targets": 13519,
+      "candidate_recall_at50": 0.0
+    },
+    {
+      "scenario": "complement_panier",
+      "window": 2,
+      "model": "cooccurrence_item_item",
+      "n_orders": 5338,
+      "n_targets": 13543,
+      "candidate_recall_at50": 0.25001845972088904
+    },
+    {
+      "scenario": "complement_panier",
+      "window": 2,
+      "model": "association_support_confidence_lift",
+      "n_orders": 5338,
+      "n_targets": 13543,
+      "candidate_recall_at50": 0.20999778483349332
+    },
+    {
+      "scenario": "complement_panier",
+      "window": 2,
+      "model": "bm25_panier",
+      "n_orders": 5338,
+      "n_targets": 13543,
+      "candidate_recall_at50": 0.23805656058480396
+    },
+    {
+      "scenario": "complement_panier",
+      "window": 2,
+      "model": "popularite_categorie",
+      "n_orders": 5338,
+      "n_targets": 13543,
+      "candidate_recall_at50": 0.8797902975707007
+    },
+    {
+      "scenario": "complement_panier",
+      "window": 3,
+      "model": "cooccurrence_item_item",
+      "n_orders": 5338,
+      "n_targets": 13571,
+      "candidate_recall_at50": 0.2191437624346032
+    },
+    {
+      "scenario": "complement_panier",
+      "window": 3,
+      "model": "association_support_confidence_lift",
+      "n_orders": 5338,
+      "n_targets": 13571,
+      "candidate_recall_at50": 0.1784687937513816
+    },
+    {
+      "scenario": "complement_panier",
+      "window": 3,
+      "model": "bm25_panier",
+      "n_orders": 5338,
+      "n_targets": 13571,
+      "candidate_recall_at50": 0.21310146636209565
+    },
+    {
+      "scenario": "complement_panier",
+      "window": 3,
+      "model": "popularite_categorie",
+      "n_orders": 5338,
+      "n_targets": 13571,
+      "candidate_recall_at50": 0.9043548743644536
+    },
+    {
+      "scenario": "complement_panier",
+      "window": 4,
+      "model": "cooccurrence_item_item",
+      "n_orders": 5338,
+      "n_targets": 13481,
+      "candidate_recall_at50": 0.20666122691195016
+    },
+    {
+      "scenario": "complement_panier",
+      "window": 4,
+      "model": "association_support_confidence_lift",
+      "n_orders": 5338,
+      "n_targets": 13481,
+      "candidate_recall_at50": 0.15718418514946964
+    },
+    {
+      "scenario": "complement_panier",
+      "window": 4,
+      "model": "bm25_panier",
+      "n_orders": 5338,
+      "n_targets": 13481,
+      "candidate_recall_at50": 0.19813070247014317
+    },
+    {
+      "scenario": "complement_panier",
+      "window": 4,
+      "model": "popularite_categorie",
+      "n_orders": 5338,
+      "n_targets": 13481,
+      "candidate_recall_at50": 0.943995252577702
+    }
+  ],
+  "summary": [
+    {
+      "model": "association_support_confidence_lift",
+      "candidate_recall_at50": 0.13641269093358616
+    },
+    {
+      "model": "bm25_panier",
+      "candidate_recall_at50": 0.16232218235426069
+    },
+    {
+      "model": "cooccurrence_item_item",
+      "candidate_recall_at50": 0.1689558622668606
+    },
+    {
+      "model": "popularite_categorie",
+      "candidate_recall_at50": 0.682035106128214
+    }
+  ],
+  "candidate_gate_ge_050": false,
+  "candidate_gate_rule": "all four temporal windows must meet Recall@50 >= 0.50",
+  "lambda_rank_started": false,
+  "reason": "category-popularity reaches the threshold only on windows 2-4; window 1 has no prior eligible training orders and Recall@50=0"
+}

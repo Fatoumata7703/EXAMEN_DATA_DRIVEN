@@ -21,6 +21,25 @@ Aucun LightGBM LambdaRank, XGBoost ranking, CatBoostRanker, ALS/BPR ou modèle p
 
 La popularité globale demeure le modèle officiel tant qu’un pilote hors échantillon n’apporte pas un gain NDCG stable, avec bootstrap client×fenêtre à IC95 % entièrement positif. Le complément panier reste un système métier indépendant ; aucune causalité ni personnalisation garantie n’est déduite.
 
+## Pilote ranking prochain achat (F1–F2)
+
+Le candidat set a été réutilisé avec négatifs reproductibles (seed 42) et hard negatives issus des générateurs. Les deux rankers ont été entraînés avec features strictement antérieures au cutoff et groupes `client_key×cutoff`.
+
+| Modèle | Recall@10 moyen | NDCG@10 moyen | Couverture | Décision |
+|---|---:|---:|---:|---|
+| popularite_globale | 0,1305 | 0,0639 | 100 % | baseline |
+| heuristique_rrf | 0,1212 | 0,0602 | 100 % | challenger |
+| LightGBM_LambdaRank | 0,0882 | 0,0432 | 100 % | gate échoué |
+| logistique_pointwise | 0,0747 | 0,0348 | 100 % | baseline supervisée |
+
+Le gain NDCG ≥5 % n'est pas atteint et le Recall@10 baisse de plus de 2 %. Aucun passage F3–F4 ni bootstrap n'est justifié. La popularité globale reste officielle.
+
+## Complément panier — candidat@50
+
+Validation leave-one-item-out sur 22 460 commandes multi-produits, commandes entières dans un seul split. Les scores candidats ont été calculés séparément par cooccurrence, association support/confiance/lift, BM25 panier et popularité catégorie.
+
+La popularité catégorie atteint 0,6820 en moyenne mais 0 en fenêtre 1, où aucun historique antérieur admissible n'est disponible ; le gate strict sur les quatre fenêtres n'est donc pas franchi. Aucun LambdaRank complément panier n'est entraîné. La référence métier reste Recall@10 0,1006, NDCG@10 0,0485, couverture 89,33 %.
+
 ## Protocole futur
 
 Après de nouvelles données ou une définition sessionnelle corrigée, exécuter quatre fenêtres temporelles, tuning uniquement antérieur, checkpoints séquentiels, tests de fuite par perturbation, déterminisme, doublons Top-10, éligibilité, diversité, nouveauté, concentration et bootstrap à 95 %. Le reranking métier ne pourra réduire la pertinence de plus de 2 % hors scénario explicitement « découverte ».
