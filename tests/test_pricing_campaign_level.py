@@ -36,3 +36,15 @@ def test_campaign_manifest_matches_artifacts():
         path = ROOT / name if name.startswith("data/") else MODEL / name
         assert path.exists()
         assert hashlib.sha256(path.read_bytes()).hexdigest() == digest
+
+
+def test_metric_diagnostic_has_exact_wape_and_zero_baseline():
+    diagnostics = json.loads((MODEL / "campaign_diagnostics.json").read_text(encoding="utf-8"))
+    assert diagnostics["formula"] == "sum(abs(y - y_pred)) / sum(y)"
+    assert diagnostics["sum_actual"] > 0
+    assert diagnostics["negative_predictions"] == 0
+    assert diagnostics["nan_predictions"] == 0
+    assert 0 <= diagnostics["zero_target_rate"] <= 1
+    metrics = pd.read_csv(MODEL / "campaign_metrics.csv")
+    zero = metrics[metrics.model.eq("baseline_zero")]
+    assert (zero.wape_micro == 1.0).all()

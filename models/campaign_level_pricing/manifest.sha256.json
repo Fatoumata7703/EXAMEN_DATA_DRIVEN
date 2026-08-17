@@ -1,7 +1,9 @@
 {
-  "campaign_metrics.csv": "359b08afab3a77097cf510100172070ae7483dbdbbcf66972e8dec69b2e1c84e",
-  "metadata.json": "541ca317f2ef8b703ab38cfd24dcb26b93e468db6b98865e21b2eba29e51f447",
-  "data/processed/final/pricing_product_campaign.parquet": "790b6ad6b6583c2d081ef5020e43596a4076047c4bfa57e92f31959963ab3d68",
+  "campaign_diagnostics.json": "6159614c78e2a60df9f38241ebba9e335734f831aaa4b0f9cd72e35d00144991",
+  "campaign_examples_direct_recalculation.csv": "1ecc4e083de1026d517ac6eb34065a19b0c1e1cac71796c29421c3b7bab35bb1",
+  "campaign_metrics.csv": "aeef9a337b9a2aa576950c350ceb50eca8b7e4fafc5aa62e50e59f267dd38abc",
+  "metadata.json": "dcb056d2bba563eb71b206f36deff5fad7093ce78cbdadc18f873d2ff0a9e5c6",
+  "data/processed/final/pricing_product_campaign.parquet": "8e1f86a32a49a5ae8d0e8896531bf3cf71d78d174fa05da0e27b9a5842d5568c",
   "data/processed/final/pricing_product_week.parquet": "b2c7cd7496cba45c480e7ac703b51acf90cbf947f3baa59cbc20f5416dc117e6",
   "data/processed/final/pricing_product_day_reference.parquet": "b336733bfd4c8db7c192c268ac6d303d0ffe37a1369655a5f4f09c8e51eaa1db"
 }

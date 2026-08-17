@@ -7,9 +7,17 @@
   "n_product_week_rows": 23700,
   "effective_independent_campaigns": 120,
   "historical_product_day_reference_wape": 0.4164,
-  "campaign_wape_macro_windows": 1.3152319149327794,
-  "campaign_wape_micro_pooled": 1.2744016695202336,
-  "heavy_models_status": "not_run_gate_independent_campaigns_insufficient_for_reliable_ml",
+  "campaign_wape_macro_windows": 1.0,
+  "campaign_wape_micro_pooled": 1.0,
+  "heavy_models_status": "bounded_regularised_pilot_run_no_optuna",
+  "decision": {
+    "campaign_predictive_model_promoted": false,
+    "official_product_day_model": "LightGBM_calibre",
+    "campaign_dataset_use": "descriptive_policy_evaluation_only",
+    "best_bounded_pilot": "lightgbm_poisson_regularise",
+    "best_bounded_pilot_wape_micro": 0.6476,
+    "best_bounded_pilot_bias": -0.3103
+  },
   "discount_support": {
     "5": 26,
     "10": 30,
