@@ -57,3 +57,17 @@ def test_complement_ranker_artifact_declares_leakage_controls():
     assert meta["deterministic_negative_seed"] == 42
     assert meta["evaluated_windows"] == [2, 3, 4]
     assert meta["f1_model_evaluation_allowed"] is False
+
+
+def test_end_to_end_predictions_are_materialized_and_bootstrapped():
+    pred = OUT / "complement_topk_predictions.parquet"
+    meta = OUT / "complement_end_to_end_metadata.json"
+    assert pred.exists() and meta.exists()
+    df = pd.read_parquet(pred)
+    assert set(df.window.unique()) == {2, 3, 4}
+    assert (df.label == 1).groupby(df.order_id).sum().max() >= 0
+    assert not df.duplicated(["order_id", "window", "target", "model", "item"]).any()
+    assert all(str(t) not in str(c) for t, c in zip(df.target.head(1000), df.context_items.head(1000)))
+    m = json.loads(meta.read_text(encoding="utf-8"))
+    assert m["bootstrap_replicates"] >= 2000
+    assert m["bootstrap_unit"] == "commande_x_fenetre"

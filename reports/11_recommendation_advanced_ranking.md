@@ -54,6 +54,12 @@ Diagnostic F1 : 0 commande d'entraînement, 5 338 commandes test, 0 produit di
 
 Après de nouvelles données ou une définition sessionnelle corrigée, exécuter quatre fenêtres temporelles, tuning uniquement antérieur, checkpoints séquentiels, tests de fuite par perturbation, déterminisme, doublons Top-10, éligibilité, diversité, nouveauté, concentration et bootstrap à 95 %. Le reranking métier ne pourra réduire la pertinence de plus de 2 % hors scénario explicitement « découverte ».
 
+## Sorties end-to-end complément panier F2–F4
+
+Les recommandations Top-20 (dont le Top-10) sont matérialisées dans `complement_topk_predictions.parquet`. Chaque ligne conserve `order_id`, fenêtre, cible masquée, contexte, union de candidats, modèle, rang et score. La cible est absente du contexte, les commandes restent indivisibles entre splits et les produits sont dédupliqués.
+
+Les métriques comparables sont publiées dans `complement_end_to_end_metrics.csv` pour référence, popularité globale, popularité catégorie, cooccurrence, BM25, association et `candidate_union_rrf`, sur 5/10/20. Le bootstrap stratifié par fenêtre au grain commande comporte 2 000 réplications : IC95 % de la différence NDCG@10 RRF − meilleure baseline = [-0,00268 ; -0,00033]. Le gain est donc défavorable ; RRF ne franchit pas le gate et l’ancienne référence complément panier est conservée. LambdaRank n’est pas lancé, conformément à la règle conditionnelle (RRF n’a pas échoué avec un gain candidat justifiant son exécution).
+
 ## Artefacts
 
 Métadonnées, couverture candidat et manifeste SHA-256 : `models/advanced/recommendation_ranking/`. Aucun write-back Supabase, déploiement, merge ou push n’est autorisé dans ce commit.
