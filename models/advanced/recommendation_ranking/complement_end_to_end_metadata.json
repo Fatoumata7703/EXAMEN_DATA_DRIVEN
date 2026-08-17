@@ -14,5 +14,7 @@
   ],
   "rrf_promotion": false,
   "decision": "ancienne_reference_conservee",
+  "lambdarank_evaluated": true,
+  "lambdarank_metrics_file": "complement_lambdarank_metrics.json",
   "f1_status": "non_evaluable_no_history"
 }
