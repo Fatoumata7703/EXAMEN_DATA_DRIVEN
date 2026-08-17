@@ -93,3 +93,28 @@ L'apport marginal du stock et de la promotion est faible mais positif dans ce te
 - Quotidien : conserver CrostonOptimized.
 - Cumul 30 jours : LightGBM direct par horizon est **candidat expérimental principal**, à promouvoir seulement après revue et décision explicite.
 - Aucun modèle n'est présenté comme vainqueur global.
+
+## Vérification finale du candidat direct
+
+Le périmètre est strictement identique (300 produits × 30 jours × 6 fenêtres). Les WAPE30 sont :
+
+| Fenêtre | Direct | LightGBM_Tweedie | Croston | MovingAverage28 |
+|---:|---:|---:|---:|---:|
+| 1 | 0,26794 | 0,30946 | 0,40723 | 0,33603 |
+| 2 | 0,28876 | 0,33012 | 0,40509 | 0,35805 |
+| 3 | 0,24895 | 0,32212 | 0,35845 | 0,31976 |
+| 4 | 0,25868 | 0,28966 | 0,34051 | 0,30064 |
+| 5 | 0,25282 | 0,31638 | 0,35762 | 0,32518 |
+| 6 | 0,23274 | 0,29569 | 0,35083 | 0,30474 |
+
+Le direct gagne 6/6 fenêtres contre LightGBM_Tweedie et satisfait la règle de stabilité (au moins 4/6). Bootstrap apparié produit×fenêtre (3 000 tirages) : différence WAPE30 = -0,05267, IC95 % [-0,06048 ; -0,04488]. La promotion est donc limitée à `planning_30d_model = LightGBM_direct_per_horizon`; `operational_daily_model = CrostonOptimized` reste inchangé.
+
+Les moyennes directes vérifiées sont WAPE quotidienne 1,08698, WAPE7 0,45457, WAPE14 0,34978, WAPE30 0,25831 et biais -0,02589. Par fenêtre, les WAPE7/WAPE14/WAPE30 sont respectivement : (0,43816/0,35223/0,26794), (0,47627/0,37504/0,28876), (0,46897/0,35326/0,24895), (0,45155/0,34031/0,25868), (0,43348/0,33541/0,25282), (0,45898/0,34240/0,23274). RMSSE = 1,162/2,170/1,539/2,058/3,752/1,248 et MASE = 2,083/4,754/3,481/4,286/5,650/2,538 ; les échelles nulles sont exclues et comptées comme non définies (55, 35, 25, 17, 9, 1 produits). ABC-A, intermittents et produits récents (âge de version ≤28 jours) sont évalués séparément : WAPE ABC-A = 0,484/1,706/0,524/0,364/0,574/6 599 (la dernière valeur est dominée par un dénominateur très faible), intermittents = 1,086/1,113/1,081/1,058/1,071/1,099, nouveaux produits = 1,141/1,319/1,291/1,013/1,091/1,320.
+
+Chaque horizon J+1…J+30 a son modèle direct (180 checkpoints) ; aucune feature ne lit une date future. Le tuning est antérieur à chaque fenêtre. Les vues/paniers sont décalés, le stock est celui du cutoff, et la remise suppose un calendrier planifié gelé. Qualité : 0 NaN/infini, 0 prédiction négative, 0 fallback silencieux. Les produits nouveaux et historiques courts ne sont pas assimilés aux produits matures : une politique cold-start explicite reste requise en production.
+
+### Ablations
+
+Les ablations disponibles portent sur le modèle global contrôlé (mêmes fenêtres, sans retuning) : sans promotions 0,26212 ; sans web décalé 0,25913 ; sans stock cutoff 0,26063 ; complet global 0,26005. Une variante strictement « ventes/calendrier uniquement » n'a pas été exécutée dans cette phase ; elle est explicitement marquée manquante plutôt que reconstruite a posteriori. L'ablation ne modifie pas le statut du direct et n'autorise aucune interprétation causale.
+
+Ressources du direct : 1 165,3 s d'entraînement cumulé, 40,0 s d'inférence enregistrée sur les origines, pic RSS 583,0 Mo, modèle h30 1 267 838 octets. Les artefacts sont reproductibles via les checkpoints et le manifeste.

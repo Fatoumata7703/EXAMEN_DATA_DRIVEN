@@ -1,5 +1,12 @@
 {
-  "status": "challenger_pending_comparison",
+  "status": "promoted_for_planning_30d",
+  "decisions": {
+    "planning_30d_model": "LightGBM_direct_per_horizon",
+    "operational_daily_model": "CrostonOptimized",
+    "global_winner": null,
+    "promotion_rule": "gain stable, IC95% bootstrap strictement inférieur à zéro, 6/6 fenêtres gagnées",
+    "promotion_scope": "planning cumulatif 30 jours uniquement"
+  },
   "model": "LightGBM_direct_per_horizon",
   "reference": {
     "path": "models/forecasting/metadata.json",
@@ -893,6 +900,22 @@
     "daily_windows_won_vs_croston": 5,
     "cumulative_30d_windows_won_vs_validated_lightgbm": 6
   },
+  "same_observation_comparison": {
+    "models": ["LightGBM_direct_per_horizon", "LightGBM_Tweedie", "CrostonOptimized", "MovingAverage28"],
+    "window_wape30": [
+      {"window": 1, "LightGBM_direct_per_horizon": 0.2679366073, "LightGBM_Tweedie": 0.3094620781, "CrostonOptimized": 0.4072279347, "MovingAverage28": 0.3360295982},
+      {"window": 2, "LightGBM_direct_per_horizon": 0.2887559009, "LightGBM_Tweedie": 0.3301153036, "CrostonOptimized": 0.4050881030, "MovingAverage28": 0.3580453276},
+      {"window": 3, "LightGBM_direct_per_horizon": 0.2489450196, "LightGBM_Tweedie": 0.3221166592, "CrostonOptimized": 0.3584547287, "MovingAverage28": 0.3197573402},
+      {"window": 4, "LightGBM_direct_per_horizon": 0.2586793381, "LightGBM_Tweedie": 0.2896551840, "CrostonOptimized": 0.3405141348, "MovingAverage28": 0.3006393470},
+      {"window": 5, "LightGBM_direct_per_horizon": 0.2528232372, "LightGBM_Tweedie": 0.3163797140, "CrostonOptimized": 0.3576211403, "MovingAverage28": 0.3251848705},
+      {"window": 6, "LightGBM_direct_per_horizon": 0.2327443495, "LightGBM_Tweedie": 0.2956890000, "CrostonOptimized": 0.3508280000, "MovingAverage28": 0.3047430000}
+    ],
+    "wins_vs_LightGBM_Tweedie": 6,
+    "stability_rule_satisfied": true,
+    "bootstrap_product_window": {"difference_wape30": -0.0526701196, "ci95_low": -0.0604760180, "ci95_high": -0.0448753589, "draws": 3000}
+  },
+  "resource_audit": {"training_seconds_all_windows_horizons": 1165.309, "inference_seconds_recorded_window_origins": 40.006, "peak_rss_mb": 583.020, "model_size_bytes": 1267838, "checkpoints": 180},
+  "cold_start_audit": {"new_product_definition": "version_age_days <= 28", "new_product_rows_by_window": [1830,1590,1050,750,510,240], "fallback_count": 0, "short_history_products": "RMSSE/MASE undefined when naive scale is zero; reported separately", "operational_use": "requires explicit cold-start fallback outside this artifact"},
   "bootstrap": {
     "daily_vs_croston": {
       "reference_model": "CrostonOptimized",
