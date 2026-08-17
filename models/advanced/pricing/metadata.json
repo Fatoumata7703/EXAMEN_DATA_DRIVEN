@@ -1,5 +1,23 @@
 {
   "status": "experimental_observational",
+  "decision": {
+    "validated_reference": "LightGBM_calibre",
+    "gate_wape": 0.3956,
+    "pilot_windows": [1, 2],
+    "pilot_gate_passed": false,
+    "optuna_launched": false,
+    "causal_claim_allowed": false,
+    "pricing_optimization_status": "stopped_after_pilot"
+  },
+  "populations": ["estimation_individuelle_supportee", "pooling_categorie", "insufficient_evidence"],
+  "simulation_flags": {
+    "automatic_application_allowed": false,
+    "human_validation_required": true,
+    "causal_effect_estimated": false,
+    "off_policy_evaluation_validated": false,
+    "simulation_status": "observational_supported_scenarios",
+    "support_status": "product_observed_support_only"
+  },
   "selected_experimental_predictor": "CatBoost_enriched",
   "validated_reference": {
     "path": "models/pricing/metadata.json",
