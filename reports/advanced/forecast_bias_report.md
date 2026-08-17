@@ -2,6 +2,13 @@
 
 Convention : `Forecast Bias = Σ(pred − actual) / Σ(actual)`. Les biais positifs indiquent une sur-prévision, les négatifs une sous-prévision. Toutes les mesures sont calculées sur les mêmes observations que la WAPE, sans retrait de produits difficiles.
 
+### Conventions WAPE officielles
+
+- `WAPE_macro_fenetres = 0,25831` : moyenne **non pondérée** des six WAPE calculées séparément sur chaque fenêtre.
+- `WAPE_micro_poolée = 0,25743` : somme de toutes les erreurs absolues divisée par la somme de toutes les valeurs réelles sur l’ensemble des observations produit×fenêtre.
+
+Les deux valeurs sont correctes et répondent à deux conventions d’agrégation différentes. La métrique officielle historique reste `WAPE_macro_fenetres = 0,25831`; la WAPE micro est publiée comme contrôle complémentaire, jamais comme correction de la macro.
+
 ## Modèles six fenêtres — grain produit×fenêtre
 
 | Modèle | Horizon | Réel | Prévu | Erreur signée | Bias | WAPE | Mean Error | Forecast/Actual | Sur | Sous |

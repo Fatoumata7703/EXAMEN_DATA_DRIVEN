@@ -9,7 +9,10 @@ def test_forecast_bias_ratio_consistency_and_reference():
     data = json.loads((ROOT / "reports/advanced/forecast_bias_audit.json").read_text())
     direct30 = next(r for r in data["records"] if r["model"] == "LightGBM_direct_per_horizon" and r["horizon"] == 30)
     assert abs(direct30["forecast_actual_ratio"] - (1 + direct30["forecast_bias"])) < 1e-12
-    assert abs(data["official_reference"]["wape30_six_windows"] - 0.2583140754237418) < 1e-12
+    assert data["official_reference"]["wape_macro_fenetres"] == 0.25831
+    micro = next(value for key, value in data["official_reference"].items() if key.startswith("wape_micro"))
+    assert micro == 0.25743
+    assert data["official_reference"]["official_metric"] == "wape_macro_fenetres"
     assert data["quality"]["zero_nan"] and data["quality"]["zero_negative"]
 
 

@@ -7936,7 +7936,10 @@
   ],
   "official_reference": {
     "model": "LightGBM_direct_per_horizon",
-    "wape30_six_windows": 0.2583140754237418,
+    "wape_macro_fenetres": 0.25831,
+    "wape_micro_poolée": 0.25743,
+    "aggregation_definition": "macro = moyenne non pondérée des six WAPE par fenêtre; micro = somme des erreurs absolues / somme des réels sur tous les produits×fenêtres",
+    "official_metric": "wape_macro_fenetres",
     "bias_six_windows": -0.025894923434817
   },
   "quality": {

@@ -7,6 +7,13 @@
     "promotion_rule": "gain stable, IC95% bootstrap strictement inférieur à zéro, 6/6 fenêtres gagnées",
     "promotion_scope": "planning cumulatif 30 jours uniquement"
   },
+  "wape_aggregation": {
+    "wape_macro_fenetres": 0.25831,
+    "wape_micro_poolée": 0.25743,
+    "official_metric": "wape_macro_fenetres",
+    "macro_definition": "moyenne non pondérée des six WAPE calculées séparément sur chaque fenêtre",
+    "micro_definition": "somme des erreurs absolues / somme des réels sur tous les produits×fenêtres"
+  },
   "model": "LightGBM_direct_per_horizon",
   "reference": {
     "path": "models/forecasting/metadata.json",
