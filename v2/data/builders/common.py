@@ -79,7 +79,9 @@ def normaliser_timestamps(serie: pd.Series, colonne: str) -> pd.Series:
     journées et fausserait silencieusement toutes les fenêtres temporelles.
     """
     ts = pd.to_datetime(serie, errors="coerce", utc=False)
-    if pd.api.types.is_datetime64tz_dtype(ts):
+    # ``is_datetime64tz_dtype`` est déprécié dans pandas ; l'instance explicite
+    # conserve le même contrôle sans dépendre d'une API retirée.
+    if isinstance(ts.dtype, pd.DatetimeTZDtype):
         return ts.dt.tz_convert("UTC")
     raise ValueError(
         f"{colonne} : horodatages sans fuseau. Le fuseau de référence doit être fourni "

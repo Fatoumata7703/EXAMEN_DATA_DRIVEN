@@ -81,6 +81,12 @@ Durée inclusive : 4–15 jours ; épisodes uniques produit×campagne : 2003 ; d
 
 Le modèle officiel reste donc `LightGBM_calibre` au grain produit×jour (WAPE 0,4164). Le dataset campagne est conservé pour l'analyse descriptive des politiques et l'évaluation observationnelle ; l'agrégation campagne n'a pas réduit l'incertitude.
 
+## Protocole futur, après données supplémentaires
+
+Aucune nouvelle expérimentation sur les données actuelles n'est lancée. Une future étude devra être randomisée par catégorie et classe ABC, avec traitements 0/5/10/15 % et un groupe contrôle sans remise. L'éligibilité et la probabilité d'affectation seront journalisées ; la décision de traitement devra être figée avant le début de la campagne.
+
+Avant lancement, un calcul de puissance devra confirmer le volume requis. L'analyse principale sera en intention de traiter et mesurera quantité, chiffre d'affaires, marge, annulations et retours. Un arrêt automatique s'appliquera en cas de marge insuffisante. Le réentraînement ne sera autorisé qu'après obtention d'un volume d'expositions suffisant et d'un suivi complet des résultats.
+
 ## Artifacts
 
 Datasets : `pricing_product_campaign.parquet`, `pricing_product_week.parquet`, `pricing_product_day_reference.parquet`. Diagnostics, métriques et SHA-256 : `models/campaign_level_pricing/`.
