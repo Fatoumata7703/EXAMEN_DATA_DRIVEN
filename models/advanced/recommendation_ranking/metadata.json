@@ -1,0 +1,15 @@
+{
+  "status": "candidate_coverage_audit_bounded",
+  "official_baseline": "popularite_globale",
+  "official_reference": {"recall_at10": 0.0634, "ndcg_at10": 0.0363, "coverage": 0.0622},
+  "complement_panier_reference": {"recall_at10": 0.1006, "ndcg_at10": 0.0485, "coverage": 0.8933, "status": "systeme_metier_separe"},
+  "candidate_gate": {"next_purchase_recall_at50": 0.5, "basket_recall_at50": 0.7},
+  "next_purchase_candidate_recall_at50_lower_bound": [0.6130978027, 0.5834018077, 0.5933226066, 0.5963855422],
+  "next_purchase_candidate_sources": ["popularite_globale", "popularite_recente", "popularite_categorie", "item_item_commandes", "BM25_implicite", "SVD_implicite", "BPR_implicite", "hybride_web_historique"],
+  "multi_product_orders": 22460,
+  "ranking_started": false,
+  "ranking_gate_status": "coverage_audit_only",
+  "reason_no_new_ranker": "validated candidate coverage artifact reused; no heavy rerun on the same data",
+  "session_model_usable": false,
+  "causal_claim_allowed": false
+}
