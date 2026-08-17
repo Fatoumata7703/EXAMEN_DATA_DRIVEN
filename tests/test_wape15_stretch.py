@@ -20,3 +20,12 @@ def test_pilot_does_not_pass_five_percent_gate():
     h30 = [row["wape"] for row in data["rows"] if row["horizon"] == 30]
     assert min(h30) > data["five_percent_gate"]
     assert all(row["future_features_excluded"] for row in data["rows"])
+
+
+def test_four_candidate_gates_are_independent_and_all_fail():
+    data = json.loads((ROOT / "reports/advanced/wape15_four_candidates.json").read_text())
+    candidates = {row["candidate"] for row in data["rows"]}
+    assert candidates == {"CatBoost_direct_y30", "hurdle_cum30", "hierarchical_category_to_product", "ensemble_constrained_oos"}
+    assert data["all_candidates_pass"] is False
+    assert all(not row["gate_pass"] for row in data["rows"])
+    assert all(row["future_features_excluded"] for row in data["rows"])

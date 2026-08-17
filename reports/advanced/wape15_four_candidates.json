@@ -1,0 +1,86 @@
+{
+  "gate": 0.2453983716525547,
+  "reference_mean_windows_1_2": 0.2583140754237418,
+  "rows": [
+    {
+      "window": 1,
+      "candidate": "CatBoost_direct_y30",
+      "wape30": 0.2887725346415045,
+      "bias": 0.06153913194516227,
+      "gate_pass": false,
+      "future_features_excluded": true
+    },
+    {
+      "window": 1,
+      "candidate": "hurdle_cum30",
+      "wape30": 0.2976397473476443,
+      "bias": 0.09337853607082171,
+      "gate_pass": false,
+      "future_features_excluded": true
+    },
+    {
+      "window": 1,
+      "candidate": "hierarchical_category_to_product",
+      "wape30": 0.3857236534266462,
+      "bias": -0.20098990683229817,
+      "gate_pass": false,
+      "future_features_excluded": true
+    },
+    {
+      "window": 1,
+      "candidate": "ensemble_constrained_oos",
+      "wape30": 0.29383566113463483,
+      "bias": -0.018462804470779557,
+      "gate_pass": false,
+      "weights": {
+        "direct": 0.25,
+        "LightGBM_Tweedie": 0.25,
+        "CrostonOptimized": 0.25,
+        "MovingAverage28": 0.25
+      },
+      "weight_source": "predefined_equal",
+      "future_features_excluded": true
+    },
+    {
+      "window": 2,
+      "candidate": "CatBoost_direct_y30",
+      "wape30": 0.2945850935936133,
+      "bias": 0.0024635795333137625,
+      "gate_pass": false,
+      "future_features_excluded": true
+    },
+    {
+      "window": 2,
+      "candidate": "hurdle_cum30",
+      "wape30": 0.29362075026867274,
+      "bias": 0.012766341393184045,
+      "gate_pass": false,
+      "future_features_excluded": true
+    },
+    {
+      "window": 2,
+      "candidate": "hierarchical_category_to_product",
+      "wape30": 0.393617866391463,
+      "bias": -0.19126913799044945,
+      "gate_pass": false,
+      "future_features_excluded": true
+    },
+    {
+      "window": 2,
+      "candidate": "ensemble_constrained_oos",
+      "wape30": 0.301528468532537,
+      "bias": -0.040740611392600504,
+      "gate_pass": false,
+      "weights": {
+        "direct": 0.3011026448422532,
+        "LightGBM_Tweedie": 0.2606988927630648,
+        "CrostonOptimized": 0.1981112154571718,
+        "MovingAverage28": 0.24008724693751018
+      },
+      "weight_source": "window_1_only",
+      "future_features_excluded": true
+    }
+  ],
+  "all_candidates_pass": false,
+  "families_independent": true
+}

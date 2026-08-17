@@ -824,7 +824,7 @@
       "quantity_share": 0.19299078734922595
     }
   ],
-  "historical_only_oracle": [
+  "historical_strong_baseline": [
     {
       "window": 1,
       "wape": 0.40608780736833155,

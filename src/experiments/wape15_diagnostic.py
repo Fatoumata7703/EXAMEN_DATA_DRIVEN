@@ -54,8 +54,8 @@ def main() -> int:
             hard = product.head(n)
             rows.append({"window": int(window), "segment": f"hardest_{n}", "n_products": int(len(hard)), "wape": wape(hard), "error_contribution": float(hard.abs_error.sum() / max(product.abs_error.sum(), 1.0)), "quantity_share": float(hard.y.sum() / max(product.y.sum(), 1.0))})
 
-    # Historical-only oracle: mean of positive demand and zero-rate from dates < origin.
-    oracle_rows = []
+    # Strong historical baseline: mean demand from dates strictly before origin.
+    baseline_rows = []
     for window, group in pred.groupby("window"):
         origin = pd.Timestamp(group.origin.iloc[0])
         hist = raw[raw.ds < origin]
@@ -64,17 +64,17 @@ def main() -> int:
         # Expected 30-day demand from historical mean; no future information.
         test["oracle"] = test["mean"].fillna(0) * 30
         test["error"] = test.oracle - test.y30
-        oracle_rows.append({"window": int(window), "wape": float(test.error.abs().sum() / max(test.y30.sum(), 1.0)), "n_products": int(len(test))})
+        baseline_rows.append({"window": int(window), "wape": float(test.error.abs().sum() / max(test.y30.sum(), 1.0)), "n_products": int(len(test))})
 
     payload = {
         "reference_locked": {"model": "LightGBM_direct_per_horizon", "wape30": 0.2583140754237418, "grain": "produit×fenêtre", "windows": 6, "population_unchanged": True},
         "diagnostic": rows,
-        "historical_only_oracle": oracle_rows,
+        "historical_strong_baseline": baseline_rows,
         "attainability": {"target_wape30": 0.15, "reference_gap_absolute": 0.1083140754, "reference_gap_relative": 0.4194, "interpretation": "objectif très ambitieux ; le diagnostic doit précéder toute optimisation et ne justifie aucune réduction de population"},
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps({"reference": payload["reference_locked"], "oracle": oracle_rows}, ensure_ascii=False))
+    print(json.dumps({"reference": payload["reference_locked"], "historical_strong_baseline": baseline_rows}, ensure_ascii=False))
     return 0
 
 

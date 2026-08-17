@@ -6,7 +6,7 @@ Branche : `experiment/wape15-stretch-goal`.
 
 La référence verrouillée reste `LightGBM_direct_per_horizon`, WAPE cumulée 30 jours **0,25831**, au grain produit×fenêtre, sur les six fenêtres et les 300 produits. Le seuil 0,15 exige une baisse absolue de 0,10831 (41,94 % relative), sans réduction de population.
 
-L'oracle historique raisonnable (moyenne de demande connue avant cutoff, projetée sur 30 jours) obtient WAPE 0,4061 / 0,4150 / 0,4121 / 0,4114 / 0,4146 / 0,3951. Il est donc très inférieur à la référence ; il confirme que le seuil 0,15 est extraordinairement ambitieux et non proche d'un simple gain de niveau moyen.
+La **baseline historique forte sans information future** (moyenne de demande connue avant cutoff, projetée sur 30 jours) obtient WAPE 0,4061 / 0,4150 / 0,4121 / 0,4114 / 0,4146 / 0,3951. Elle est donc très inférieure à la référence ; elle situe le diagnostic, sans constituer une limite théorique.
 
 | Segment | WAPE moyenne | Contribution moyenne à l'erreur | Part de quantité |
 |---|---:|---:|---:|
@@ -24,7 +24,20 @@ Les catégories et contributions détaillées par fenêtre sont dans `reports/ad
 
 Le pilote fenêtres 1–2 a prédit directement `y_h = somme(y[J+1:J+h])`, avec modèles séparés h=7,14,30 et uniquement des features disponibles au cutoff. Le meilleur candidat à h=30 est `LightGBM_L1_cum`, moyenne WAPE 0,28446 (0,27570 puis 0,29323), contre 0,25831 pour la référence. `LightGBM_Tweedie_cum` atteint 0,29245 et `LightGBM_Poisson_cum` 0,30797.
 
-Le gate de poursuite était une amélioration d'au moins 5 % sur la référence, soit WAPE ≤0,24540. Aucun modèle ne le franchit sur les fenêtres pilotes ; les six fenêtres, Optuna, hiérarchique, CatBoost, XGBoost, hurdle et ensemble n'ont donc pas été lancés inutilement.
+Le gate de poursuite était une amélioration d'au moins 5 % sur la référence, soit WAPE ≤0,24540. Aucun de ces trois modèles ne le franchit sur les fenêtres pilotes ; les six fenêtres et Optuna restent donc arrêtées pour cette famille.
+
+## Pilote borné des quatre familles distinctes
+
+Chaque famille a été évaluée séparément sur les fenêtres 1–2, au même grain et avec la même population. L'ensemble utilise des poids égaux prédéfinis en fenêtre 1, puis des poids inverse-erreur appris uniquement sur la fenêtre 1 pour la fenêtre 2.
+
+| Candidat | F1 WAPE30 | F2 WAPE30 | Gate pilote |
+|---|---:|---:|---|
+| CatBoost direct `y_30d` | 0,28877 | 0,29459 | non |
+| Hurdle cumulatif 30 j | 0,29764 | 0,29362 | non |
+| Hiérarchique catégorie→produit | 0,38572 | 0,39362 | non |
+| Ensemble contraint OOS | 0,29384 | 0,30153 | non |
+
+Le gate est propre à chaque famille : moyenne ≤0,24540 (ou amélioration ≥5 %). Aucun candidat ne le franchit ; aucune famille n'est rejetée au seul motif de l'échec d'une autre. CatBoost est disponible sans installation supplémentaire et ne justifie toutefois pas une poursuite. Le hurdle et l'allocation hiérarchique sont restés non négatifs, sans NaN ni fallback silencieux.
 
 ## Contrôles méthodologiques
 
@@ -36,4 +49,6 @@ Le gate de poursuite était une amélioration d'au moins 5 % sur la référence,
 
 ## Conclusion
 
-Le seuil WAPE ≤0,15 n'est pas atteint. Le meilleur score réellement obtenu dans le pilote est 0,27570 sur la fenêtre 1 et 0,29323 sur la fenêtre 2, soit un écart moyen de 0,02615 au-dessus de la référence et 0,13446 au-dessus de l'objectif. Le plancher empirique actuel est donc autour de 0,25–0,29 pour des modèles directs honnêtes ; atteindre 0,15 nécessiterait probablement davantage d'historique fiable, des signaux de demande exogènes réellement disponibles au cutoff, une meilleure couverture des ruptures/stock et une réduction structurelle de l'incertitude intermittente — pas un changement de métrique.
+Le seuil WAPE ≤0,15 est **non atteint et peu plausible avec les méthodes et données évaluées**. Le meilleur score réellement obtenu dans le pilote est 0,27570 sur la fenêtre 1 et 0,29323 sur la fenêtre 2, soit un écart moyen de 0,02615 au-dessus de la référence et 0,13446 au-dessus de l'objectif. La plage 0,25–0,29 est une plage empirique observée, pas une limite mathématique prouvée.
+
+Les données qui pourraient permettre une amélioration substantielle sont : historique plus long, date de lancement commercial réelle, demande perdue, disponibilité intrajournalière, campagnes futures connues au cutoff, signaux externes et davantage d'interactions clients.
