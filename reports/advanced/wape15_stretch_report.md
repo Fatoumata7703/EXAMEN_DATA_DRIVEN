@@ -22,20 +22,20 @@ Les catégories et contributions détaillées par fenêtre sont dans `reports/ad
 
 ## Pilote direct sur la vraie cible métier
 
-Le pilote fenêtres 1–2 a prédit directement `y_h = somme(y[J+1:J+h])`, avec modèles séparés h=7,14,30 et uniquement des features disponibles au cutoff. Le meilleur candidat à h=30 est `LightGBM_L1_cum`, moyenne WAPE 0,28446 (0,27570 puis 0,29323), contre 0,25831 pour la référence. `LightGBM_Tweedie_cum` atteint 0,29245 et `LightGBM_Poisson_cum` 0,30797.
+Le pilote fenêtres 1–2 a prédit directement `y_h = somme(y[J+1:J+h])`, avec modèles séparés h=7,14,30 et uniquement des features disponibles au cutoff. Pour le gate, la référence LightGBM direct calculée sur **les mêmes fenêtres F1–F2** est **0,27835**. Les moyennes WAPE30 des quatre familles sont : CatBoost **0,29168**, hurdle **0,29563**, hiérarchique **0,38967**, ensemble **0,29769**.
 
-Le gate de poursuite était une amélioration d'au moins 5 % sur la référence, soit WAPE ≤0,24540. Aucun de ces trois modèles ne le franchit sur les fenêtres pilotes ; les six fenêtres et Optuna restent donc arrêtées pour cette famille.
+Le gate de poursuite est une amélioration d'au moins 5 % sur cette référence F1–F2, soit **WAPE ≤0,26443**. Aucun candidat ne le franchit ; aucune exécution six fenêtres ni Optuna n'est donc justifiée.
 
 ## Pilote borné des quatre familles distinctes
 
 Chaque famille a été évaluée séparément sur les fenêtres 1–2, au même grain et avec la même population. L'ensemble utilise des poids égaux prédéfinis en fenêtre 1, puis des poids inverse-erreur appris uniquement sur la fenêtre 1 pour la fenêtre 2.
 
-| Candidat | F1 WAPE30 | F2 WAPE30 | Gate pilote |
-|---|---:|---:|---|
-| CatBoost direct `y_30d` | 0,28877 | 0,29459 | non |
-| Hurdle cumulatif 30 j | 0,29764 | 0,29362 | non |
-| Hiérarchique catégorie→produit | 0,38572 | 0,39362 | non |
-| Ensemble contraint OOS | 0,29384 | 0,30153 | non |
+| Candidat | F1 WAPE30 | F2 WAPE30 | Moyenne F1–F2 | Gate pilote |
+|---|---:|---:|---:|---|
+| CatBoost direct `y_30d` | 0,28877 | 0,29459 | **0,29168** | non |
+| Hurdle cumulatif 30 j | 0,29764 | 0,29362 | **0,29563** | non |
+| Hiérarchique catégorie→produit | 0,38572 | 0,39362 | **0,38967** | non |
+| Ensemble contraint OOS | 0,29384 | 0,30153 | **0,29769** | non |
 
 Le gate est propre à chaque famille : moyenne ≤0,24540 (ou amélioration ≥5 %). Aucun candidat ne le franchit ; aucune famille n'est rejetée au seul motif de l'échec d'une autre. CatBoost est disponible sans installation supplémentaire et ne justifie toutefois pas une poursuite. Le hurdle et l'allocation hiérarchique sont restés non négatifs, sans NaN ni fallback silencieux.
 

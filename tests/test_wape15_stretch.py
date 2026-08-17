@@ -29,3 +29,10 @@ def test_four_candidate_gates_are_independent_and_all_fail():
     assert data["all_candidates_pass"] is False
     assert all(not row["gate_pass"] for row in data["rows"])
     assert all(row["future_features_excluded"] for row in data["rows"])
+
+
+def test_pilot_gate_uses_same_windows_as_pilot():
+    data = json.loads((ROOT / "reports/advanced/wape15_four_candidates.json").read_text())
+    assert data["pilot_windows"] == data["reference_windows"] == [1, 2]
+    assert data["reference_mean_windows_1_2"] == 0.27835
+    assert data["gate"] == 0.26443

@@ -1,6 +1,9 @@
 {
-  "gate": 0.2453983716525547,
-  "reference_mean_windows_1_2": 0.2583140754237418,
+  "gate": 0.26443,
+  "pilot_windows": [1, 2],
+  "reference_windows": [1, 2],
+  "reference_mean_windows_1_2": 0.27835,
+  "candidate_mean_wape30_windows_1_2": {"CatBoost_direct_y30": 0.29168, "hurdle_cum30": 0.29563, "hierarchical_category_to_product": 0.38967, "ensemble_constrained_oos": 0.29769},
   "rows": [
     {
       "window": 1,
