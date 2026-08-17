@@ -62,9 +62,13 @@ def exclure_bots_et_tests(web: pd.DataFrame) -> pd.DataFrame:
     ignorant la question du trafic non humain — les popularités et les taux de
     conversion en dépendent directement.
     """
-    exiger_colonnes(web, ("is_bot", "is_test_interne"), contexte="exclusion bots/tests")
-    garde = ~(web["is_bot"].fillna(False).astype(bool)
-              | web["is_test_interne"].fillna(False).astype(bool))
+    # La livraison finale expose `est_bot` et ne contient pas d'indicateur de
+    # trafic interne. On accepte l'ancien alias uniquement pour compatibilité.
+    bot_col = "est_bot" if "est_bot" in web.columns else "is_bot"
+    exiger_colonnes(web, (bot_col,), contexte="exclusion bots")
+    garde = ~web[bot_col].fillna(False).astype(bool)
+    if "is_test_interne" in web.columns:
+        garde &= ~web["is_test_interne"].fillna(False).astype(bool)
     return web[garde].copy()
 
 
