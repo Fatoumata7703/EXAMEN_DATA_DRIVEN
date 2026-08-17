@@ -50,6 +50,7 @@ data/raw/
 data/extracted/
 data/interim/
 data/processed/
+data/checkpoints/
 
 # =============================================================================
 # Checkpoints et prédictions brutes de backtest (volumineux, intermédiaires,
