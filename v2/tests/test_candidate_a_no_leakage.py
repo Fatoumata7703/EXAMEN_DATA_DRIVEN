@@ -28,7 +28,11 @@ from v2.forecasting.candidate_a_blend import (
 
 @pytest.fixture(scope="module")
 def frame() -> pd.DataFrame:
-    return build_blend_frame(load_v1_operational_predictions())
+    try:
+        predictions = load_v1_operational_predictions()
+    except FileNotFoundError as exc:
+        pytest.skip(str(exc))
+    return build_blend_frame(predictions)
 
 
 # =============================================================================

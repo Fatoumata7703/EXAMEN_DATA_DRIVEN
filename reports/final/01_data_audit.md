@@ -43,8 +43,8 @@ Extraction fraîche, locale et strictement en lecture seule. Aucun cache ou rés
 |---|---:|---|
 | `product_daily_forecasting` | 163,800 | `e46095fc0dc00dee05f3451bc6d2daed0ac9d6ec4994e39142f40bf0c24da6ef` |
 | `product_day_discount_pricing` | 55,586 | `b336733bfd4c8db7c192c268ac6d303d0ffe37a1369655a5f4f09c8e51eaa1db` |
-| `order_baskets` | 80,130 | `b0d2908c7b60abbeabaf925916e88fd4ae08df0b1d196b2f4db83b3aa7b1dc07` |
-| `session_sequences` | 622,440 | `5396d9c53c6e2859ef97151ab42e5d035645bd33c0a5d2fb4270016ae11fab7e` |
+| `order_baskets` | 80,130 | `278183c3aeda82385ccaea09ea1a5025ec5c29c5c89dddbf50b56adc1b3a5a8d` |
+| `session_sequences` | 622,440 | `4e89c148085b34fd671c9cfa6c1d59e73668f5b3840d61d58608245e8ce9054e` |
 | `client_product_interactions` | 622,440 | `ba81136aca57b5e4f20d7bf840528d2e1763650bb739577a0f1d7979e55af740` |
 
 ## Limites documentées

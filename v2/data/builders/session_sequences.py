@@ -41,6 +41,8 @@ SCHEMA_SORTIE = {
     "event_id": "text — identifiant de l'événement",
     "event_timestamp": "timestamptz — horodatage, converti en UTC",
     "event_type": "text — type d'événement",
+    "order_id": "text — commande portée uniquement par purchase",
+    "quantity": "integer — quantité portée uniquement par purchase",
     "produit_key": "text — produit concerné, nul si l'événement n'en vise aucun",
     "client_key": "text — client si authentifié à cet instant, sinon nul",
     "anonymous_id": "text — identifiant de navigateur",

@@ -165,9 +165,12 @@ def _load_v1_interval_coverage() -> tuple[float, float]:
 
     - Produits A : valeur publiée au rapport 23 §8 (couverture par segment),
       extraite du markdown car ce détail n'est pas dans le CSV d'intervalles.
-    - Globale (bucket J+15-30) : lue depuis `reports/23_intervals_ae.csv`.
+    - Globale (bucket J+15-30) : lue depuis `reports/23_intervals_ae.csv`
+      quand il est disponible, sinon depuis le tableau AutoETS du rapport 23
+      versionné. Les deux artefacts publient la même mesure validée.
     """
     import csv
+    import math
     import re
 
     couverture_globale = float("nan")
@@ -187,6 +190,24 @@ def _load_v1_interval_coverage() -> tuple[float, float]:
         m = re.search(r"\|\s*classe A\s*\|\s*[\d.]+\s*\|\s*([\d.]+)\s*\|", text)
         if m:
             couverture_A = float(m.group(1))
+
+        if math.isnan(couverture_globale):
+            # Le CSV historique n'est pas versionné. Le premier tableau de la
+            # section de couverture est celui d'AutoETS+repli, modèle V1 retenu.
+            section_match = re.search(
+                r"\*\*AutoETS\+repli — couverture empirique par horizon\s*:\*\*"
+                r"(?P<table>.*?)"
+                r"\*\*WindowAverage28",
+                text,
+                flags=re.DOTALL,
+            )
+            if section_match:
+                row_match = re.search(
+                    r"\|\s*J\+15 a J\+30\s*\|\s*0\.8000\s*\|\s*([\d.]+)\s*\|",
+                    section_match.group("table"),
+                )
+                if row_match:
+                    couverture_globale = float(row_match.group(1))
 
     return couverture_A, couverture_globale
 

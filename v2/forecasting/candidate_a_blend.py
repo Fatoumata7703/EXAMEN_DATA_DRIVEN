@@ -73,7 +73,13 @@ def load_v1_operational_predictions() -> pd.DataFrame:
     (``train_observations > 0``), cold-start exclu — exactement le périmètre
     sur lequel la V1 a publié WAPE 30 j = 0,2772.
     """
-    frames = [pd.read_parquet(f) for f in sorted(glob.glob(str(OPERATIONAL_DIR / "*.parquet")))]
+    paths = sorted(glob.glob(str(OPERATIONAL_DIR / "*.parquet")))
+    if not paths:
+        raise FileNotFoundError(
+            "Prédictions opérationnelles V1 absentes : ce candidat historique "
+            f"requiert les Parquet non versionnés dans {OPERATIONAL_DIR}."
+        )
+    frames = [pd.read_parquet(f) for f in paths]
     op = pd.concat(frames, ignore_index=True)
     op = op[op["train_observations"] > 0]
     keep = op["model_requested"].isin([MODEL_A, MODEL_B])

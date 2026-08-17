@@ -72,7 +72,8 @@ def build_order_baskets(
     if d.empty:
         return pd.DataFrame(columns=list(SCHEMA_SORTIE))
 
-    if produits is not None and {"produit_key", "categorie"} <= set(produits.columns):
+    if ("categorie" not in d.columns and produits is not None
+            and {"produit_key", "categorie"} <= set(produits.columns)):
         d = d.merge(produits[["produit_key", "categorie"]].drop_duplicates("produit_key"),
                     on="produit_key", how="left")
 

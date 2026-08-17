@@ -25,8 +25,8 @@
       "taille_octets": 5367983
     },
     "reports/forecast_final/forecasting_v2_objectives.md": {
-      "sha256": "981051a8caa50679710acbd24c629afeb84b3ffa0f63ac55cfeb0da1a7f8c235",
-      "taille_octets": 15983
+      "sha256": "ae6b680678b3033ae2dffbef2e6f9dedb3d39e843d6762517501acd345a2bc29",
+      "taille_octets": 16208
     },
     "reports/23_rapport_final_forecasting.md": {
       "sha256": "ac115e6b4982d6e197ad6acf72cd3302cdd0afb4fe1a62720bfdf59f245df1a4",
@@ -37,8 +37,8 @@
       "taille_octets": 1226
     },
     "reports/25_forecasting_v1_cloture.md": {
-      "sha256": "b75d0ecd442d04ceb2b91302474b02e9a3b2f031f2cb23074e5e5754941bc83d",
-      "taille_octets": 3620
+      "sha256": "bb414401cf5e58f10e20b634a04fda1f13c37e0bc5a1118ae0ab7761c4711721",
+      "taille_octets": 3695
     },
     "reports/pricing_final/metadata.json": {
       "sha256": "de3528c13deac1f09b5b53468f8069292a537f2cf3ba5d7d5a3da4ebe6d7c80e",
@@ -53,8 +53,8 @@
       "taille_octets": 687
     },
     "reports/pricing_final/pricing_v2_objectives.md": {
-      "sha256": "a37520ecf10ffb5f2ecf5ce0910062993d06d9ece0828a6b5171bdf57cd3d687",
-      "taille_octets": 10341
+      "sha256": "f46719065988a625cf180de302d64e914decd649c7be863518a5cfa2b26e0f8e",
+      "taille_octets": 10502
     },
     "reports/33_pricing_comparaison_rapport_final.md": {
       "sha256": "3e2b7312e41c724236c01bb6aa5558d1e4feeb092a16ffce58405b6b3ec7ae20",
@@ -73,20 +73,20 @@
       "taille_octets": 1108
     },
     "reports/recsys_final/recommendation_v2_objectives.md": {
-      "sha256": "5089ebdaa8805dece8087377f4e3477b26ba2a11c47e66043aebf7e101c8f8b2",
-      "taille_octets": 9328
+      "sha256": "1b4a1ce549d98c297d6adee6268e5b1527e2ee742cc7f330f5e36f0fda62c4a2",
+      "taille_octets": 9454
     },
     "reports/41_recsys_consolidation_finale.md": {
       "sha256": "d19c2177186a3195e8990db7143890830d54b541d069e9363f43add8ac3da350",
       "taille_octets": 15362
     },
     "reports/SYNTHESE_EQUIPE_V1.md": {
-      "sha256": "69d94403fe7d1b1c6cfacaff47b1693bfaf21cac3781d3ca3e8ff8ca09718e6f",
-      "taille_octets": 8377
+      "sha256": "46eb8ce29f03f688b9ad3a08c6194171ee82b8b8f9797487a9b3412d676e06ee",
+      "taille_octets": 8549
     },
     "reports/MESSAGE_SLACK_V1.md": {
-      "sha256": "d267d7338aee2c33aacb62c3a38fcebfa0114a4629b8393a68e039e433de343d",
-      "taille_octets": 1771
+      "sha256": "c24c338178aadf015d2559139656da7975b10010bf620b6e46662f0ffe9eecb4",
+      "taille_octets": 1793
     }
   },
   "n_artefacts": 22
