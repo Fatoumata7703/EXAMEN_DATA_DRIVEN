@@ -1,0 +1,865 @@
+{
+  "reference_locked": {
+    "model": "LightGBM_direct_per_horizon",
+    "wape30": 0.2583140754237418,
+    "grain": "produit×fenêtre",
+    "windows": 6,
+    "population_unchanged": true
+  },
+  "diagnostic": [
+    {
+      "window": 1,
+      "segment": "ABC-A",
+      "n_products": 60,
+      "wape": 0.23545515999477462,
+      "error_contribution": 0.2747624190649002,
+      "quantity_share": 0.31266637089618454
+    },
+    {
+      "window": 1,
+      "segment": "ABC-B",
+      "n_products": 240,
+      "wape": 0.2827123375192308,
+      "error_contribution": 0.7252375809350998,
+      "quantity_share": 0.6873336291038155
+    },
+    {
+      "window": 1,
+      "segment": "intermittent",
+      "n_products": 247,
+      "wape": 0.24592500217205182,
+      "error_contribution": 0.8945350322990057,
+      "quantity_share": 0.974600709849157
+    },
+    {
+      "window": 1,
+      "segment": "new_le_28d",
+      "n_products": 61,
+      "wape": 0.654185723148742,
+      "error_contribution": 0.14135969776293586,
+      "quantity_share": 0.05789707187222715
+    },
+    {
+      "window": 1,
+      "segment": "mature",
+      "n_products": 239,
+      "wape": 0.24419961197884382,
+      "error_contribution": 0.858640302237064,
+      "quantity_share": 0.9421029281277729
+    },
+    {
+      "window": 1,
+      "segment": "all",
+      "n_products": 300,
+      "wape": 0.2679366073238624,
+      "error_contribution": 1.0,
+      "quantity_share": 1.0
+    },
+    {
+      "window": 1,
+      "segment": "category:Alimentation & Epicerie",
+      "n_products": 40,
+      "wape": 0.2216936173303779,
+      "error_contribution": 0.16206824602322895,
+      "quantity_share": 0.19587400177462289
+    },
+    {
+      "window": 1,
+      "segment": "category:Beaute & Soins",
+      "n_products": 39,
+      "wape": 0.2764581975668999,
+      "error_contribution": 0.11089380678819055,
+      "quantity_share": 0.10747559893522626
+    },
+    {
+      "window": 1,
+      "segment": "category:Bebe & Enfant",
+      "n_products": 42,
+      "wape": 0.25535558192262253,
+      "error_contribution": 0.11913059607321928,
+      "quantity_share": 0.125
+    },
+    {
+      "window": 1,
+      "segment": "category:Electronique & High-Tech",
+      "n_products": 42,
+      "wape": 0.27487387643470446,
+      "error_contribution": 0.14541806586871495,
+      "quantity_share": 0.1417480035492458
+    },
+    {
+      "window": 1,
+      "segment": "category:Maison & Cuisine",
+      "n_products": 32,
+      "wape": 0.2535631204177615,
+      "error_contribution": 0.07452439849676526,
+      "quantity_share": 0.0787488908606921
+    },
+    {
+      "window": 1,
+      "segment": "category:Mode & Vetements",
+      "n_products": 34,
+      "wape": 0.30118827234633466,
+      "error_contribution": 0.15048713373477235,
+      "quantity_share": 0.13387311446317657
+    },
+    {
+      "window": 1,
+      "segment": "category:Sport & Loisirs",
+      "n_products": 30,
+      "wape": 0.2894683514955076,
+      "error_contribution": 0.08244106037129072,
+      "quantity_share": 0.07630878438331855
+    },
+    {
+      "window": 1,
+      "segment": "category:Telephonie & Accessoires",
+      "n_products": 41,
+      "wape": 0.29466930686567744,
+      "error_contribution": 0.15503669264381792,
+      "quantity_share": 0.14097160603371783
+    },
+    {
+      "window": 1,
+      "segment": "hardest_10",
+      "n_products": 10,
+      "wape": 0.5847534673187671,
+      "error_contribution": 0.13434448158958107,
+      "quantity_share": 0.06155723158828749
+    },
+    {
+      "window": 1,
+      "segment": "hardest_20",
+      "n_products": 20,
+      "wape": 0.6848549132252489,
+      "error_contribution": 0.22935126530472488,
+      "quantity_share": 0.08972937000887311
+    },
+    {
+      "window": 1,
+      "segment": "hardest_50",
+      "n_products": 50,
+      "wape": 0.5426142565059198,
+      "error_contribution": 0.4456428171362914,
+      "quantity_share": 0.22005323868677906
+    },
+    {
+      "window": 2,
+      "segment": "ABC-A",
+      "n_products": 60,
+      "wape": 0.23094027127904454,
+      "error_contribution": 0.24998516862559383,
+      "quantity_share": 0.3125686662272028
+    },
+    {
+      "window": 2,
+      "segment": "ABC-B",
+      "n_products": 240,
+      "wape": 0.31504413264730285,
+      "error_contribution": 0.750014831374406,
+      "quantity_share": 0.6874313337727972
+    },
+    {
+      "window": 2,
+      "segment": "intermittent",
+      "n_products": 265,
+      "wape": 0.2726539266530943,
+      "error_contribution": 0.9254598812082845,
+      "quantity_share": 0.9801142606020655
+    },
+    {
+      "window": 2,
+      "segment": "new_le_28d",
+      "n_products": 53,
+      "wape": 0.620780486028966,
+      "error_contribution": 0.14951131712222274,
+      "quantity_share": 0.06954515491100857
+    },
+    {
+      "window": 2,
+      "segment": "mature",
+      "n_products": 247,
+      "wape": 0.26393932720589447,
+      "error_contribution": 0.850488682877777,
+      "quantity_share": 0.9304548450889915
+    },
+    {
+      "window": 2,
+      "segment": "all",
+      "n_products": 300,
+      "wape": 0.28875590087486885,
+      "error_contribution": 1.0,
+      "quantity_share": 1.0
+    },
+    {
+      "window": 2,
+      "segment": "category:Alimentation & Epicerie",
+      "n_products": 40,
+      "wape": 0.28285006559661013,
+      "error_contribution": 0.1820911938538175,
+      "quantity_share": 0.18589321028345418
+    },
+    {
+      "window": 2,
+      "segment": "category:Beaute & Soins",
+      "n_products": 39,
+      "wape": 0.387089063310046,
+      "error_contribution": 0.14565972761390286,
+      "quantity_share": 0.10865743792573061
+    },
+    {
+      "window": 2,
+      "segment": "category:Bebe & Enfant",
+      "n_products": 42,
+      "wape": 0.29011545930733357,
+      "error_contribution": 0.10927941638541902,
+      "quantity_share": 0.10876730388925511
+    },
+    {
+      "window": 2,
+      "segment": "category:Electronique & High-Tech",
+      "n_products": 42,
+      "wape": 0.2545608613704912,
+      "error_contribution": 0.11893845683756415,
+      "quantity_share": 0.13491540320808615
+    },
+    {
+      "window": 2,
+      "segment": "category:Maison & Cuisine",
+      "n_products": 32,
+      "wape": 0.25260534510540833,
+      "error_contribution": 0.07016131123060197,
+      "quantity_share": 0.08020215337288508
+    },
+    {
+      "window": 2,
+      "segment": "category:Mode & Vetements",
+      "n_products": 34,
+      "wape": 0.29065707062885177,
+      "error_contribution": 0.1283942021126316,
+      "quantity_share": 0.12755438365194463
+    },
+    {
+      "window": 2,
+      "segment": "category:Sport & Loisirs",
+      "n_products": 30,
+      "wape": 0.3354947241400966,
+      "error_contribution": 0.08641848819728337,
+      "quantity_share": 0.07437925730608658
+    },
+    {
+      "window": 2,
+      "segment": "category:Telephonie & Accessoires",
+      "n_products": 41,
+      "wape": 0.2556838431271207,
+      "error_contribution": 0.15905720376877944,
+      "quantity_share": 0.1796308503625577
+    },
+    {
+      "window": 2,
+      "segment": "hardest_10",
+      "n_products": 10,
+      "wape": 0.4515236133839676,
+      "error_contribution": 0.12352124454881068,
+      "quantity_share": 0.07899362777411557
+    },
+    {
+      "window": 2,
+      "segment": "hardest_20",
+      "n_products": 20,
+      "wape": 0.47975607811404225,
+      "error_contribution": 0.217219969208093,
+      "quantity_share": 0.13074049659415513
+    },
+    {
+      "window": 2,
+      "segment": "hardest_50",
+      "n_products": 50,
+      "wape": 0.4804548301878049,
+      "error_contribution": 0.4264809171436147,
+      "quantity_share": 0.25631729290265876
+    },
+    {
+      "window": 3,
+      "segment": "ABC-A",
+      "n_products": 60,
+      "wape": 0.1795691916496236,
+      "error_contribution": 0.21664898697298193,
+      "quantity_share": 0.3003504432075861
+    },
+    {
+      "window": 3,
+      "segment": "ABC-B",
+      "n_products": 240,
+      "wape": 0.27872715899353345,
+      "error_contribution": 0.783351013027018,
+      "quantity_share": 0.6996495567924139
+    },
+    {
+      "window": 3,
+      "segment": "intermittent",
+      "n_products": 275,
+      "wape": 0.23761603764910758,
+      "error_contribution": 0.9431782224085355,
+      "quantity_share": 0.9881467738610595
+    },
+    {
+      "window": 3,
+      "segment": "new_le_28d",
+      "n_products": 35,
+      "wape": 0.5241317462797725,
+      "error_contribution": 0.08029296158783178,
+      "quantity_share": 0.03813646670789528
+    },
+    {
+      "window": 3,
+      "segment": "mature",
+      "n_products": 265,
+      "wape": 0.238034272780925,
+      "error_contribution": 0.9197070384121683,
+      "quantity_share": 0.9618635332921047
+    },
+    {
+      "window": 3,
+      "segment": "all",
+      "n_products": 300,
+      "wape": 0.24894501955422677,
+      "error_contribution": 1.0,
+      "quantity_share": 1.0
+    },
+    {
+      "window": 3,
+      "segment": "category:Alimentation & Epicerie",
+      "n_products": 40,
+      "wape": 0.19989878363275493,
+      "error_contribution": 0.14136220326015725,
+      "quantity_share": 0.17604617604617603
+    },
+    {
+      "window": 3,
+      "segment": "category:Beaute & Soins",
+      "n_products": 39,
+      "wape": 0.2666000968705106,
+      "error_contribution": 0.1150173373435715,
+      "quantity_share": 0.10740053597196454
+    },
+    {
+      "window": 3,
+      "segment": "category:Bebe & Enfant",
+      "n_products": 42,
+      "wape": 0.3239507591524376,
+      "error_contribution": 0.13090737287675272,
+      "quantity_share": 0.10059781488352917
+    },
+    {
+      "window": 3,
+      "segment": "category:Electronique & High-Tech",
+      "n_products": 42,
+      "wape": 0.2582029069107462,
+      "error_contribution": 0.1409002699606951,
+      "quantity_share": 0.13584827870542157
+    },
+    {
+      "window": 3,
+      "segment": "category:Maison & Cuisine",
+      "n_products": 32,
+      "wape": 0.2934578199715087,
+      "error_contribution": 0.1040051247409266,
+      "quantity_share": 0.08822923108637394
+    },
+    {
+      "window": 3,
+      "segment": "category:Mode & Vetements",
+      "n_products": 34,
+      "wape": 0.22512154816790386,
+      "error_contribution": 0.12909283182934947,
+      "quantity_share": 0.1427540713254999
+    },
+    {
+      "window": 3,
+      "segment": "category:Sport & Loisirs",
+      "n_products": 30,
+      "wape": 0.29333323406788064,
+      "error_contribution": 0.0841646637458738,
+      "quantity_share": 0.07142857142857142
+    },
+    {
+      "window": 3,
+      "segment": "category:Telephonie & Accessoires",
+      "n_products": 41,
+      "wape": 0.21651949812816035,
+      "error_contribution": 0.15455019624267355,
+      "quantity_share": 0.1776953205524634
+    },
+    {
+      "window": 3,
+      "segment": "hardest_10",
+      "n_products": 10,
+      "wape": 0.4975135190755597,
+      "error_contribution": 0.11432288015398516,
+      "quantity_share": 0.05720470006184292
+    },
+    {
+      "window": 3,
+      "segment": "hardest_20",
+      "n_products": 20,
+      "wape": 0.4380884086797016,
+      "error_contribution": 0.1993401324155478,
+      "quantity_share": 0.11327561327561328
+    },
+    {
+      "window": 3,
+      "segment": "hardest_50",
+      "n_products": 50,
+      "wape": 0.3914553891878506,
+      "error_contribution": 0.40048873933193474,
+      "quantity_share": 0.2546897546897547
+    },
+    {
+      "window": 4,
+      "segment": "ABC-A",
+      "n_products": 60,
+      "wape": 0.21958876901505858,
+      "error_contribution": 0.248970678450155,
+      "quantity_share": 0.29329173166926675
+    },
+    {
+      "window": 4,
+      "segment": "ABC-B",
+      "n_products": 240,
+      "wape": 0.27490235580029526,
+      "error_contribution": 0.7510293215498449,
+      "quantity_share": 0.7067082683307332
+    },
+    {
+      "window": 4,
+      "segment": "intermittent",
+      "n_products": 283,
+      "wape": 0.24794415895655297,
+      "error_contribution": 0.946257119953041,
+      "quantity_share": 0.9872269890795632
+    },
+    {
+      "window": 4,
+      "segment": "new_le_28d",
+      "n_products": 25,
+      "wape": 0.5909237592491696,
+      "error_contribution": 0.12517800168537327,
+      "quantity_share": 0.054797191887675505
+    },
+    {
+      "window": 4,
+      "segment": "mature",
+      "n_products": 275,
+      "wape": 0.23941779857022932,
+      "error_contribution": 0.8748219983146267,
+      "quantity_share": 0.9452028081123245
+    },
+    {
+      "window": 4,
+      "segment": "all",
+      "n_products": 300,
+      "wape": 0.25867933814721494,
+      "error_contribution": 1.0,
+      "quantity_share": 1.0
+    },
+    {
+      "window": 4,
+      "segment": "category:Alimentation & Epicerie",
+      "n_products": 40,
+      "wape": 0.20722459982187755,
+      "error_contribution": 0.15934253560668932,
+      "quantity_share": 0.19890795631825273
+    },
+    {
+      "window": 4,
+      "segment": "category:Beaute & Soins",
+      "n_products": 39,
+      "wape": 0.26844573225538954,
+      "error_contribution": 0.1254695775767642,
+      "quantity_share": 0.12090483619344773
+    },
+    {
+      "window": 4,
+      "segment": "category:Bebe & Enfant",
+      "n_products": 42,
+      "wape": 0.34009800029235904,
+      "error_contribution": 0.1285775831435996,
+      "quantity_share": 0.09779641185647425
+    },
+    {
+      "window": 4,
+      "segment": "category:Electronique & High-Tech",
+      "n_products": 42,
+      "wape": 0.27674562977548856,
+      "error_contribution": 0.15042024044638003,
+      "quantity_share": 0.14060062402496099
+    },
+    {
+      "window": 4,
+      "segment": "category:Maison & Cuisine",
+      "n_products": 32,
+      "wape": 0.27732778304610695,
+      "error_contribution": 0.08216297815110042,
+      "quantity_share": 0.07663806552262091
+    },
+    {
+      "window": 4,
+      "segment": "category:Mode & Vetements",
+      "n_products": 34,
+      "wape": 0.18798170388299965,
+      "error_contribution": 0.08864069206966287,
+      "quantity_share": 0.1219773790951638
+    },
+    {
+      "window": 4,
+      "segment": "category:Sport & Loisirs",
+      "n_products": 30,
+      "wape": 0.34249011849523037,
+      "error_contribution": 0.09630461956409939,
+      "quantity_share": 0.07273790951638065
+    },
+    {
+      "window": 4,
+      "segment": "category:Telephonie & Accessoires",
+      "n_products": 41,
+      "wape": 0.25662272914514755,
+      "error_contribution": 0.16908177344170414,
+      "quantity_share": 0.1704368174726989
+    },
+    {
+      "window": 4,
+      "segment": "hardest_10",
+      "n_products": 10,
+      "wape": 0.45072509579866504,
+      "error_contribution": 0.11994349168995265,
+      "quantity_share": 0.0688377535101404
+    },
+    {
+      "window": 4,
+      "segment": "hardest_20",
+      "n_products": 20,
+      "wape": 0.47554989903812517,
+      "error_contribution": 0.2104381317161276,
+      "quantity_share": 0.11446957878315132
+    },
+    {
+      "window": 4,
+      "segment": "hardest_50",
+      "n_products": 50,
+      "wape": 0.43535121126966003,
+      "error_contribution": 0.4058112852575728,
+      "quantity_share": 0.24112714508580343
+    },
+    {
+      "window": 5,
+      "segment": "ABC-A",
+      "n_products": 60,
+      "wape": 0.22561882089687013,
+      "error_contribution": 0.26013272223938433,
+      "quantity_share": 0.29149871747893
+    },
+    {
+      "window": 5,
+      "segment": "ABC-B",
+      "n_products": 240,
+      "wape": 0.2640159514946695,
+      "error_contribution": 0.7398672777606158,
+      "quantity_share": 0.70850128252107
+    },
+    {
+      "window": 5,
+      "segment": "intermittent",
+      "n_products": 291,
+      "wape": 0.24004404150739428,
+      "error_contribution": 0.9285792624061773,
+      "quantity_share": 0.9780139245144742
+    },
+    {
+      "window": 5,
+      "segment": "new_le_28d",
+      "n_products": 17,
+      "wape": 0.49545924029423044,
+      "error_contribution": 0.09730310613832756,
+      "quantity_share": 0.04965188713814584
+    },
+    {
+      "window": 5,
+      "segment": "mature",
+      "n_products": 283,
+      "wape": 0.24014647664489508,
+      "error_contribution": 0.9026968938616725,
+      "quantity_share": 0.9503481128618542
+    },
+    {
+      "window": 5,
+      "segment": "all",
+      "n_products": 300,
+      "wape": 0.25282323717053995,
+      "error_contribution": 1.0,
+      "quantity_share": 1.0
+    },
+    {
+      "window": 5,
+      "segment": "category:Alimentation & Epicerie",
+      "n_products": 40,
+      "wape": 0.2513394713878703,
+      "error_contribution": 0.18660451218310042,
+      "quantity_share": 0.18770611945767682
+    },
+    {
+      "window": 5,
+      "segment": "category:Beaute & Soins",
+      "n_products": 39,
+      "wape": 0.22386512850583193,
+      "error_contribution": 0.1082085963568868,
+      "quantity_share": 0.12220593624038109
+    },
+    {
+      "window": 5,
+      "segment": "category:Bebe & Enfant",
+      "n_products": 42,
+      "wape": 0.2689032088288962,
+      "error_contribution": 0.10464530576443222,
+      "quantity_share": 0.09838768779772811
+    },
+    {
+      "window": 5,
+      "segment": "category:Electronique & High-Tech",
+      "n_products": 42,
+      "wape": 0.2777911970203694,
+      "error_contribution": 0.18369647948575013,
+      "quantity_share": 0.1671857823378527
+    },
+    {
+      "window": 5,
+      "segment": "category:Maison & Cuisine",
+      "n_products": 32,
+      "wape": 0.2413635302113123,
+      "error_contribution": 0.07381312310057192,
+      "quantity_share": 0.07731769879076585
+    },
+    {
+      "window": 5,
+      "segment": "category:Mode & Vetements",
+      "n_products": 34,
+      "wape": 0.17662749455923354,
+      "error_contribution": 0.08063959518203004,
+      "quantity_share": 0.11542689629901062
+    },
+    {
+      "window": 5,
+      "segment": "category:Sport & Loisirs",
+      "n_products": 30,
+      "wape": 0.2696271967111413,
+      "error_contribution": 0.06360103311023808,
+      "quantity_share": 0.059637229754488826
+    },
+    {
+      "window": 5,
+      "segment": "category:Telephonie & Accessoires",
+      "n_products": 41,
+      "wape": 0.29197873874760266,
+      "error_contribution": 0.1987913548169906,
+      "quantity_share": 0.17213264932209602
+    },
+    {
+      "window": 5,
+      "segment": "hardest_10",
+      "n_products": 10,
+      "wape": 0.5115286589481799,
+      "error_contribution": 0.13345103679364215,
+      "quantity_share": 0.0659582264565775
+    },
+    {
+      "window": 5,
+      "segment": "hardest_20",
+      "n_products": 20,
+      "wape": 0.4409772937156367,
+      "error_contribution": 0.22002379610023665,
+      "quantity_share": 0.12614510809820448
+    },
+    {
+      "window": 5,
+      "segment": "hardest_50",
+      "n_products": 50,
+      "wape": 0.41835916357616043,
+      "error_contribution": 0.42505661621034313,
+      "quantity_share": 0.2568706485892268
+    },
+    {
+      "window": 6,
+      "segment": "ABC-A",
+      "n_products": 60,
+      "wape": 0.2017054979741974,
+      "error_contribution": 0.2532672067603041,
+      "quantity_share": 0.2922404786779371
+    },
+    {
+      "window": 6,
+      "segment": "ABC-B",
+      "n_products": 240,
+      "wape": 0.24556057948487972,
+      "error_contribution": 0.7467327932396961,
+      "quantity_share": 0.7077595213220629
+    },
+    {
+      "window": 6,
+      "segment": "intermittent",
+      "n_products": 299,
+      "wape": 0.23324775663724193,
+      "error_contribution": 0.9997833888042241,
+      "quantity_share": 0.997625605470605
+    },
+    {
+      "window": 6,
+      "segment": "new_le_28d",
+      "n_products": 8,
+      "wape": 0.3459671686849712,
+      "error_contribution": 0.038400556633916436,
+      "quantity_share": 0.025833412479817647
+    },
+    {
+      "window": 6,
+      "segment": "mature",
+      "n_products": 292,
+      "wape": 0.22974185294975302,
+      "error_contribution": 0.9615994433660836,
+      "quantity_share": 0.9741665875201824
+    },
+    {
+      "window": 6,
+      "segment": "all",
+      "n_products": 300,
+      "wape": 0.23274434947173794,
+      "error_contribution": 1.0,
+      "quantity_share": 1.0
+    },
+    {
+      "window": 6,
+      "segment": "category:Alimentation & Epicerie",
+      "n_products": 40,
+      "wape": 0.1792466673950267,
+      "error_contribution": 0.14592433343191474,
+      "quantity_share": 0.18947668344572133
+    },
+    {
+      "window": 6,
+      "segment": "category:Beaute & Soins",
+      "n_products": 39,
+      "wape": 0.2067565747333623,
+      "error_contribution": 0.1078261033476715,
+      "quantity_share": 0.12137904834267262
+    },
+    {
+      "window": 6,
+      "segment": "category:Bebe & Enfant",
+      "n_products": 42,
+      "wape": 0.31159766524405835,
+      "error_contribution": 0.13147659917550633,
+      "quantity_share": 0.09820495773577738
+    },
+    {
+      "window": 6,
+      "segment": "category:Electronique & High-Tech",
+      "n_products": 42,
+      "wape": 0.26511863031329796,
+      "error_contribution": 0.17807534996287736,
+      "quantity_share": 0.1563301358153671
+    },
+    {
+      "window": 6,
+      "segment": "category:Maison & Cuisine",
+      "n_products": 32,
+      "wape": 0.24841703630846926,
+      "error_contribution": 0.08474642406698754,
+      "quantity_share": 0.07939975306296894
+    },
+    {
+      "window": 6,
+      "segment": "category:Mode & Vetements",
+      "n_products": 34,
+      "wape": 0.25402064667353935,
+      "error_contribution": 0.12905418633003585,
+      "quantity_share": 0.11824484756387121
+    },
+    {
+      "window": 6,
+      "segment": "category:Sport & Loisirs",
+      "n_products": 30,
+      "wape": 0.3716428384660255,
+      "error_contribution": 0.096149881767148,
+      "quantity_share": 0.060214645265457306
+    },
+    {
+      "window": 6,
+      "segment": "category:Telephonie & Accessoires",
+      "n_products": 41,
+      "wape": 0.16690064117016237,
+      "error_contribution": 0.12674712191785886,
+      "quantity_share": 0.17674992876816412
+    },
+    {
+      "window": 6,
+      "segment": "hardest_10",
+      "n_products": 10,
+      "wape": 0.6518168127645053,
+      "error_contribution": 0.10985234653837257,
+      "quantity_share": 0.03922499762560547
+    },
+    {
+      "window": 6,
+      "segment": "hardest_20",
+      "n_products": 20,
+      "wape": 0.5192577250916631,
+      "error_contribution": 0.1932464537329701,
+      "quantity_share": 0.08661791243232976
+    },
+    {
+      "window": 6,
+      "segment": "hardest_50",
+      "n_products": 50,
+      "wape": 0.47068955980998883,
+      "error_contribution": 0.39029411004377934,
+      "quantity_share": 0.19299078734922595
+    }
+  ],
+  "historical_only_oracle": [
+    {
+      "window": 1,
+      "wape": 0.40608780736833155,
+      "n_products": 300
+    },
+    {
+      "window": 2,
+      "wape": 0.41502910752679195,
+      "n_products": 300
+    },
+    {
+      "window": 3,
+      "wape": 0.41207998350855496,
+      "n_products": 300
+    },
+    {
+      "window": 4,
+      "wape": 0.411423599801135,
+      "n_products": 300
+    },
+    {
+      "window": 5,
+      "wape": 0.4146207401978747,
+      "n_products": 300
+    },
+    {
+      "window": 6,
+      "wape": 0.39511676949562324,
+      "n_products": 300
+    }
+  ],
+  "attainability": {
+    "target_wape30": 0.15,
+    "reference_gap_absolute": 0.1083140754,
+    "reference_gap_relative": 0.4194,
+    "interpretation": "objectif très ambitieux ; le diagnostic doit précéder toute optimisation et ne justifie aucune réduction de population"
+  }
+}
