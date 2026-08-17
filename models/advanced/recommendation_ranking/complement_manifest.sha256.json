@@ -1,4 +1,15 @@
 {
-  "complement_candidate_metadata.json": "e0449622dcfc07bd717c93ee4b218ce3a4b475d7e47f365ed55f63a817fe4288",
-  "complement_candidate_metrics.csv": "650a8b6803683b4e79a371d66779a11c0ca89c0c88089f93741f0aedd8774af9"
+  "candidate_coverage.json": "0c92a6ae031f245284326748f5ac853137fc3821c682704005ff653ef1830cf1",
+  "complement_candidate_metadata.json": "adab940d0cc6bc13077629fa946faf6f073c616aafd23a721655e3de819c15e1",
+  "complement_candidate_metrics.csv": "41ae800688d7d12b314e4e8303a797a98e6e2e5feb1b3c8e167dfb74a9004524",
+  "complement_manifest.sha256.json": "e11397aaade69d866324b06bd494e7d2ae4114a6bf58def94eb10fe3194e5021",
+  "complement_ranker_metadata.json": "b4680e701c87008df39fd1f4786c85789dc055a6732afce63777a82abc35798c",
+  "complement_ranker_report.md": "5e5fe02814232c1fd546572fdc7714ad3808acd2d1348914b89a99dfed5df5fa",
+  "metadata.json": "e3d4366cdba8db261a8d745fe4fa149b5081cd9e5285f409899deabed01c8d41",
+  "ranking_candidates_window_1.parquet": "42d92ea6469d7f5b33afa09768161932beb4c2abe01c146c2c2bb1fd63c7c5db",
+  "ranking_candidates_window_2.parquet": "ee5bfb18050be24b0f471ad81580ab9ec1eca3109ede839d7858ad70927f9ee9",
+  "ranking_manifest.sha256.json": "20c74d19271104a497638e70900bd35cc5197135d2ca3c0e4ea5748f56d8bc97",
+  "ranking_pilot_metadata.json": "709b6a8a7c52ef8c4cf11845b338cc04931afbedd913b859d064fe67d14ad0c5",
+  "ranking_pilot_metrics.csv": "8cf1d57957ff200ae0b71f1658fcbd62094e189be9df3fc769e64b7ea039a253",
+  "ranking_pilot_report.md": "a8414e060fb795ed7b7d40251c00051794c3e5f0936dbb272e99c2c756e8d762"
 }
