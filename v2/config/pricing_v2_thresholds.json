@@ -17,11 +17,12 @@
     "methode": "challenger_ml_lightgbm",
     "wape_quantite_global": 1.0713207916807077,
     "definition_agregation": "moyenne simple des WAPE de fenêtre (chaque fenêtre pèse 1/3) — définition du chiffre figé, conservée telle quelle",
-    "biais_quantite_global": 0.0100050902964778,
+    "biais_quantite_global_unitaire": 0.0100050902964778,
+    "biais_quantite_global_normalise": 0.008577296909212745,
     "par_fenetre": {
-      "1": { "wape_quantite": 1.094946, "biais_quantite": 0.036089 },
-      "2": { "wape_quantite": 1.046194, "biais_quantite": -0.019574 },
-      "3": { "wape_quantite": 1.072822, "biais_quantite": 0.013501 }
+      "1": { "wape_quantite": 1.094946, "biais_unitaire": 0.036089, "biais_normalise": 0.029875, "n_test": 15850, "somme_y": 19147 },
+      "2": { "wape_quantite": 1.046194, "biais_unitaire": -0.019574, "biais_normalise": -0.015204, "n_test": 16986, "somme_y": 21869 },
+      "3": { "wape_quantite": 1.072822, "biais_unitaire": 0.013501, "biais_normalise": 0.011061, "n_test": 17899, "somme_y": 21847 }
     },
     "part_simulations_hors_support_individuel": 0.314,
     "note_hors_support": "216 des 688 simulations à remise non nulle (plancher principal 5 %) reposent sur le pooling catégorie et non sur le support individuel du produit."
@@ -36,10 +37,16 @@
       "non_evaluable_vaut_echec": true
     },
     "C2_biais": {
-      "metrique": "biais normalisé SUM(yhat - y) / SUM(y), moyenne simple des 3 fenêtres",
-      "seuil_valeur_absolue": 0.10,
-      "operateur": "<=",
-      "justification": "Un biais systématique fausse directement les marges et les CA simulés. La V1 est à 0,0100, donc déjà conforme : un candidat qui améliorerait le WAPE en dégradant le biais au-delà de 0,10 est rejeté. C'est exactement le piège de `panel_effets_fixes` (WAPE 0,97-1,00 mais biais -0,39 à -0,45).",
+      "_attention_deux_definitions": "Le `biais_quantite` publié en V1 est `(yhat - y).mean()`, une MOYENNE DE RÉSIDUS EN UNITÉS PAR LIGNE produit-jour — ce n'est PAS le biais normalisé. Cette métrique dépend du grain : la même prévision agrégée autrement donnerait une autre valeur. Le biais normalisé, lui, est invariant au grain. Les deux sont donc évalués, et la V1 est mesurée sous les deux.",
+      "definition_v1_biais_unitaire": "(yhat - y).mean(), en unités par ligne produit-jour",
+      "definition_v2_biais_normalise": "SUM(yhat - y) / SUM(y), sans dimension, invariant au grain",
+      "seuil_biais_unitaire": 0.10,
+      "seuil_biais_normalise": 0.10,
+      "operateur": "<= en valeur absolue, sur les DEUX",
+      "reference_v1_biais_unitaire": 0.010005090296477835,
+      "reference_v1_biais_normalise": 0.008577296909212745,
+      "reference_v1_par_fenetre_normalise": { "1": 0.029875, "2": -0.015204, "3": 0.011061 },
+      "justification": "Un biais systématique fausse directement les marges et les CA simulés. La V1 est conforme sous les deux définitions. Un candidat qui améliorerait le WAPE en dégradant le biais au-delà de 0,10 est rejeté : c'est exactement le piège de `panel_effets_fixes` (WAPE 0,97-1,00 mais biais unitaire -0,39 à -0,45).",
       "non_evaluable_vaut_echec": true
     },
     "C3_robustesse": {

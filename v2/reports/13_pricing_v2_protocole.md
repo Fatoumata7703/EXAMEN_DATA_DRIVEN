@@ -14,7 +14,8 @@ Le Pricing V1 est archivé comme **prototype exploratoire**, explicitement pas c
 |---|---|
 | Méthode retenue | `challenger_ml_lightgbm` |
 | WAPE quantité | **1,0713** |
-| Biais quantité normalisé | **+0,0100** |
+| Biais quantité (unités/ligne, définition V1) | **+0,0100** |
+| Biais quantité normalisé (recalculé) | **+0,0086** |
 | Fenêtres | 3 × 60 jours |
 | Grain | produit × jour |
 | Effet causal estimé | non |
@@ -24,11 +25,11 @@ Le Pricing V1 est archivé comme **prototype exploratoire**, explicitement pas c
 
 Vérification par recalcul :
 
-| Fenêtre | WAPE quantité | Biais | n_test | SUM\|y\| |
-|---|---:|---:|---:|---:|
-| 1 | 1,094946 | +0,036089 | 15 850 | 19 147 |
-| 2 | 1,046194 | −0,019574 | 16 986 | 21 869 |
-| 3 | 1,072822 | +0,013501 | 17 899 | 21 847 |
+| Fenêtre | WAPE quantité | Biais V1 (unités/ligne) | Biais normalisé | n_test | SUM\|y\| |
+|---|---:|---:|---:|---:|---:|
+| 1 | 1,094946 | +0,036089 | +0,029875 | 15 850 | 19 147 |
+| 2 | 1,046194 | −0,019574 | −0,015204 | 16 986 | 21 869 |
+| 3 | 1,072822 | +0,013501 | +0,011061 | 17 899 | 21 847 |
 
 Moyenne simple = **1,0713207916807075**, contre 1,0713207916807077 publié : écart de 2,2 × 10⁻¹⁶, soit une reconstitution exacte à la précision machine.
 
@@ -36,7 +37,26 @@ Moyenne simple = **1,0713207916807075**, contre 1,0713207916807077 publié : éc
 
 L'écart est négligeable ici, mais la conséquence méthodologique ne l'est pas : **P1 sera comparé à la V1 avec la moyenne simple**, définition identique au chiffre figé, pour qu'aucune fraction du gain ne provienne d'un changement de formule.
 
-### 1.2 La méthode retenue n'est pas la meilleure en WAPE — et c'était justifié
+### 1.2 Le « biais » publié n'est pas un biais normalisé
+
+Le code V1 calcule `biais = (pred_qty - y).mean()` (`src/pipelines/pricing_prototype.py:276`). Le chiffre publié **+0,0100** est donc une **moyenne de résidus en unités par ligne produit-jour**, pas le rapport `SUM(yhat − y) / SUM(y)`.
+
+La distinction compte : une moyenne de résidus **dépend du grain**. Les mêmes prévisions agrégées par semaine ou par produit donneraient une autre valeur. Le biais normalisé, lui, est invariant au grain — c'est la raison pour laquelle il avait été retenu côté forecasting, après l'écart constaté entre +2,51 et +0,067 sur des grains différents.
+
+Recalcul du biais normalisé, à partir du biais unitaire, de `n_test` et de `SUM(y)` :
+
+| Fenêtre | Biais unitaire | × n_test ÷ SUM(y) | Biais normalisé |
+|---|---:|---|---:|
+| 1 | +0,036089 | × 15 850 ÷ 19 147 | **+0,029875** |
+| 2 | −0,019574 | × 16 986 ÷ 21 869 | **−0,015204** |
+| 3 | +0,013501 | × 17 899 ÷ 21 847 | **+0,011061** |
+| **Moyenne** | **+0,010005** | | **+0,008577** |
+
+La moyenne des biais unitaires reproduit exactement le chiffre des métadonnées (0,010005090296477835 contre 0,0100050902964778 publié). La V1 est conforme au seuil de 0,10 sous **les deux** définitions — l'écart n'a donc aucune conséquence sur le verdict V1, et rien n'est corrigé rétroactivement.
+
+En revanche, pour la V2, le critère C2 exige **les deux à la fois** : le biais unitaire (pour rester comparable au chiffre figé) et le biais normalisé (parce qu'il est le seul robuste au grain).
+
+### 1.3 La méthode retenue n'est pas la meilleure en WAPE — et c'était justifié
 
 | Méthode | WAPE F1 | WAPE F2 | WAPE F3 | Biais F1 | Biais F2 | Biais F3 |
 |---|---:|---:|---:|---:|---:|---:|
@@ -49,9 +69,9 @@ L'écart est négligeable ici, mais la conséquence méthodologique ne l'est pas
 
 **Conséquence pour la V2 : un WAPE plus bas obtenu au prix d'un biais massif ne compte pas comme une amélioration.** C'est la raison d'être du critère C2.
 
-### 1.3 Les prédictions par ligne ne sont pas archivées
+### 1.4 Les prédictions par ligne ne sont pas archivées
 
-La V1 n'a conservé que les métriques agrégées par fenêtre, pas les prédictions ligne à ligne. **P1 doit donc régénérer les prédictions V1 avec le code figé et retrouver exactement les six valeurs du tableau 1.1** avant d'appliquer la moindre calibration. Sans cette reproduction, aucun écart V1/P1 ne serait interprétable — il pourrait venir de la calibration comme d'une divergence d'environnement.
+La V1 n'a conservé que les métriques agrégées par fenêtre, pas les prédictions ligne à ligne. **P1 doit donc régénérer les prédictions V1 avec le code figé et retrouver exactement les valeurs du tableau 1.1** avant d'appliquer la moindre calibration. Sans cette reproduction, aucun écart V1/P1 ne serait interprétable — il pourrait venir de la calibration comme d'une divergence d'environnement.
 
 ---
 
@@ -247,7 +267,7 @@ Fichier : `v2/config/pricing_v2_thresholds.json`. Règle transverse : **un crit�
 | Critère | Exigence | Référence V1 |
 |---|---|---|
 | **C1 — Précision** | WAPE quantité < 1,00 (moyenne simple des 3 fenêtres) | 1,0713 → échoue |
-| **C2 — Biais** | \|biais normalisé\| ≤ 0,10 | +0,0100 → conforme |
+| **C2 — Biais** | \|biais unitaire\| ≤ 0,10 **et** \|biais normalisé\| ≤ 0,10 | +0,0100 / +0,0086 → conforme |
 | **C3 — Robustesse** | amélioration stricte du WAPE sur ≥ 2 fenêtres sur 3 | — |
 | **C4 — Garde-fou marge** | 0 violation, sous les **deux** définitions du plancher | 0 sur coût / 5 sur prix |
 | **C5 — Aucune extrapolation** | 0 remise hors {0, 5, 10, 15, 20, 25, 30} % | 0 |
