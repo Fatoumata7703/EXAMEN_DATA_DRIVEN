@@ -8,7 +8,7 @@ Branche isolée : `experiment/advanced-model-optimization`. La livraison validé
 |---|---|---|
 | Forecasting | terminé | CrostonOptimized quotidien inchangé ; LightGBM direct candidat expérimental cumul 30 j |
 | Pricing | terminé | aucun challenger promu ; simulateur observationnel uniquement |
-| Recommandation | à exécuter | aucune décision avancée |
+| Recommandation | terminé | popularité globale = baseline officielle ; rankers = challengers exploratoires |
 
 ## Forecasting
 
@@ -25,6 +25,24 @@ La cible reste la quantité confirmée au grain produit × jour × remise, éval
 La référence LightGBM_calibre (WAPE 0,4164) reste figée mais utilisait `n_lignes`, corrélé à 0,708 avec la quantité et indisponible avant les ventes : elle n'est pas une preuve qu'une prédiction décisionnelle à 0,4164 soit réalisable. Le support commun n'a filtré aucune ligne. L'AIPW est publié comme sensibilité observationnelle uniquement. Le simulateur respecte coût et marge minimale sur 300 produits, mais recommande 0 % partout ; application automatique et interprétation causale restent interdites.
 
 Détails reproductibles : [pricing_advanced.md](advanced/pricing_advanced.md).
+
+## Recommandation générale avancée
+
+Quatre fenêtres de 30 jours ont été évaluées, avec apprentissage strictement antérieur, candidats issus uniquement du passé, exclusions des articles déjà vus et vérité terrain sur commandes confirmées. Les métriques sont end-to-end (clients sans vérité conservés et scorés à zéro) et aucune population n'a été réduite.
+
+| Système | Recall@10 moyen | NDCG@10 moyen | Couverture catalogue | Statut |
+|---|---:|---:|---:|---|
+| popularité globale | 0,0669 | 0,0377 | 0,061 | baseline officielle |
+| hybride_web_historique | 0,0643 | 0,0373 | 0,298 | challenger exploratoire |
+| CatBoost ranker | 0,0614 | 0,0349 | 0,405 | challenger |
+| LightGBM ranker | 0,0536 | 0,0310 | 0,654 | challenger |
+| BPR implicite | 0,0421 | 0,0248 | 0,906 | challenger |
+
+Le gain hybride n'est pas présent : différence NDCG@10 vs popularité = -0,00665, IC95 % [-0,00943 ; -0,00401] au bootstrap client-fenêtre (5 000 tirages). Il ne satisfait ni Recall ≥ 0,08, ni NDCG ≥ 0,045, ni la stabilité sur 3/4 fenêtres. Aucun modèle n'est donc retenu ; la popularité globale reste la baseline utilisable. Les ablations confirment que web, stock et commandes changent la couverture mais pas la pertinence.
+
+Le diagnostic sessionnel existant reste négatif : le pilote R3 perd 1,29 % de NDCG et 2,09 % de Recall face à la baseline sur les clients personnalisables, avec forte sparsité (~0,96). L'absence de signal persiste après alignement temporel et exclusions ; aucun modèle sessionnel n'est conservé comme utilisable. Le système « complémentaires panier » demeure séparé, évalué sur cooccurrence d'`order_id` et non comparable au recommender général.
+
+Artefacts : `models/advanced/recommendation/general_metadata.json`, `general_recommender.joblib`, `manifest.sha256.json` et checkpoints par fenêtre. Disponibilités : BM25 manuel et BPR CPU ; LightFM/implicit et modèles séquentiels profonds non installés et non lancés.
 
 ## Gouvernance
 
