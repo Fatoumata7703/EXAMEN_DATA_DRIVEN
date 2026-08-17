@@ -1,0 +1,27 @@
+{
+  "status": "campaign_level_audit_and_bounded_baselines",
+  "n_campaigns": 120,
+  "n_product_campaign_episodes": 2406,
+  "n_primary_episodes": 2003,
+  "overlap_episodes": 403,
+  "n_product_week_rows": 23700,
+  "effective_independent_campaigns": 120,
+  "historical_product_day_reference_wape": 0.4164,
+  "campaign_wape_macro_windows": 1.3152319149327794,
+  "campaign_wape_micro_pooled": 1.2744016695202336,
+  "heavy_models_status": "not_run_gate_independent_campaigns_insufficient_for_reliable_ml",
+  "discount_support": {
+    "5": 26,
+    "10": 30,
+    "15": 27,
+    "20": 12,
+    "25": 15,
+    "30": 9,
+    "40": 1
+  },
+  "metrics_path": "C:\\Users\\X1 Carbon\\OneDrive\\Dokumente\\ECOMMERCE_FORECASTING_PRICING_RECOMMANDATION\\models\\campaign_level_pricing\\campaign_metrics.csv",
+  "features_strictly_pre_campaign": true,
+  "post_campaign_features_used": false,
+  "causal_claim_allowed": false,
+  "automatic_application_allowed": false
+}
