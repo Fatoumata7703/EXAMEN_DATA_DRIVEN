@@ -1,6 +1,6 @@
 # 04 — Recommandation finale
 
-**Modèle retenu pour la découverte : `hybride_achats_web`.**
+**Baseline officielle : `popularite_globale`. Hybride : `challenger_exploratoire`.**
 
 | model                   | scenario            |    recall |      ndcg |      map10 |   coverage |   diversity |
 |:------------------------|:--------------------|----------:|----------:|-----------:|-----------:|------------:|
@@ -19,13 +19,28 @@
 | popularite_categorie    | reapprovisionnement | 0.04732   | 0.0278971 | 0.0152582  |  0.266667  |    0.1      |
 | regles_association_lift | reapprovisionnement | 0.0276558 | 0.0162255 | 0.0087174  |  0.714444  |    0.569181 |
 
-## Scénarios spécialisés
+## Comparaison hybride vs baseline par fenêtre
 
-- Complémentaires panier, NDCG@10 : 0.0485.
-- Sessions connues/anonymes, NDCG@10 : 2.35922e-05.
+|   window |   global_recall |   hybrid_recall |   global_ndcg |   hybrid_ndcg |   n_client_windows |   recall_diff |   ndcg_diff |
+|---------:|----------------:|----------------:|--------------:|--------------:|-------------------:|--------------:|------------:|
+|        1 |       0.0673296 |       0.0658008 |     0.0370773 |     0.0384632 |               2430 |  -0.00152881  | 0.00138587  |
+|        2 |       0.062755  |       0.0619017 |     0.0351641 |     0.0361994 |               2470 |  -0.000853255 | 0.00103523  |
+|        3 |       0.0616676 |       0.0624815 |     0.0366185 |     0.0370647 |               2484 |   0.000813954 | 0.000446189 |
+
+## Bootstrap apparié client-fenêtre
+
+- ΔNDCG@10 : 0.000952, IC95% [-0.000842; 0.002764].
+- ΔRecall@10 : -0.000515, IC95% [-0.003584; 0.002512].
+
+## Systèmes spécialisés
+
+- Complémentaires panier : système métier séparé, NDCG@10 0.0485.
+- Sessions : modèle non utilisable, NDCG@10 2.35922e-05.
 
 Les achats confirmés fournissent les cibles. Les `purchase` web ne sont jamais additionnés aux ventes; leur statut vient de la commande. Les bots sont exclus. Les anonymes restent des identités de session, sans client inventé.
 
 LightFM/ALS/BPR natifs indisponibles dans l’environnement; SVD implicite légère évaluée. Aucun Transformer ou réseau profond, volume insuffisant pour le justifier.
+
+Diagnostic session : {"usable_model": false, "temporal_alignment": "contexte strictement antérieur au premier purchase confirmé", "temporal_violations": 0, "candidate_catalog_size": 300, "targets_outside_candidates": 0, "exclude_seen_applied": false, "already_seen_target_rate": 1.0, "target_survival_if_seen_excluded": 0.0, "self_only_context_session_rate": 1.0, "confirmed_purchase_events": 80130, "confirmed_purchase_sessions": 47368, "sessions_with_pre_purchase_product_context": 47368, "ground_truth": "tous les produits des purchase reliés à une commande confirmée de la session; cutoff au premier purchase"}
 
 Commande : `python -m src.pipelines.final_recommendation`.

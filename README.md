@@ -6,11 +6,12 @@ Livraison finale reconstruite à partir d'une extraction Supabase fraîche, cont
 
 | Domaine | Sélection finale | Validation temporelle | Résultat principal | Usage autorisé |
 |---|---|---|---|---|
-| Forecasting | `CrostonOptimized` | 3 fenêtres glissantes communes de 30 jours | WAPE quotidienne 1,0765; WAPE cumulée 30 j 0,3497 | Planification avec validation humaine |
-| Pricing | `LightGBM_calibre` | 3 fenêtres temporelles | WAPE 0,4167; biais -0,0009 | Simulation observationnelle de remises |
-| Recommandation | `hybride_achats_web` | 3 fenêtres temporelles, découverte et réapprovisionnement | NDCG@10 découverte 0,0372; couverture 18,67 % | Classement assisté, non automatisé |
+| Forecasting quotidien | `CrostonOptimized` | 6 fenêtres non chevauchantes de 30 jours | WAPE 1,0945; 4 victoires sur 6 | Prévision quotidienne supervisée |
+| Forecasting cumulé 30 j | `LightGBM_Tweedie` | mêmes 6 fenêtres | WAPE cumulée 0,3106 | Planification agrégée supervisée |
+| Pricing | `LightGBM_calibre` | 3 fenêtres temporelles, calibration antérieure séparée | WAPE 0,4164; biais -0,0035 | Simulation observationnelle de remises |
+| Recommandation | baseline `popularite_globale`; hybride `challenger_exploratoire` | 3 fenêtres, bootstrap client-fenêtre | ΔNDCG hybride +0,00095, IC95 % contenant zéro | Baseline contrôlée; hybride en expérimentation seulement |
 
-Ces métriques mesurent des tâches différentes et ne doivent pas être comparées entre domaines. Les scores de recommandation restent faibles en absolu; le modèle hybride n'est retenu que pour son NDCG moyen légèrement supérieur et sa couverture plus large que la popularité globale.
+Ces métriques mesurent des tâches différentes et ne doivent pas être comparées entre domaines. Aucun modèle forecasting n'est déclaré vainqueur global. Le gain de l'hybride de recommandation n'est pas statistiquement établi.
 
 ## Données finales
 
@@ -50,9 +51,9 @@ Le fichier `.env` est exclu par `.gitignore`. Ne jamais l'afficher, le journalis
 
 ## Garde-fous métier
 
-- Forecasting : aucun pilotage automatique; les intervalles 80/95 % du modèle reconstruit doivent encore être calibrés avant usage opérationnel. Les modèles LightGBM restent des challengers utiles pour le cumul 30 jours.
+- Forecasting : aucun pilotage automatique; intervalles conformes 80/95 % calibrés uniquement sur des résidus antérieurs. Croston sert le quotidien, LightGBM Tweedie le cumul 30 jours.
 - Pricing : prix jamais inférieur au coût, marge minimale configurable (5 % par défaut), remise limitée au support historique, validation humaine obligatoire. Le résultat est associatif, pas causal.
-- Recommandation : achats confirmés comme cibles, signaux web antérieurs seulement, `purchase` web exclu des poids hybrides, aucune identité client fictive. Les performances sessionnelles sont quasi nulles et interdisent un usage séquentiel en production.
+- Recommandation : popularité globale comme baseline officielle; hybride exploratoire uniquement. Le système panier reste séparé. Le scénario sessionnel est déclaré non utilisable.
 
 ## Artefacts et rapports
 
@@ -61,6 +62,8 @@ Le fichier `.env` est exclu par `.gitignore`. Ne jamais l'afficher, le journalis
 - Pricing : [`reports/final/03_pricing.md`](reports/final/03_pricing.md), `models/pricing/`
 - Recommandation : [`reports/final/04_recommendation.md`](reports/final/04_recommendation.md), `models/recommendation/`
 - Synthèse exécutive : [`reports/final/05_executive_summary.md`](reports/final/05_executive_summary.md)
+- Addendum méthodologique : [`reports/final/06_methodology_addendum.md`](reports/final/06_methodology_addendum.md)
+- Matrice des contrôles actifs : [`reports/final/07_active_test_matrix.md`](reports/final/07_active_test_matrix.md)
 
 Chaque répertoire de modèles contient des métadonnées et un manifeste SHA-256. Les anciens rapports V1 restent versionnés pour traçabilité, mais cette livraison finale dans `reports/final` et `models/{forecasting,pricing,recommendation}` constitue la référence courante.
 

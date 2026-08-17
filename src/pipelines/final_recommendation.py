@@ -13,7 +13,10 @@ ROOT=PROJECT_ROOT/'data/processed/final';OUT=PROJECT_ROOT/'models/recommendation
 def top(scores,k=10,exclude=None):
     z=np.asarray(scores,float).copy();
     if exclude:z[list(exclude)]=-np.inf
-    return np.argsort(-z)[:k]
+    order=np.lexsort((np.arange(len(z)),-z));return order[np.isfinite(z[order])][:k]
+def eligible_historical_web(interactions,cutoff):
+    cutoff=pd.Timestamp(cutoff,tz='UTC') if pd.Timestamp(cutoff).tzinfo is None else pd.Timestamp(cutoff)
+    return interactions[(interactions.event_timestamp<cutoff)&interactions.type_identite.eq('client')&~interactions.event_type.eq('purchase')]
 def met(recs,targets,k,pop,cats):
     rr=[];prec=[];nd=[];ap=[];items=[];div=[];nov=[]
     for u,t in targets.items():
@@ -25,12 +28,28 @@ def met(recs,targets,k,pop,cats):
     return {'recall':float(np.mean(rr)),'precision':float(np.mean(prec)),'ndcg':float(np.mean(nd)),'map':float(np.mean(ap)),
       'catalog_coverage':len(set(items))/len(pop),'user_coverage':len(rr)/max(len(targets),1),'diversity':float(np.mean(div)),
       'novelty':float(np.mean(nov)),'concentration_top10':sum(pd.Series(items).value_counts().head(10))/max(len(items),1)}
+def user_metric(rec,target,k=10):
+    r=rec[:k];hits=np.array([int(x in target) for x in r]);recall=float(hits.sum()/max(len(target),1))
+    ideal=sum(1/np.log2(i+2) for i in range(min(len(target),k)))
+    ndcg=float(sum(h/np.log2(i+2) for i,h in enumerate(hits))/max(ideal,1e-12))
+    return recall,ndcg
+def paired_bootstrap(frame,columns=('recall_diff','ndcg_diff'),draws=5000):
+    rng=np.random.default_rng(SEED);out={'unit':'client_fenetre','draws':draws,'seed':SEED}
+    n=len(frame)
+    for col in columns:
+        values=frame[col].to_numpy(float);samples=np.empty(draws)
+        for j in range(draws):samples[j]=values[rng.integers(0,n,n)].mean()
+        out[col]={'mean':float(values.mean()),'ci95_low':float(np.quantile(samples,.025)),'ci95_high':float(np.quantile(samples,.975))}
+    return out
+def write_manifest():
+    manifest={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in OUT.iterdir() if p.is_file() and p.name!='manifest.sha256.json'}
+    (OUT/'manifest.sha256.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
 def main():
     OUT.mkdir(parents=True,exist_ok=True);REPORT.mkdir(parents=True,exist_ok=True)
     b=pd.read_parquet(ROOT/'order_baskets.parquet');s=pd.read_parquet(ROOT/'session_sequences.parquet',columns=['session_id','event_timestamp','event_type','produit_key','order_id']);i=pd.read_parquet(ROOT/'client_product_interactions.parquet',columns=['identite','type_identite','produit_key','event_timestamp','event_type','poids_total'])
     b['date_commande']=pd.to_datetime(b.date_commande);s['event_timestamp']=pd.to_datetime(s.event_timestamp,utc=True);i['event_timestamp']=pd.to_datetime(i.event_timestamp,utc=True)
     products=sorted(b.produit_key.unique());pidx={p:j for j,p in enumerate(products)};cats=b.drop_duplicates('produit_key').set_index('produit_key').categorie.reindex(products).fillna('inconnue').to_numpy()
-    windows=[];artifact={}
+    windows=[];artifact={};paired=[]
     for wi,back in enumerate((90,60,30),1):
         cut=b.date_commande.max()-pd.Timedelta(days=back);end=cut+pd.Timedelta(days=29)
         tr=b[b.date_commande<cut];te=b[b.date_commande.between(cut,end)];users=sorted(tr.client_key.unique());uidx={u:j for j,u in enumerate(users)}
@@ -43,7 +62,7 @@ def main():
         co=(binary.T@binary).toarray();lift=co/(np.maximum(pop[:,None],1)*np.maximum(pop[None,:],1)/max(len(users),1));np.fill_diagonal(lift,0)
         svd=TruncatedSVD(n_components=32,random_state=SEED);U=svd.fit_transform(M);svscores=U@svd.components_
         # Web humain strictement antérieur; purchase exclu pour ne pas doubler les ventes.
-        iw=i[(i.event_timestamp<pd.Timestamp(cut,tz='UTC'))&i.type_identite.eq('client')&~i.event_type.eq('purchase')]
+        iw=eligible_historical_web(i,cut)
         wg=iw.groupby(['identite','produit_key']).poids_total.sum();H=M.toarray().astype(float)
         for (u,p),val in wg.items():
             if u in uidx and p in pidx:H[uidx[u],pidx[p]]+=.2*val
@@ -67,6 +86,10 @@ def main():
             for name,scores in raw_scores.items():
                 recs_discovery[name][u]=top(scores,10,ex)
                 recs_replenishment[name][u]=top(scores,10,None)
+            gr,gnd=user_metric(recs_discovery['popularite_globale'][u],targets[u])
+            hr,hnd=user_metric(recs_discovery['hybride_achats_web'][u],targets[u])
+            paired.append({'window':wi,'client_key':u,'global_recall':gr,'hybrid_recall':hr,
+                           'global_ndcg':gnd,'hybrid_ndcg':hnd,'recall_diff':hr-gr,'ndcg_diff':hnd-gnd})
         for name in model_names:
             for scenario,use in [('decouverte',recs_discovery[name]),('reapprovisionnement',recs_replenishment[name])]:
                 for k in (5,10):windows.append({'window':wi,'model':name,'scenario':scenario,'k':k,**met(use,targets,k,prob,cats)})
@@ -97,12 +120,30 @@ def main():
     sr={sid:top(session_scores[sx[sid]],10,None) for sid in session_ids}
     st={sid:set(pidx[x] for x in g.produit_key) for sid,g in purchases[purchases.session_id.isin(sx)].groupby('session_id')}
     sessm=met(sr,st,10,np.ones(len(products))/len(products),cats)
-    df=pd.DataFrame(windows);summary=df[df.k.eq(10)].groupby(['model','scenario']).agg(recall=('recall','mean'),ndcg=('ndcg','mean'),map10=('map','mean'),coverage=('catalog_coverage','mean'),diversity=('diversity','mean')).reset_index().sort_values(['scenario','ndcg'],ascending=[True,False]);selected=summary[summary.scenario.eq('decouverte')].iloc[0].model
-    joblib.dump(artifact,OUT/'recommender.joblib');meta={'selected':selected,'summary':summary.to_dict('records'),'complementaires_panier':compm,'sessions_anonymes_et_connues':sessm,'deep_model_used':False,'lightfm_available':False,'implicit_als_available':False}
-    (OUT/'metadata.json').write_text(json.dumps(meta,indent=2,ensure_ascii=False),encoding='utf-8');manifest={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in OUT.iterdir() if p.is_file() and p.name!='manifest.sha256.json'};(OUT/'manifest.sha256.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
-    lines=['# 04 — Recommandation finale','',f'**Modèle retenu pour la découverte : `{selected}`.**','',summary.to_markdown(index=False),'','## Scénarios spécialisés','',f'- Complémentaires panier, NDCG@10 : {compm["ndcg"]:.4f}.',f'- Sessions connues/anonymes, NDCG@10 : {sessm["ndcg"]:.6g}.','',
+    context_sets={sid:set(C[sx[sid]].indices) for sid in session_ids};target_total=sum(len(st[sid]) for sid in session_ids)
+    seen_targets=sum(len(context_sets[sid]&st[sid]) for sid in session_ids)
+    self_only=sum(bool(context_sets[sid]) and context_sets[sid]<=st[sid] for sid in session_ids)
+    session_diagnostic={'usable_model':False,'temporal_alignment':'contexte strictement antérieur au premier purchase confirmé',
+      'temporal_violations':int((contexts.event_timestamp>=contexts.target_ts).sum()),'candidate_catalog_size':len(products),
+      'targets_outside_candidates':sum(len({x for x in st[sid] if x>=len(products)}) for sid in session_ids),
+      'exclude_seen_applied':False,'already_seen_target_rate':seen_targets/max(target_total,1),
+      'target_survival_if_seen_excluded':1-seen_targets/max(target_total,1),'self_only_context_session_rate':self_only/max(len(session_ids),1),
+      'confirmed_purchase_events':len(purchases),'confirmed_purchase_sessions':purchases.session_id.nunique(),
+      'sessions_with_pre_purchase_product_context':len(session_ids),
+      'ground_truth':'tous les produits des purchase reliés à une commande confirmée de la session; cutoff au premier purchase'}
+    df=pd.DataFrame(windows);summary=df[df.k.eq(10)].groupby(['model','scenario']).agg(recall=('recall','mean'),ndcg=('ndcg','mean'),map10=('map','mean'),coverage=('catalog_coverage','mean'),diversity=('diversity','mean')).reset_index().sort_values(['scenario','ndcg'],ascending=[True,False])
+    paired_frame=pd.DataFrame(paired);bootstrap=paired_bootstrap(paired_frame)
+    per_window=(paired_frame.groupby('window').agg(global_recall=('global_recall','mean'),hybrid_recall=('hybrid_recall','mean'),global_ndcg=('global_ndcg','mean'),hybrid_ndcg=('hybrid_ndcg','mean'),n_client_windows=('client_key','size')).reset_index())
+    per_window['recall_diff']=per_window.hybrid_recall-per_window.global_recall;per_window['ndcg_diff']=per_window.hybrid_ndcg-per_window.global_ndcg
+    nd=bootstrap['ndcg_diff'];stable=bool((per_window.ndcg_diff>0).all() and nd['ci95_low']>0)
+    hybrid_status='modele_retenu' if stable else 'challenger_exploratoire'
+    joblib.dump(artifact,OUT/'recommender.joblib');meta={'selected':None if not stable else 'hybride_achats_web','official_baseline':'popularite_globale','hybrid_status':hybrid_status,'summary':summary.to_dict('records'),'per_window_hybrid_vs_global':per_window.to_dict('records'),'paired_bootstrap':bootstrap,'complementaires_panier':{'status':'systeme_metier_separe',**compm},'sessions_anonymes_et_connues':sessm,'session_diagnostic':session_diagnostic,'deep_model_used':False,'lightfm_available':False,'implicit_als_available':False}
+    (OUT/'metadata.json').write_text(json.dumps(meta,indent=2,ensure_ascii=False),encoding='utf-8');write_manifest()
+    bootstrap_text=f'- ΔNDCG@10 : {nd["mean"]:.6f}, IC95% [{nd["ci95_low"]:.6f}; {nd["ci95_high"]:.6f}].\n- ΔRecall@10 : {bootstrap["recall_diff"]["mean"]:.6f}, IC95% [{bootstrap["recall_diff"]["ci95_low"]:.6f}; {bootstrap["recall_diff"]["ci95_high"]:.6f}].'
+    lines=['# 04 — Recommandation finale','',f'**Baseline officielle : `popularite_globale`. Hybride : `{hybrid_status}`.**','',summary.to_markdown(index=False),'','## Comparaison hybride vs baseline par fenêtre','',per_window.to_markdown(index=False),'','## Bootstrap apparié client-fenêtre','',bootstrap_text,'', '## Systèmes spécialisés','',f'- Complémentaires panier : système métier séparé, NDCG@10 {compm["ndcg"]:.4f}.',f'- Sessions : modèle non utilisable, NDCG@10 {sessm["ndcg"]:.6g}.','',
       'Les achats confirmés fournissent les cibles. Les `purchase` web ne sont jamais additionnés aux ventes; leur statut vient de la commande. Les bots sont exclus. Les anonymes restent des identités de session, sans client inventé.','',
       'LightFM/ALS/BPR natifs indisponibles dans l’environnement; SVD implicite légère évaluée. Aucun Transformer ou réseau profond, volume insuffisant pour le justifier.','',
+      f'Diagnostic session : {json.dumps(session_diagnostic,ensure_ascii=False)}','',
       'Commande : `python -m src.pipelines.final_recommendation`.']
-    (REPORT/'04_recommendation.md').write_text('\n'.join(lines)+'\n',encoding='utf-8');print(json.dumps({'selected':selected,'basket_ndcg10':compm['ndcg'],'session_ndcg10':sessm['ndcg']},default=str))
+    (REPORT/'04_recommendation.md').write_text('\n'.join(lines)+'\n',encoding='utf-8');print(json.dumps({'official_baseline':'popularite_globale','hybrid_status':hybrid_status,'basket_ndcg10':compm['ndcg'],'session_ndcg10':sessm['ndcg']},default=str))
 if __name__=='__main__':main()

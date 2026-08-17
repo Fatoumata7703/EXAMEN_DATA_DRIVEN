@@ -1,5 +1,4 @@
 {
-  "backtest_predictions.parquet": "cb8488bae5702962a13622df16998faaf7b50b138db1fb7df1641a22fb1ad943",
   "lightgbm_tweedie.joblib": "08793e499a8457c49fe0bab76917f69f9b332259d128a9b0b06d6c212da777f5",
-  "metadata.json": "96b4c56cf47c973b7681c15f9d0cc50d633eb087a17e775f78f3008e21de005f"
+  "metadata.json": "43dafb4c6dbc9558bed70246cb3723eebbdfaf389c6c64a9960382f57005c0c9"
 }

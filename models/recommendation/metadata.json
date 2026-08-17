@@ -1,5 +1,7 @@
 {
-  "selected": "hybride_achats_web",
+  "selected": null,
+  "official_baseline": "popularite_globale",
+  "hybrid_status": "challenger_exploratoire",
   "summary": [
     {
       "model": "hybride_achats_web",
@@ -128,7 +130,55 @@
       "diversity": 0.5691812624035694
     }
   ],
+  "per_window_hybrid_vs_global": [
+    {
+      "window": 1,
+      "global_recall": 0.0673295714345097,
+      "hybrid_recall": 0.06580076188100879,
+      "global_ndcg": 0.037077309324151764,
+      "hybrid_ndcg": 0.0384631818382967,
+      "n_client_windows": 2430,
+      "recall_diff": -0.0015288095535009039,
+      "ndcg_diff": 0.0013858725141449382
+    },
+    {
+      "window": 2,
+      "global_recall": 0.0627549643339117,
+      "hybrid_recall": 0.061901709401709394,
+      "global_ndcg": 0.0351641359176891,
+      "hybrid_ndcg": 0.036199368592965,
+      "n_client_windows": 2470,
+      "recall_diff": -0.0008532549322023061,
+      "ndcg_diff": 0.0010352326752759017
+    },
+    {
+      "window": 3,
+      "global_recall": 0.061667558376495575,
+      "hybrid_recall": 0.06248151227015962,
+      "global_ndcg": 0.03661849746318518,
+      "hybrid_ndcg": 0.037064686853821756,
+      "n_client_windows": 2484,
+      "recall_diff": 0.0008139538936640447,
+      "ndcg_diff": 0.00044618939063657825
+    }
+  ],
+  "paired_bootstrap": {
+    "unit": "client_fenetre",
+    "draws": 5000,
+    "seed": 42,
+    "recall_diff": {
+      "mean": -0.000514719044648622,
+      "ci95_low": -0.0035843195097156376,
+      "ci95_high": 0.0025121094916429423
+    },
+    "ndcg_diff": {
+      "mean": 0.0009524687653906991,
+      "ci95_low": -0.0008421902409543259,
+      "ci95_high": 0.002763946832937469
+    }
+  },
   "complementaires_panier": {
+    "status": "systeme_metier_separe",
     "recall": 0.1005526414387411,
     "precision": 0.01005526414387411,
     "ndcg": 0.04846047949272213,
@@ -149,6 +199,21 @@
     "diversity": 0.4166905928052694,
     "novelty": 8.228818690495883,
     "concentration_top10": 0.46729437595000844
+  },
+  "session_diagnostic": {
+    "usable_model": false,
+    "temporal_alignment": "contexte strictement antérieur au premier purchase confirmé",
+    "temporal_violations": 0,
+    "candidate_catalog_size": 300,
+    "targets_outside_candidates": 0,
+    "exclude_seen_applied": false,
+    "already_seen_target_rate": 1.0,
+    "target_survival_if_seen_excluded": 0.0,
+    "self_only_context_session_rate": 1.0,
+    "confirmed_purchase_events": 80130,
+    "confirmed_purchase_sessions": 47368,
+    "sessions_with_pre_purchase_product_context": 47368,
+    "ground_truth": "tous les produits des purchase reliés à une commande confirmée de la session; cutoff au premier purchase"
   },
   "deep_model_used": false,
   "lightfm_available": false,

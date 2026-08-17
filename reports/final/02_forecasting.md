@@ -1,23 +1,40 @@
 # 02 — Forecasting final
 
-**Modèle retenu : `CrostonOptimized`** (robustesse multi-fenêtres).
+Deux décisions séparées, sans vainqueur global :
 
-| model            |    wape |       std |   wins |       bias |   wape30 |
-|:-----------------|--------:|----------:|-------:|-----------:|---------:|
-| CrostonOptimized | 1.07648 | 0.0220781 |      3 | -0.0756496 | 0.349654 |
-| MovingAverage28  | 1.08829 | 0.0179321 |      0 | -0.0221842 | 0.310189 |
-| LightGBM_Tweedie | 1.09341 | 0.0217574 |      0 | -0.020288  | 0.300575 |
-| Hurdle_LightGBM  | 1.09559 | 0.0219268 |      0 | -0.0139218 | 0.301855 |
-| LightGBM_Poisson | 1.10606 | 0.0237088 |      0 |  0.0144793 | 0.3046   |
-| TSB              | 1.11357 | 0.0227926 |      0 | -0.0103702 | 0.410258 |
-| AutoETS          | 1.2001  | 0.0471622 |      0 |  0.0529071 | 0.586084 |
-| Naive            | 1.2956  | 0.0781593 |      0 | -0.0843838 | 1.03947  |
-| SeasonalNaive7   | 1.33351 | 0.0387168 |      0 | -0.0124423 | 0.480311 |
+- **Prévision quotidienne : `CrostonOptimized`.**
+- **Planification cumulée à 30 jours : `LightGBM_Tweedie`.**
 
-Validation glissante: 3 fenêtres communes de 30 jours; cible = quantité confirmée produit-jour.
+| model            |    wape |       std |   daily_wins |        bias |   wape30 |   n_windows |
+|:-----------------|--------:|----------:|-------------:|------------:|---------:|------------:|
+| CrostonOptimized | 1.09452 | 0.0276115 |            4 | -0.0595882  | 0.369956 |           6 |
+| MovingAverage28  | 1.09789 | 0.0221816 |            0 | -0.0245606  | 0.324067 |           6 |
+| LightGBM_Tweedie | 1.10103 | 0.0279013 |            2 | -0.0256601  | 0.31057  |           6 |
+| Naive            | 1.32566 | 0.0866417 |            0 | -0.0593922  | 1.07707  |           6 |
+| SeasonalNaive7   | 1.36164 | 0.0400055 |            0 |  0.00722315 | 0.495252 |           6 |
 
-Intervalles 80/95 % : calibration conforme à produire sur les résidus du modèle retenu avant usage opérationnel; aucun intervalle non calibré n’est présenté comme valide.
+## Fenêtres
 
-Cold-start/historique insuffisant : repli explicite Seasonal Naive puis moyenne globale; aucun NaN silencieux.
+Six fenêtres non chevauchantes de 30 jours sont évaluées. Les 546 jours disponibles laissent 366 jours avant la première fenêtre. Les trois fenêtres précédentes étaient un compromis de coût sur les 90 derniers jours; elles ont été réutilisées par checkpoint et seules les trois fenêtres supplémentaires ont été calculées.
 
-Commande: `python -m src.pipelines.final_forecasting`.
+## Intervalles conformes de CrostonOptimized
+
+|   level | segment      |   coverage |   mean_width |     n |
+|--------:|:-------------|-----------:|-------------:|------:|
+|    0.8  | abc_a        |   0.782715 |      3.18118 | 28290 |
+|    0.8  | global       |   0.815611 |      2.84054 | 54000 |
+|    0.8  | intermittent |   0.815611 |      2.84054 | 54000 |
+|    0.95 | abc_a        |   0.94567  |      5.11345 | 28290 |
+|    0.95 | global       |   0.949519 |      4.74037 | 54000 |
+|    0.95 | intermittent |   0.949519 |      4.74037 | 54000 |
+
+Chaque quantile utilise exclusivement un bloc de calibration ou des fenêtres strictement antérieurs à la fenêtre évaluée. Les bornes inférieures sont tronquées à zéro.
+
+## Garde-fous
+
+- NaN ou infinis : 0.
+- Prédictions négatives : 0.
+- Cold-start observés : 0; repli défini : moyenne globale du train.
+- Historiques de moins de 28 jours observés : 0; repli défini : moyenne disponible puis SeasonalNaive7.
+
+Commande : `python -m src.pipelines.final_forecasting`.
