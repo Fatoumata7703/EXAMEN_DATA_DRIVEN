@@ -10,7 +10,7 @@
   "ranking_started": true,
   "ranking_gate_status": "pilot_f1_f2_failed",
   "ranking_models": ["LightGBM_LambdaRank", "logistique_pointwise"],
-  "ranking_pilot_summary": {"popularite_globale_ndcg_at10": 0.06387, "heuristique_rrf_ndcg_at10": 0.06024, "LightGBM_LambdaRank_ndcg_at10": 0.04325, "logistique_pointwise_ndcg_at10": 0.03481, "LightGBM_LambdaRank_recall_at10": 0.08823, "coverage": 1.0},
+  "ranking_pilot_summary": {"population": "30_day_discovery_candidate_conditional", "popularite_globale_ndcg_at10": 0.06387, "heuristique_rrf_ndcg_at10": 0.06024, "LightGBM_LambdaRank_ndcg_at10": 0.04325, "logistique_pointwise_ndcg_at10": 0.03481, "LightGBM_LambdaRank_recall_at10": 0.08823, "coverage_clients_receiving_list": 1.0, "catalog_coverage_top10_f1": 0.0466666667, "catalog_coverage_top10_f2": 0.06, "catalog_denominator": 300},
   "reason_no_new_ranker": "LambdaRank and logistic pilot both failed NDCG gain and recall-loss gates on F1-F2; no F3-F4 continuation",
   "session_model_usable": false,
   "causal_claim_allowed": false

@@ -31,7 +31,7 @@ def main() -> None:
     for window, ids in enumerate(chunks, 1):
         test_ids = set(ids.tolist()); test = multi[multi.order_id.isin(test_ids)]; train = multi[~multi.order_id.isin(test_ids) & multi.date_commande.lt(test.date_commande.min())]
         co = cooccurrence(train); global_pop = Counter(train.produit_key); category_pop = {cat: Counter(g.produit_key) for cat, g in train.groupby("categorie")}
-        hits = {"cooccurrence_item_item": 0, "association_support_confidence_lift": 0, "bm25_panier": 0, "popularite_categorie": 0}; n = 0
+        hits = {"cooccurrence_item_item": 0, "association_support_confidence_lift": 0, "bm25_panier": 0, "popularite_categorie": 0}; union_hits = {10: 0, 20: 0, 50: 0}; union_sizes = []; n = 0
         for _, group in test.groupby("order_id"):
             context = set(group.produit_key)
             for target in context:
@@ -53,8 +53,14 @@ def main() -> None:
                 cat = group.loc[group.produit_key.eq(target), "categorie"].iloc[0]
                 ranked_cat = [x for x, _ in category_pop.get(cat, Counter()).most_common(50) if x not in observed_context]
                 hits["popularite_categorie"] += int(target in ranked_cat[:50])
+                union = Counter(); union.update(scores); union.update(assoc); union.update(bm); union.update(category_pop.get(cat, Counter()))
+                union_ranked = [x for x, _ in union.most_common() if x not in observed_context][:50]
+                union_sizes.append(len(union_ranked))
+                for k in union_hits: union_hits[k] += int(target in union_ranked[:k])
         for model, hit in hits.items():
             rows.append({"scenario": "complement_panier", "window": window, "model": model, "n_orders": len(test_ids), "n_targets": n, "candidate_recall_at50": hit / max(n, 1)})
+        for k, hit in union_hits.items():
+            rows.append({"scenario": "complement_panier", "window": window, "model": f"union_top{k}", "n_orders": len(test_ids), "n_targets": n, f"candidate_recall_at{k}": hit / max(n, 1), "mean_candidates": float(np.mean(union_sizes)) if union_sizes else 0.0})
     out = pd.DataFrame(rows); out.to_csv(OUT / "complement_candidate_metrics.csv", index=False)
     summary = out.groupby("model", as_index=False).candidate_recall_at50.mean(); gate = bool(summary.candidate_recall_at50.max() >= .50)
     payload = {"metrics": out.to_dict("records"), "summary": summary.to_dict("records"), "candidate_gate_ge_050": gate, "lambda_rank_started": False}
