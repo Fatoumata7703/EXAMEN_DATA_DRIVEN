@@ -13,6 +13,16 @@ def test_health_and_ready(client):
     assert all(ready.json()["checks"].values())
 
 
+def test_web_console_is_public_and_does_not_persist_key(client):
+    for path in ("/", "/ui"):
+        response = client.get(path)
+        assert response.status_code == 200
+        assert response.headers["content-type"].startswith("text/html")
+        assert "Recommandations générales" in response.text
+        assert "/api/v1/pricing/simulate" in response.text
+        assert "localStorage" not in response.text
+
+
 def test_models_status(client):
     response = client.get("/api/v1/models/status")
     assert response.status_code == 200

@@ -9,7 +9,7 @@ from contextlib import asynccontextmanager
 from fastapi import Depends, FastAPI, Request, Security
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.security import APIKeyHeader
 
 from api.config import Settings
@@ -26,6 +26,7 @@ from api.schemas import (
 from api.services.model_loader import ModelRegistry, load_registry
 from api.services.pricing import simulate
 from api.services.recommendation import recommend
+from api.ui import UI_HTML
 
 LOGGER = logging.getLogger("model_api")
 API_KEY_HEADER = APIKeyHeader(name="X-API-Key", auto_error=False)
@@ -109,6 +110,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         return value
 
     protected = [Depends(authorize)]
+
+    @app.get("/", response_class=HTMLResponse, include_in_schema=False)
+    @app.get("/ui", response_class=HTMLResponse, include_in_schema=False)
+    async def ui():
+        return UI_HTML
 
     @app.get("/health", tags=["health"])
     async def health():
