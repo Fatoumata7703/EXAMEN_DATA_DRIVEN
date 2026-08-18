@@ -63,3 +63,11 @@ Les métriques comparables sont publiées dans `complement_end_to_end_metrics.cs
 ## Artefacts
 
 Métadonnées, couverture candidat et manifeste SHA-256 : `models/advanced/recommendation_ranking/`. Aucun write-back Supabase, déploiement, merge ou push n’est autorisé dans ce commit.
+
+## Décision comparative finale F2–F4
+
+La meilleure baseline simple exacte est `popularite_categorie`, ex æquo avec l’ancienne référence recalculée sur ce même périmètre (la référence est donc cette règle, et non une ancienne métrique globale). F2/F3/F4 : Recall@10 = 0,4374 / 0,3604 / 0,3346 ; NDCG@10 = 0,2126 / 0,1802 / 0,1630 ; couverture catalogue = 30,67 % / 31,00 % / 31,33 %. La couverture reste sous 70 %, donc aucune promotion.
+
+Le tableau complet (commandes, Recall/NDCG@5/10/20, MAP@10, MRR, HitRate@10, couverture, diversité, nombre moyen de recommandations) est dans `complement_end_to_end_metrics.csv`. Bootstrap apparié stratifié : catégorie−référence = 0 ; RRF−référence IC95 % [-0,00268 ; -0,00033] ; LambdaRank F4−catégorie IC95 % [-0,00449 ; -0,00050].
+
+Les scores F4 élevés (RRF Recall@10 0,3290, NDCG@10 0,1605) proviennent du nouveau périmètre leave-one-item-out : une cible masquée par commande, commandes multi-produits uniquement et fenêtres F2–F4 évaluables. Les anciennes valeurs 0,1006 / 0,0485 sont end-to-end sur une population et une définition de cible différentes ; elles ne constituent pas une comparaison numérique directe.
