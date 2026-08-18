@@ -71,3 +71,11 @@ La meilleure baseline simple exacte est `popularite_categorie`, ex æquo avec l�
 Le tableau complet (commandes, Recall/NDCG@5/10/20, MAP@10, MRR, HitRate@10, couverture, diversité, nombre moyen de recommandations) est dans `complement_end_to_end_metrics.csv`. Bootstrap apparié stratifié : catégorie−référence = 0 ; RRF−référence IC95 % [-0,00268 ; -0,00033] ; LambdaRank F4−catégorie IC95 % [-0,00449 ; -0,00050].
 
 Les scores F4 élevés (RRF Recall@10 0,3290, NDCG@10 0,1605) proviennent du nouveau périmètre leave-one-item-out : une cible masquée par commande, commandes multi-produits uniquement et fenêtres F2–F4 évaluables. Les anciennes valeurs 0,1006 / 0,0485 sont end-to-end sur une population et une définition de cible différentes ; elles ne constituent pas une comparaison numérique directe.
+
+## Statut métier final
+
+- `general_recommendation_model = popularite_globale`.
+- `basket_complement_model = ancienne_reference / popularite_categorie` (ex æquo sur le périmètre comparable F2–F4) ; RRF est seulement un challenger de diversité si sa couverture supérieure est utile.
+- `session_model_status = non_utilisable`.
+
+Périmètres et formules sont explicites : Recall@k = hits@k / cibles masquées ; NDCG@k = gain actualisé / gain idéal ; couverture catalogue = produits uniques recommandés / 300 produits éligibles. Le prochain axe d’amélioration est la couverture catalogue, autour de 31 % sur F2–F4, et non une nouvelle optimisation de pertinence. Aucune revendication croisée n’est faite entre les anciennes métriques et le leave-one-item-out.

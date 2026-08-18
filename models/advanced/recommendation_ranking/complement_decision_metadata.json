@@ -1,4 +1,11 @@
 {
+  "general_recommendation_model": "popularite_globale",
+  "basket_complement_model": "ancienne_reference_popularite_categorie",
+  "session_model_status": "non_utilisable",
+  "general_recommendation_perimeter": "end_to_end historical general recommendation; metrics not comparable to leave-one-item-out F2-F4",
+  "basket_complement_perimeter": "F2-F4 evaluable multi-product orders, one masked target per order, temporal cutoff, eligible catalogue",
+  "metric_formulas": {"recall_at_k": "hits@k / masked targets", "ndcg_at_k": "discounted gain / ideal gain", "catalogue_coverage": "unique recommended eligible products / 300 eligible catalogue products"},
+  "next_improvement_axis": "catalogue coverage (~31% on comparable F2-F4 perimeter)",
   "best_simple_model": "popularite_categorie",
   "best_simple_equivalent_model_key": "category",
   "best_simple_promotion": false,
