@@ -3,6 +3,11 @@ import pytest
 from api.services import model_loader
 
 
+def test_bundle_json_uses_portable_lf_endings(model_root):
+    for name in ("metadata.json", "catalog.json", "manifest.sha256.json"):
+        assert b"\r\n" not in (model_root / "api_bundle" / name).read_bytes()
+
+
 def test_sha_verification_rejects_tampering(model_root, monkeypatch):
     model_loader.load_registry.cache_clear()
     original = model_loader.sha256

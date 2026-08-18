@@ -28,7 +28,8 @@ def sha256(path: Path) -> str:
 
 
 def write_json(path: Path, payload: object) -> None:
-    path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+    with path.open("w", encoding="utf-8", newline="\n") as stream:
+        stream.write(json.dumps(payload, indent=2, ensure_ascii=False))
 
 
 def main() -> int:
