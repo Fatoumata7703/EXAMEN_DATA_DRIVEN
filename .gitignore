@@ -89,3 +89,6 @@ reports/recsys_final/recommandations_sortie.csv
 # Notebooks Jupyter (checkpoints d'édition)
 # =============================================================================
 .ipynb_checkpoints/
+
+# --- CatBoost : répertoire de logs d'entraînement local, régénéré à chaque run ---
+catboost_info/
