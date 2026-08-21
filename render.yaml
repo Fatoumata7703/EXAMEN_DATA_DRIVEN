@@ -1,0 +1,32 @@
+# Configuration de deploiement du service API V4 (pricing et recommandation).
+#
+# Statut : experimentation academique sur donnees synthetiques
+# (`synthetic_academic_experiment`). Le service n'ecrit dans aucune base et
+# n'ouvre aucune connexion Supabase : tout est charge depuis les artefacts et
+# catalogues versionnes du depot (`models/v4/`, `api_v4/data/`).
+#
+# Aucun secret n'est declare ici. Aucune variable d'environnement contenant un
+# identifiant, une cle ou une chaine de connexion n'est necessaire au
+# fonctionnement de l'API V4 : si l'une d'elles etait ajoutee, elle devrait
+# l'etre via l'interface de la plateforme, jamais dans ce fichier versionne.
+
+services:
+  - type: web
+    name: examen-data-driven-api-v4
+    runtime: python
+    plan: free
+    branch: v4/pricing-recommendation-training
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api_v4.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      # Version de Python alignee sur celle utilisee pour entrainer et
+      # serialiser les modeles (compatibilite des artefacts joblib).
+      - key: PYTHON_VERSION
+        value: "3.12"
+      # Empeche la creation de fichiers .pyc dans le conteneur.
+      - key: PYTHONDONTWRITEBYTECODE
+        value: "1"
+      # Sortie non tamponnee, pour que les journaux remontent immediatement.
+      - key: PYTHONUNBUFFERED
+        value: "1"
