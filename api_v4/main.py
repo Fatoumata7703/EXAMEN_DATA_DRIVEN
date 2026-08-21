@@ -82,7 +82,9 @@ def _handle_recommendation(target: str, request: RecommendationRequest) -> Recom
     if outcome.fallback_used:
         METRICS["fallback_triggered_total"] += 1
     return RecommendationResponse(
-        target=outcome.target, model_used=outcome.model_used,
+        target=outcome.target, target_status=outcome.target_status,
+        model_requested=outcome.model_requested, model_used=outcome.model_used,
+        served_model_status=outcome.served_model_status,
         fallback_used=outcome.fallback_used, fallback_reason=outcome.fallback_reason,
         status=outcome.status, version=outcome.version,
         dropped_products=outcome.dropped_products,

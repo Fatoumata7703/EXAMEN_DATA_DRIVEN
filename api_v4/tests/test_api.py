@@ -181,6 +181,98 @@ def test_recommendation_fallback_when_scoring_raises(known_products, monkeypatch
     assert body["model_used"] == "popularite_globale_v1"
 
 
+# ------------------------------------------- contrat de statut lors d'un repli
+
+
+@pytest.mark.parametrize("endpoint,target,expected_model", [
+    ("/recommendations", "purchased_after", "CatBoostRanker"),
+    ("/recommendations/cart", "added_to_cart_after", "pointwise_conversion"),
+])
+def test_status_contract_when_primary_model_is_available(endpoint, target, expected_model, known_products):
+    """Modele principal disponible : le modele demande est bien celui servi, et
+    les deux statuts coincident."""
+    body = client.post(endpoint, json={"candidate_products": known_products}).json()
+    assert body["target"] == target
+    assert body["fallback_used"] is False
+    assert body["model_requested"] == expected_model
+    assert body["model_used"] == expected_model
+    assert body["target_status"] == "validated_academic"
+    assert body["served_model_status"] == "validated_academic"
+    assert body["status"] == body["target_status"], "compatibilite ascendante rompue"
+
+
+@pytest.mark.parametrize("endpoint,target,expected_model", [
+    ("/recommendations", "purchased_after", "CatBoostRanker"),
+    ("/recommendations/cart", "added_to_cart_after", "pointwise_conversion"),
+])
+def test_status_contract_when_model_unavailable_triggers_fallback(
+        endpoint, target, expected_model, known_products):
+    """Modele indisponible : `model_requested` conserve le modele prevu,
+    `model_used` designe le repli, et `served_model_status` qualifie le repli
+    et non la cible."""
+    original = dict(REGISTRY.recommendation_models)
+    REGISTRY.recommendation_models.pop(target, None)
+    try:
+        body = client.post(endpoint, json={"candidate_products": known_products}).json()
+        assert body["target"] == target
+        assert body["fallback_used"] is True
+        assert body["fallback_reason"] == "modele_indisponible"
+        assert body["model_requested"] == expected_model
+        assert body["model_used"] == "popularite_globale_v1"
+        assert body["target_status"] == "validated_academic"
+        assert body["served_model_status"] == "validated_academic"
+        assert body["status"] == body["target_status"], "compatibilite ascendante rompue"
+    finally:
+        REGISTRY.recommendation_models.clear()
+        REGISTRY.recommendation_models.update(original)
+
+
+def test_status_contract_when_scoring_fails_triggers_fallback(known_products, monkeypatch):
+    def _boom(model, frame):
+        raise RuntimeError("echec simule de scoring")
+
+    monkeypatch.setattr(recommendation_service, "predict_recommendation", _boom)
+    body = client.post("/recommendations", json={"candidate_products": known_products}).json()
+    assert body["fallback_used"] is True
+    assert body["fallback_reason"] == "echec_scoring"
+    assert body["model_requested"] == "CatBoostRanker"
+    assert body["model_used"] == "popularite_globale_v1"
+    assert body["served_model_status"] == "validated_academic"
+
+
+@pytest.mark.parametrize("endpoint", ["/recommendations", "/recommendations/cart"])
+def test_served_model_status_always_matches_the_model_actually_used(endpoint, known_products):
+    """Coherence stricte : `served_model_status` doit toujours etre le statut
+    declare, dans FINAL_STATUS.json, du modele nomme par `model_used` — que le
+    repli ait ete declenche ou non."""
+    declared = {}
+    for entry in client.get("/metadata").json()["models"]:
+        if entry["domain"] == "recommendation":
+            declared.setdefault(entry["model_name"], set()).add(entry["status"])
+
+    for remove_model in (False, True):
+        original = dict(REGISTRY.recommendation_models)
+        if remove_model:
+            target = "purchased_after" if endpoint == "/recommendations" else "added_to_cart_after"
+            REGISTRY.recommendation_models.pop(target, None)
+        try:
+            body = client.post(endpoint, json={"candidate_products": known_products}).json()
+            assert body["served_model_status"] in declared[body["model_used"]], (
+                f"served_model_status={body['served_model_status']} incoherent avec "
+                f"model_used={body['model_used']}")
+        finally:
+            REGISTRY.recommendation_models.clear()
+            REGISTRY.recommendation_models.update(original)
+
+
+def test_openapi_documents_the_new_status_fields():
+    schema = client.get("/openapi.json").json()
+    properties = schema["components"]["schemas"]["RecommendationResponse"]["properties"]
+    for field in ("target_status", "model_requested", "model_used", "served_model_status"):
+        assert field in properties, f"champ {field} absent de la documentation OpenAPI"
+        assert properties[field].get("description"), f"champ {field} sans description OpenAPI"
+
+
 def test_recommendation_never_uses_exposure_probability_as_feature():
     from src.recsys_v4.dataset import ALL_FEATURES
     assert "product_exposure_probability" not in ALL_FEATURES

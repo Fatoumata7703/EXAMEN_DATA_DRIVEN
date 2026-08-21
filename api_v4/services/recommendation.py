@@ -36,12 +36,28 @@ class NoValidCandidatesError(Exception):
 
 @dataclass
 class RecommendationOutcome:
+    """Resultat d'un scoring.
+
+    Distingue explicitement trois choses qui peuvent differer lors d'un repli :
+    - `target` / `target_status` : la cible demandee et le statut du modele
+      prevu pour elle ;
+    - `model_requested` : le modele qui aurait ete utilise sans incident ;
+    - `model_used` / `served_model_status` : le modele reellement servi et son
+      propre statut.
+
+    `status` est conserve pour compatibilite avec les consommateurs existants
+    et vaut toujours `target_status`.
+    """
+
     target: str
     model_used: str
     fallback_used: bool
     fallback_reason: str | None
     status: str
     version: str
+    target_status: str
+    model_requested: str
+    served_model_status: str
     results: list[dict] = field(default_factory=list)
     dropped_products: list[str] = field(default_factory=list)
 
@@ -102,9 +118,20 @@ def _fallback_popularity(products: list[str]) -> list[dict]:
     return _rank(products, scores)
 
 
+def _fallback_outcome(target: str, reason: str, target_status: str, model_requested: str,
+                      version: str, products: list[str], dropped: list[str]) -> RecommendationOutcome:
+    return RecommendationOutcome(
+        target=target, model_used=FALLBACK_MODEL_NAME, fallback_used=True,
+        fallback_reason=reason, status=target_status, version=version,
+        target_status=target_status, model_requested=model_requested,
+        served_model_status=REGISTRY.status_of_model_name("recommendation", FALLBACK_MODEL_NAME),
+        results=_fallback_popularity(products), dropped_products=dropped)
+
+
 def score_target(target: str, candidate_products: list[str], context: dict) -> RecommendationOutcome:
-    status = REGISTRY.model_status("recommendation", target)
+    target_status = REGISTRY.model_status("recommendation", target)
     version = REGISTRY.model_version("recommendation", target)
+    model_requested = REGISTRY.model_name_for_target("recommendation", target)
 
     frame, dropped = _build_feature_frame(candidate_products, context)
     if frame.empty:
@@ -113,9 +140,8 @@ def score_target(target: str, candidate_products: list[str], context: dict) -> R
 
     model = REGISTRY.recommendation_models.get(target)
     if model is None:
-        return RecommendationOutcome(
-            target, FALLBACK_MODEL_NAME, True, "modele_indisponible", status, version,
-            _fallback_popularity(frame.produit_key.tolist()), dropped)
+        return _fallback_outcome(target, "modele_indisponible", target_status, model_requested,
+                                 version, frame.produit_key.tolist(), dropped)
 
     try:
         scores = predict_recommendation(model, frame)
@@ -123,9 +149,12 @@ def score_target(target: str, candidate_products: list[str], context: dict) -> R
         if scores.shape[0] != len(frame) or not np.all(np.isfinite(scores)):
             raise ValueError("scores non valides retournes par le modele")
     except Exception:  # noqa: BLE001 - tout echec de scoring declenche le repli, sans propager l'erreur
-        return RecommendationOutcome(
-            target, FALLBACK_MODEL_NAME, True, "echec_scoring", status, version,
-            _fallback_popularity(frame.produit_key.tolist()), dropped)
+        return _fallback_outcome(target, "echec_scoring", target_status, model_requested,
+                                 version, frame.produit_key.tolist(), dropped)
 
     results = _rank(frame.produit_key.tolist(), scores)
-    return RecommendationOutcome(target, model.name, False, None, status, version, results, dropped)
+    return RecommendationOutcome(
+        target=target, model_used=model.name, fallback_used=False, fallback_reason=None,
+        status=target_status, version=version, target_status=target_status,
+        model_requested=model_requested, served_model_status=target_status,
+        results=results, dropped_products=dropped)

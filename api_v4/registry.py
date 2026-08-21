@@ -92,6 +92,29 @@ class ModelRegistry:
         entry = self.model_entry(domain, target)
         return entry.get("version", "unknown") if entry else "unknown"
 
+    def model_name_for_target(self, domain: str, target: str) -> str:
+        """Nom du modele prevu pour cette cible, independamment de ce qui est
+        reellement servi (le repli peut differer)."""
+        entry = self.model_entry(domain, target)
+        return entry.get("model_name", "unknown") if entry else "unknown"
+
+    def entry_by_model_name(self, domain: str, model_name: str) -> Optional[dict]:
+        """Fiche d'un modele designe par son nom.
+
+        Reservee aux noms non ambigus dans un domaine donne — typiquement le
+        modele de repli `popularite_globale_v1`. Un meme nom peut servir
+        plusieurs cibles (`CatBoostRanker` couvre `purchased_after` et
+        `viewed_after_impression`) : pour ces cas, passer par la cible.
+        """
+        for entry in self.final_status.get("models", []):
+            if entry.get("domain") == domain and entry.get("model_name") == model_name:
+                return entry
+        return None
+
+    def status_of_model_name(self, domain: str, model_name: str) -> str:
+        entry = self.entry_by_model_name(domain, model_name)
+        return entry.get("status", "unknown") if entry else "unknown"
+
     def uptime_seconds(self) -> float:
         return time.time() - self.started_at
 

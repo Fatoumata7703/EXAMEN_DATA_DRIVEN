@@ -42,11 +42,24 @@ class RecommendationItem(BaseModel):
 
 
 class RecommendationResponse(BaseModel):
-    target: str
-    model_used: str
+    target: str = Field(..., description="Cible demandee par l'endpoint appele.")
+    target_status: str = Field(
+        ..., description="Statut du modele PREVU pour cette cible "
+                         "(`validated_academic` ou `exploratory`).")
+    model_requested: str = Field(
+        ..., description="Modele qui aurait ete utilise en l'absence d'incident.")
+    model_used: str = Field(
+        ..., description="Modele REELLEMENT utilise pour produire ce classement. "
+                         "Differe de `model_requested` en cas de repli.")
+    served_model_status: str = Field(
+        ..., description="Statut du modele reellement utilise. C'est ce champ, "
+                         "et non `target_status`, qui qualifie le resultat renvoye.")
     fallback_used: bool
     fallback_reason: Optional[str] = None
-    status: str
+    status: str = Field(
+        ..., description="Conserve pour compatibilite ascendante ; vaut toujours "
+                         "`target_status`. Preferer `served_model_status` pour "
+                         "qualifier le resultat effectivement renvoye.")
     version: str
     dropped_products: list[str] = Field(default_factory=list)
     results: list[RecommendationItem]

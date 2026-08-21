@@ -168,7 +168,10 @@ Reponse :
 ```json
 {
   "target": "purchased_after",
+  "target_status": "validated_academic",
+  "model_requested": "CatBoostRanker",
   "model_used": "CatBoostRanker",
+  "served_model_status": "validated_academic",
   "fallback_used": false,
   "fallback_reason": null,
   "status": "validated_academic",
@@ -186,7 +189,36 @@ Reponse :
 ```
 
 Meme requete sur `POST /recommendations/cart` : `target` devient
-`added_to_cart_after`, `model_used` devient `pointwise_conversion`.
+`added_to_cart_after`, `model_requested` et `model_used` deviennent
+`pointwise_conversion`.
+
+#### Champs de statut : quoi lire, et quand
+
+Trois champs distincts evitent toute ambiguite lorsqu'un repli survient :
+
+| Champ | Signification |
+|---|---|
+| `target_status` | statut du modele **prevu** pour la cible demandee |
+| `model_requested` | modele qui aurait ete utilise sans incident |
+| `model_used` | modele **reellement** utilise pour ce classement |
+| `served_model_status` | statut du modele reellement utilise — **c'est ce champ qui qualifie le resultat renvoye** |
+
+`status` est conserve pour compatibilite ascendante et vaut toujours
+`target_status` ; les consommateurs doivent lui preferer
+`served_model_status`. Exemple de reponse en repli (modele principal
+indisponible), ou les deux modeles different :
+
+```json
+{
+  "target": "purchased_after",
+  "target_status": "validated_academic",
+  "model_requested": "CatBoostRanker",
+  "model_used": "popularite_globale_v1",
+  "served_model_status": "validated_academic",
+  "fallback_used": true,
+  "fallback_reason": "modele_indisponible"
+}
+```
 
 ### `POST /pricing/simulation`
 
