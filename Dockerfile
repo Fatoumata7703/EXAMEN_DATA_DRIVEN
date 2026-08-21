@@ -26,8 +26,10 @@ RUN apt-get update \
 
 COPY --from=builder /opt/venv /opt/venv
 WORKDIR /app
-COPY api/__init__.py api/config.py api/errors.py api/logging.py api/main.py api/schemas.py api/ui.py ./api/
+COPY api/__init__.py api/config.py api/errors.py api/logging.py api/main.py \
+     api/schemas.py api/status.py api/ui.py ./api/
 COPY api/services ./api/services
+COPY api/static ./api/static
 COPY models/FINAL_STATUS.json models/FINAL_STATUS.sha256.json ./models/
 COPY models/api_bundle ./models/api_bundle
 

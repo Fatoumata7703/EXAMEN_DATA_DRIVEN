@@ -48,7 +48,13 @@ class PricingSimulationRequest(StrictModel):
     product_key: Identifier
     decision_date: Annotated[date, Field(strict=False)]
     candidate_discounts_pct: list[Discount] = Field(min_length=1, max_length=20)
-    features: dict[Identifier, FeatureValue]
+    # `features` est optionnel : l'interface ne peut pas demander a un
+    # utilisateur de connaitre `stock_at_cutoff`. Vide, le snapshot catalogue
+    # du produit est utilise tel quel.
+    features: dict[Identifier, FeatureValue] = Field(default_factory=dict)
+    # Mode partiel : renvoie les remises bloquees avec leur motif au lieu
+    # d'annuler toute la simulation.
+    partial_results: bool = False
 
     @field_validator("candidate_discounts_pct")
     @classmethod
@@ -87,6 +93,8 @@ class PricingCandidateResult(StrictModel):
     margin_rate: float
     support_status: str
     simulation_status: str
+    blocked_reason_code: str | None = None
+    blocked_reason: str | None = None
 
 
 class PricingSimulationResponse(StrictModel):
@@ -101,3 +109,55 @@ class PricingSimulationResponse(StrictModel):
     causal_effect_estimated: bool
     pricing_wape: float
     pricing_bias: float
+
+
+# --------------------------------------------------------------------- forecasting
+
+
+HorizonDays = Annotated[StrictInt, Field(ge=1, le=30)]
+
+
+class ForecastRequest(StrictModel):
+    product_key: Identifier
+    horizon_days: HorizonDays = 30
+
+
+class ForecastPoint(StrictModel):
+    date: date
+    predicted_quantity: float
+    actual_quantity: float | None = None
+
+
+class ForecastResponse(StrictModel):
+    request_id: str
+    product_key: str
+    horizon_days: int
+    cutoff: date
+    total_predicted_quantity: float
+    total_actual_quantity: float | None
+    points: list[ForecastPoint]
+    model_name: str
+    model_status: str
+    kind: str
+    fallback_used: bool
+    fallback_reason: str | None
+    generated_at: str
+
+
+# ----------------------------------------------------------------------- catalogue
+
+
+class CatalogProduct(StrictModel):
+    product_key: str
+    catalog_price_xof: float
+    cost_xof: float
+    supported_discounts_pct: list[float]
+    popularity_rank: int | None = None
+    has_forecast: bool = False
+
+
+class CatalogResponse(StrictModel):
+    request_id: str
+    total: int
+    returned: int
+    products: list[CatalogProduct]

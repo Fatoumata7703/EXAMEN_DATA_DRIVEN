@@ -14,6 +14,8 @@ class Settings:
     model_root: Path = Path("models")
     api_key: str = ""
     cors_origins: tuple[str, ...] = ("http://localhost:3000",)
+    git_commit: str = "unknown"
+    request_timeout_s: float = 30.0
 
     @classmethod
     def from_env(cls) -> Settings:
@@ -30,5 +32,9 @@ class Settings:
             model_root=Path(os.getenv("MODEL_ROOT", "models")),
             api_key=os.getenv("API_KEY", ""),
             cors_origins=origins,
+            # Render expose RENDER_GIT_COMMIT ; GIT_COMMIT reste surchargeable.
+            git_commit=(os.getenv("GIT_COMMIT")
+                        or os.getenv("RENDER_GIT_COMMIT", "unknown"))[:40],
+            request_timeout_s=float(os.getenv("REQUEST_TIMEOUT_S", "30")),
         )
 

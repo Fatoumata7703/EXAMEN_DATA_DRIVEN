@@ -17,6 +17,7 @@ RUNTIME_ALLOWLIST = frozenset(
         "api_bundle/metadata.json",
         "api_bundle/manifest.sha256.json",
         "api_bundle/catalog.json",
+        "api_bundle/forecast_backtest.json",
         "api_bundle/pricing_model.joblib",
     }
 )
@@ -47,12 +48,14 @@ class ModelRegistry:
     metadata: dict[str, Any]
     catalog: dict[str, Any]
     pricing_artifact: dict[str, Any]
+    forecast: dict[str, Any]
 
     @classmethod
     def unavailable(cls, message: str) -> ModelRegistry:
         return cls(False, {"models_loaded": False, "metadata_present": False,
-                           "sha256_valid": False, "versions_consistent": False},
-                   message, {}, {}, {}, {})
+                           "sha256_valid": False, "versions_consistent": False,
+                           "forecast_available": False},
+                   message, {}, {}, {}, {}, {})
 
 
 @lru_cache(maxsize=4)
@@ -110,13 +113,25 @@ def load_registry(model_root: Path) -> ModelRegistry:
         raise ValueError("Features du modèle et métadonnées incohérentes")
     metadata["artifact_sha256"] = manifest
 
+    # Le forecasting est SECONDAIRE : son absence degrade la readiness sans
+    # empecher le demarrage, conformement a la regle de readiness degradee.
+    forecast: dict[str, Any] = {}
+    forecast_path = bundle_root / "forecast_backtest.json"
+    if forecast_path.is_file():
+        try:
+            forecast = _read_json(forecast_path)
+        except ValueError:
+            forecast = {}
+
     return ModelRegistry(
         ready=True,
         checks={"models_loaded": True, "metadata_present": True,
-                "sha256_valid": True, "versions_consistent": True},
+                "sha256_valid": True, "versions_consistent": True,
+                "forecast_available": bool(forecast)},
         error=None,
         status=status,
         metadata=metadata,
         catalog=catalog,
         pricing_artifact=artifact,
+        forecast=forecast,
     )

@@ -17,14 +17,17 @@
     "personalization_validated": false,
     "catalog_coverage_warning": true,
     "metrics": {
-      "recall": 0.06685764600105439,
-      "ndcg": 0.0377118374378624
+      "recall": 0.06685765,
+      "ndcg": 0.03771184,
+      "coverage": 0.06083333
     },
     "limits": [
       "baseline globale",
       "aucune forte personnalisation",
       "couverture catalogue limitée"
-    ]
+    ],
+    "perimeter": "prochain_achat_4_fenetres_30j",
+    "perimeter_label": "Recommandation générale — prochain achat"
   },
   "basket": {
     "model_name": "popularite_globale",
@@ -33,7 +36,16 @@
     "limits": [
       "aucun modèle de complément personnalisé validé",
       "fallback popularité globale"
-    ]
+    ],
+    "perimeter": "complement_panier_leave_one_item_out_F2_F4",
+    "perimeter_label": "Complément panier — leave-one-item-out",
+    "metrics": {
+      "recall": 0.05557637,
+      "ndcg": 0.02399695,
+      "coverage": 0.04222222
+    },
+    "validated_model": "none_validated",
+    "reason": "no_complementarity_signal"
   },
   "pricing": {
     "model_name": "lgbm_tweedie_moyenne",
@@ -139,7 +151,36 @@
     "exposed": false
   },
   "forecasting": {
-    "exposed": false
+    "exposed": true,
+    "kind": "backtest_valide",
+    "model_name": "LightGBM_direct_per_horizon",
+    "daily_model_name": "CrostonOptimized",
+    "status": "validated",
+    "window_index": 6,
+    "cutoff": "2026-07-01",
+    "first_date": "2026-07-02",
+    "last_date": "2026-07-31",
+    "horizon_max_days": 30,
+    "n_products": 300,
+    "metrics": {
+      "wape30_macro": 0.25831,
+      "wape30_micro": 0.25743,
+      "forecast_bias_macro": -0.02589,
+      "wape30_this_window": 0.23274
+    },
+    "limits": [
+      "prévisions issues du backtest validé, non recalculées en direct",
+      "demande intermittente : environ 66 % de jours sans vente",
+      "usage de planification supervisée uniquement"
+    ]
   },
-  "automatic_decision_allowed": false
+  "automatic_decision_allowed": false,
+  "perimeter_warning": "Les métriques de recommandation générale et de complément panier portent sur des tâches, des populations et des cibles différentes. Elles ne doivent jamais être comparées ni présentées l'une pour l'autre.",
+  "extended_at": "2026-08-21T14:46:17.431212+00:00",
+  "extension": {
+    "script": "api/scripts/extend_bundle_readonly.py",
+    "retrained": false,
+    "pricing_model_untouched": true,
+    "catalog_untouched": true
+  }
 }

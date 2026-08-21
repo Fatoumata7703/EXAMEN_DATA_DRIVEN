@@ -13,14 +13,30 @@ def test_health_and_ready(client):
     assert all(ready.json()["checks"].values())
 
 
-def test_web_console_is_public_and_does_not_persist_key(client):
+def test_web_interface_is_public_and_does_not_persist_key(client):
+    """L'interface est servie sans clé et ne stocke rien de façon persistante."""
     for path in ("/", "/ui"):
         response = client.get(path)
         assert response.status_code == 200
         assert response.headers["content-type"].startswith("text/html")
-        assert "Recommandations générales" in response.text
-        assert "/api/v1/pricing/simulate" in response.text
+        assert 'lang="fr"' in response.text
+        assert "/static/app.js" in response.text
         assert "localStorage" not in response.text
+
+    script = client.get("/static/app.js")
+    assert script.status_code == 200
+    assert "/api/v1/pricing/simulate" in script.text
+    # sessionStorage disparaît à la fermeture de l'onglet ; localStorage non.
+    assert "localStorage" not in script.text
+
+
+def test_legacy_console_remains_available(client):
+    response = client.get("/console")
+    assert response.status_code == 200
+    assert response.headers["content-type"].startswith("text/html")
+    assert "Recommandations générales" in response.text
+    assert "/api/v1/pricing/simulate" in response.text
+    assert "localStorage" not in response.text
 
 
 def test_models_status(client):
@@ -28,7 +44,8 @@ def test_models_status(client):
     assert response.status_code == 200
     assert response.json()["pricing"]["metrics"] == {"wape": 0.5526, "forecast_bias": 0.0013}
     assert set(response.json()["artifact_sha256"]) == {
-        "metadata.json", "catalog.json", "pricing_model.joblib"
+        "metadata.json", "catalog.json", "pricing_model.joblib",
+        "forecast_backtest.json",
     }
 
 

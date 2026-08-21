@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from datetime import date
 
 import numpy as np
@@ -19,12 +20,37 @@ def simulate(
     decision_date: date,
     discounts: list[float | int],
     request_features: dict[str, float | int],
+    strict: bool = True,
 ) -> list[PricingCandidateResult]:
+    """Simule des remises sous garde-fous.
+
+    `strict=True` (défaut) lève une erreur dès qu'une remise viole un garde-fou :
+    c'est la sémantique historique, et c'est ce que garantissent les tests.
+    `strict=False` renvoie la remise fautive avec `simulation_status="blocked"`
+    et son motif, pour que l'interface puisse afficher les scénarios valides tout
+    en expliquant les autres.
+    """
     catalog = registry.catalog["pricing_catalog"]
     if product_key not in catalog:
         raise ApiError(404, "unknown_product", "Produit inconnu")
-    if "stock_at_cutoff" not in request_features:
-        raise ApiError(400, "missing_required_features", "La feature stock_at_cutoff est obligatoire")
+    # NaN traverse toute comparaison de bornes sans declencher d'erreur : il
+    # produirait une prediction d'apparence normale a partir d'une entree
+    # invalide. Il faut donc le rejeter explicitement, avant tout controle.
+    non_finite = sorted(name for name, value in request_features.items()
+                        if not math.isfinite(float(value)))
+    if non_finite:
+        raise ApiError(422, "non_finite_feature",
+                       "Une valeur de contexte n'est pas un nombre fini",
+                       {"features": non_finite})
+    non_finite_discounts = [float(value) for value in discounts
+                            if not math.isfinite(float(value))]
+    if non_finite_discounts:
+        raise ApiError(422, "non_finite_discount",
+                       "Une remise candidate n'est pas un nombre fini")
+    # `stock_at_cutoff` n'est plus obligatoire : une interface ne peut pas
+    # demander cette valeur technique a un utilisateur. Absente, on retombe sur
+    # le snapshot catalogue du produit, qui est precisement sa derniere valeur
+    # observee. Le repli est signale dans la reponse via `context_source`.
     forbidden = set(request_features) & FORBIDDEN_FEATURES
     if forbidden:
         raise ApiError(400, "forbidden_features", "Une feature contemporaine ou cible est interdite",
@@ -63,13 +89,36 @@ def simulate(
     for raw_discount in discounts:
         discount = float(raw_discount)
         simulated_price = price * (1 - discount / 100)
-        if simulated_price < cost:
-            raise ApiError(409, "price_below_cost", "Le prix simulé serait inférieur au coût",
-                           {"discount_pct": discount})
         margin_rate = (simulated_price - cost) / simulated_price if simulated_price else 0.0
-        if margin_rate < MIN_MARGIN_RATE:
-            raise ApiError(409, "margin_below_floor", "La marge simulée serait inférieure à 5 %",
-                           {"discount_pct": discount})
+        blocked_reason = None
+        if simulated_price < cost:
+            blocked_reason = ("price_below_cost",
+                              "Le prix après remise passerait sous le coût unitaire.")
+        elif margin_rate < MIN_MARGIN_RATE:
+            blocked_reason = ("margin_below_floor",
+                              "La marge après remise passerait sous le plancher de 5 %.")
+        if blocked_reason is not None:
+            code, message = blocked_reason
+            if strict:
+                raise ApiError(409, code,
+                               "Le prix simulé serait inférieur au coût" if code == "price_below_cost"
+                               else "La marge simulée serait inférieure à 5 %",
+                               {"discount_pct": discount})
+            results.append(PricingCandidateResult(
+                discount_pct=discount,
+                catalog_price_xof=round(price, 2),
+                simulated_price_xof=round(simulated_price, 2),
+                cost_xof=round(cost, 2),
+                predicted_quantity=0.0,
+                expected_revenue_xof=0.0,
+                expected_margin_xof=0.0,
+                margin_rate=round(margin_rate, 4),
+                support_status="supported",
+                simulation_status="blocked",
+                blocked_reason_code=code,
+                blocked_reason=message,
+            ))
+            continue
 
         values = dict(snapshot)
         values.update({
@@ -101,5 +150,7 @@ def simulate(
             margin_rate=round(margin_rate, 4),
             support_status="supported",
             simulation_status="exploratory",
+            blocked_reason_code=None,
+            blocked_reason=None,
         ))
     return results
