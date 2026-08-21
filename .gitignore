@@ -85,6 +85,11 @@ reports/backtest/operational_predictions/
 # ~135 Mo) — jamais publié, ni pour la taille ni pour la granularité client.
 reports/recsys_final/recommandations_sortie.csv
 
+# --- Pricing/Recommandation V4 : artefacts de reproductibilité au grain
+# produit/décision/slate uniquement, aucune donnée client individuelle ---
+!models/v4/**/*.csv
+!reports/v4_training/*.csv
+
 # =============================================================================
 # Notebooks Jupyter (checkpoints d'édition)
 # =============================================================================
