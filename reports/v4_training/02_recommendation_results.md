@@ -7,6 +7,18 @@ résultats servent à l'évaluation académique et au benchmark de pipeline.
 Reproduction : `python -m src.recsys_v4.train`
 Artefacts : `models/v4/recommendation/{cible}/`
 
+**Mise à jour post-validation indépendante** : une vérification statistique
+indépendante (`07_validation_independante.md`), menée avec des fonctions de
+métrique, de bootstrap et de correction Holm entièrement réécrites,
+reclasse le modèle retenu sur `viewed_after_impression` de « promu » à
+**« exploratoire »** — la p-value brute recalculée par un test de
+permutation différent (0,088) ne franchit pas le seuil conventionnel de
+5 %, avant même correction. Les statuts de `added_to_cart_after` et
+`purchased_after` sont confirmés « validé » par cette même vérification.
+Les chiffres ci-dessous, produits par le pipeline principal, sont
+conservés tels quels ; voir `07_validation_independante.md` pour l'analyse
+qui a conduit à cette reclassification.
+
 ---
 
 ## 1. Périmètre
@@ -80,6 +92,13 @@ sont pas d'accord sur cette cible. Ce résultat est donc promu selon les
 critères explicitement fournis (IC95 % bootstrap, fenêtres gagnées, gain
 NDCG@10), mais présenté avec cette réserve statistique plutôt que comme un
 gain incontestable.
+
+**Mise à jour** : la vérification indépendante (`07_validation_independante.md`)
+confirme cette fragilité par une troisième construction statistique
+(permutation par inversion de signe des différences moyennes par client,
+p brute = 0,088, non significative même avant correction). Ce modèle est en
+conséquence **reclassé « exploratoire »** : `popularite_globale_v1` reste la
+référence retenue sur cette cible.
 
 ## 4. Résultats — `added_to_cart_after`
 
@@ -163,19 +182,21 @@ sous-ensemble de produits). Détail par fenêtre :
 
 ## 8. Décision finale et garde-fous
 
-| Cible | Modèle retenu | Gain NDCG@10 | Fenêtres gagnées | IC95 % | p Holm |
-|---|---|---:|---:|---|---:|
-| `viewed_after_impression` | `CatBoostRanker` | +5,57 % | 4/4 | entièrement positif | 0,168 (non significatif) |
-| `added_to_cart_after` | `pointwise_conversion` | +7,70 % | 4/4 | entièrement positif | 0,018 (significatif) |
-| `purchased_after` | `CatBoostRanker` | +8,57 % | 4/4 | entièrement positif | 0,009 (significatif) |
+| Cible | Modèle | Gain NDCG@10 | Fenêtres gagnées | IC95 % | p Holm (pipeline) | p Holm (indép.) | Statut retenu |
+|---|---|---:|---:|---|---:|---:|:---:|
+| `viewed_after_impression` | `CatBoostRanker` | +5,57 % | 4/4 | entièrement positif, borne basse proche de 0 | 0,168 | 0,088 | **exploratoire** |
+| `added_to_cart_after` | `pointwise_conversion` | +7,70 % | 4/4 | entièrement positif | 0,018 | 0,0015 | **validé** |
+| `purchased_after` | `CatBoostRanker` | +8,57 % | 4/4 | entièrement positif | 0,009 | 0,00075 | **validé** |
 
-Sur les trois cibles, un modèle franchit le seuil de promotion défini par la
-consigne (gain NDCG@10 ≥ 5 %, perte Recall@10 ≤ 2 %, IC95 % bootstrap
-entièrement positif, au moins 3 fenêtres gagnées, couverture/diversité
-acceptables, stabilité contrôle/traitement). Aucun repli sur
-`popularite_globale` n'a été nécessaire. La seule réserve est statistique et
-documentée (§3) : sur `viewed_after_impression`, la significativité
-corrigée Holm est plus faible que sur les deux autres cibles.
+**Statut final après validation indépendante** (`07_validation_independante.md`) :
+`added_to_cart_after` et `purchased_after` sont confirmés — deux
+constructions statistiques distinctes s'accordent sur une significativité
+nette. `viewed_after_impression` est **reclassé de « promu » à
+« exploratoire »** : ni la p-value Holm du pipeline principal (0,168), ni
+la p-value brute recalculée indépendamment par un test différent (0,088),
+ne franchissent le seuil conventionnel de 5 %. `popularite_globale_v1`
+reste donc la référence retenue sur cette cible, dans l'attente de données
+supplémentaires.
 
 Aucune de ces cibles ne mesure un « clic » — la colonne `clicked` n'existe
 plus dans la sémantique V4 et n'a jamais été référencée dans le code
