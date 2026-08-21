@@ -63,8 +63,10 @@ def _tracked() -> set[str]:
 
 def main() -> int:
     tracked = _tracked()
+    # Les repertoires caches (.git, .venv, .pytest_cache, .test-tmp-api...) sont
+    # ignores : ils contiennent des copies temporaires d'artefacts, non versionnees.
     manifests = [p for p in sorted(set(PROJECT_ROOT.rglob("*sha256.json")))
-                 if ".git" not in p.parts]
+                 if not any(part.startswith(".") for part in p.parts)]
     total_entries = 0
     crlf_in_text = []
     ok_manifests, problems = [], []
@@ -128,7 +130,7 @@ def main() -> int:
             print("     ", name)
 
     local_files = [p for p in sorted(PROJECT_ROOT.rglob("artifacts.local.json"))
-                   if ".git" not in p.parts]
+                   if not any(part.startswith(".") for part in p.parts)]
     if local_files:
         print()
         print("artefacts locaux non versionnes (informatif, hors validation) :")
