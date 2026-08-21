@@ -14,6 +14,7 @@ PyYAML>=6.0
 scikit-learn>=1.4  # aussi utilisé pour les métriques du classifieur hurdle (PR-AUC, Brier, log loss)
 lightgbm>=4.3
 catboost>=1.2
+xgboost>=3.0  # ranking (XGBRanker) pour src.recsys_v4.models
 statsforecast>=1.7
 mlforecast>=0.13
 utilsforecast>=0.2
