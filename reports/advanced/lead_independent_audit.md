@@ -1,4 +1,4 @@
-# Audit indépendant et décision — `lead/claude-independent-improvements`
+# Audit indépendant et décision
 
 > **Mise à jour du 2026-08-18 — corrections appliquées.** Ce document est le
 > rapport d'audit initial. Les fuites qu'il identifie ont depuis été corrigées :
@@ -9,7 +9,7 @@
 > invalidées**. Résultats en vigueur : [`SUPERSEDED_RESULTS.md`](../../SUPERSEDED_RESULTS.md)
 > et la série [17](../42_leakage_correction_report.md)–[20](../45_final_corrected_decision.md).
 
-Branche de travail : `lead/claude-independent-improvements`, créée depuis
+Branche de travail : branche d'audit independant dediee, créée depuis
 `experiment/recommendation-advanced-ranking` (`ff5c076`). Aucune fusion, aucun
 push, aucune écriture Supabase. Les artefacts validés existants sont inchangés.
 

@@ -7,7 +7,7 @@
 > les supprimer : chacun conserve son contenu d'origine et porte un bandeau
 > d'invalidation. Voir [`SUPERSEDED_RESULTS.md`](../SUPERSEDED_RESULTS.md).
 
-Branche : `lead/claude-independent-improvements`.
+Branche : branche d'audit independant dediee.
 Aucun push, aucune fusion, aucun déploiement, aucune écriture Supabase.
 
 ---

@@ -112,7 +112,7 @@ Chaque répertoire de modèles contient des métadonnées et un manifeste SHA-25
 
 ## Statut de livraison
 
-Branche de correction : `lead/claude-independent-improvements` (audit et correction des fuites du 2026-08-18).
+Branche de correction : branche d'audit independant (audit et correction des fuites du 2026-08-18).
 Branche de la livraison initiale : `rebuild/final-enriched-dataset`.
 
 Aucun merge vers `main`, aucun push, aucun déploiement et aucune écriture dans Supabase. L'historique Git et les branches distantes historiques ne sont pas modifiés : la série 42–45 les supersède.

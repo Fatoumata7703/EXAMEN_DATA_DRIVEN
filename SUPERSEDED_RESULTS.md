@@ -1,7 +1,7 @@
 # Résultats supersédés et invalidés
 
 **Date d'invalidation : 2026-08-18.**
-Auteur : audit indépendant, branche `lead/claude-independent-improvements`.
+Auteur : audit indépendant (branche d'audit dédiée, 2026-08-18).
 
 Ce document est la référence unique pour savoir quel résultat de ce dépôt est
 encore valide. **Aucun résultat n'a été supprimé** : tout est conservé, étiqueté

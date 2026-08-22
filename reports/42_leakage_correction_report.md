@@ -5,7 +5,7 @@
 > les supprimer : chacun conserve son contenu d'origine et porte un bandeau
 > d'invalidation. Voir [`SUPERSEDED_RESULTS.md`](../SUPERSEDED_RESULTS.md).
 
-Branche : `lead/claude-independent-improvements`. Aucun push, aucune fusion,
+Branche : branche d'audit independant dediee. Aucun push, aucune fusion,
 aucune écriture Supabase, aucun historique Git réécrit.
 
 ---

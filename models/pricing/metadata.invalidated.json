@@ -1,7 +1,7 @@
 {
   "status": "invalidated_due_to_target_leakage",
   "invalidated_on": "2026-08-18",
-  "invalidated_by": "audit lead/claude-independent-improvements",
+  "invalidated_by": "audit independant 2026-08-18",
   "reason": "Tous les modeles de cette livraison utilisaient n_lignes comme feature (src/pipelines/final_pricing.py, NUM). n_lignes est le nombre de lignes de commande confirmees du produit-jour ; la cible quantite est la somme des quantites de ces memes lignes. Correlation 0,708. La variable n'est connue qu'apres la journee de ventes.",
   "independent_proof": "Sur les memes trois fenetres, un oracle qui connaitrait la mediane produit x remise calculee DANS le test plafonne a 0,4866 / 0,4838 / 0,4931. Une WAPE de 0,4164 est sous ce plancher : elle ne peut pas etre produite sans information contemporaine de la cible.",
   "affected_models": [

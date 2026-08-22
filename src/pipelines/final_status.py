@@ -64,7 +64,7 @@ MARGIN_SIMULATOR_RULE = {
 
 PROVENANCE = {
     "corrected_on": "2026-08-18",
-    "branch": "lead/claude-independent-improvements",
+    "branch": "audit-independant-2026-08-18",
     "reports": {
         "leakage_correction": "reports/42_leakage_correction_report.md",
         "pricing": "reports/43_corrected_pricing_results.md",

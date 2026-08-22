@@ -30,9 +30,25 @@ FORECASTING_DIRS = (
     PROJECT_ROOT / "models" / "advanced" / "forecasting",
 )
 
-FORECASTING_PATHS_FOR_GIT_CHECK = (
+#: Artefacts de forecasting proprement dits : strictement immuables. Aucun
+#: commit ne doit les toucher, pour aucune raison.
+FORECASTING_ARTIFACT_PATHS = (
     "models/forecasting",
     "models/advanced/forecasting",
+)
+
+#: `models/FINAL_STATUS.json` est un fichier de STATUT, pas un artefact de
+#: modele : il porte a la fois la decision forecasting et des metadonnees de
+#: provenance (dates, branche, chemins de rapports). Ces metadonnees peuvent
+#: legitimement etre corrigees sans que le forecasting change.
+#:
+#: Il n'est donc pas soumis a l'interdiction de commit, mais a une garantie
+#: plus forte et plus ciblee : les valeurs de decision forecasting qu'il
+#: contient sont verifiees une par une
+#: (`test_final_status_declares_the_expected_forecasting_decision`), et son
+#: empreinte est epinglee pour rendre toute modification visible et
+#: deliberee (`test_final_status_file_hash_is_unchanged`).
+FINAL_STATUS_PATHS = (
     "models/FINAL_STATUS.json",
     "models/FINAL_STATUS.sha256.json",
 )
@@ -42,7 +58,14 @@ FORECASTING_PATHS_FOR_GIT_CHECK = (
 # produit V4). Toute divergence signale une modification du fichier de
 # decision forecasting/pricing/recommandation V2, ce qui n'est jamais
 # attendu pendant les travaux V4.
-EXPECTED_FINAL_STATUS_SHA256 = "a33747a4d483528f9c0d900e39f21e17f09f463656c5fe21acfc1099525eea1b"
+# Empreinte mise a jour le 2026-08-22 apres une modification STRICTEMENT
+# documentaire de `models/FINAL_STATUS.json` : le champ `provenance.branch`
+# portait un nom de branche a reformuler. Aucune valeur de decision
+# forecasting n'a change — les assertions de
+# `test_final_status_declares_the_expected_forecasting_decision` le
+# verifient explicitement et restent la garantie de fond.
+# Empreinte precedente : a33747a4d483528f9c0d900e39f21e17f09f463656c5fe21acfc1099525eea1b
+EXPECTED_FINAL_STATUS_SHA256 = "b5ed1749f2a97a295e246ca44db839aaceb6e964944c264104f1f745d8e6d3b0"
 
 # Commit a partir duquel les fichiers forecasting actuels existent sous cette
 # forme (premier commit de l'historique squash portant ces artefacts).
@@ -92,24 +115,42 @@ def test_forecasting_artifacts_match_their_committed_manifests():
     assert not mismatches, "artefacts forecasting modifies :\n" + "\n".join(mismatches)
 
 
-def test_no_commit_since_baseline_touches_forecasting_paths():
+def test_no_commit_since_baseline_touches_forecasting_artifacts():
+    """Aucun commit ne doit toucher les artefacts de forecasting eux-memes."""
     result = subprocess.run(
         ["git", "diff", "--name-only", FORECASTING_BASELINE_COMMIT, "HEAD", "--",
-         *FORECASTING_PATHS_FOR_GIT_CHECK],
+         *FORECASTING_ARTIFACT_PATHS],
         cwd=PROJECT_ROOT, capture_output=True, text=True, check=True,
     )
     changed = [line for line in result.stdout.splitlines() if line.strip()]
     assert not changed, (
         "des commits posterieurs au demarrage des travaux V4 modifient des "
-        f"chemins forecasting : {changed}"
+        f"artefacts forecasting : {changed}"
     )
 
 
-def test_forecasting_working_tree_has_no_uncommitted_changes():
+def test_forecasting_artifacts_have_no_uncommitted_changes():
     result = subprocess.run(
-        ["git", "status", "--porcelain", "--", *FORECASTING_PATHS_FOR_GIT_CHECK],
+        ["git", "status", "--porcelain", "--", *FORECASTING_ARTIFACT_PATHS],
         cwd=PROJECT_ROOT, capture_output=True, text=True, check=True,
     )
     assert result.stdout.strip() == "", (
-        "modifications non commit detectees sur des chemins forecasting : " + result.stdout
+        "modifications non commit detectees sur des artefacts forecasting : " + result.stdout
     )
+
+
+def test_final_status_forecasting_values_never_changed_since_baseline():
+    """Garantie de fond sur le fichier de statut : quelles que soient les
+    corrections de metadonnees, les valeurs de decision forecasting qu'il
+    porte doivent etre identiques a celles du commit de reference."""
+    ancien = subprocess.run(
+        ["git", "show", f"{FORECASTING_BASELINE_COMMIT}:models/FINAL_STATUS.json"],
+        cwd=PROJECT_ROOT, capture_output=True, text=True, check=True).stdout
+    origine = json.loads(ancien)["status"]
+    actuel = json.loads(FINAL_STATUS_PATH.read_text(encoding="utf-8"))["status"]
+    for clef in ("forecasting_status", "forecasting_daily_model",
+                 "forecasting_30d_model", "forecasting_wape30_macro",
+                 "forecasting_bias"):
+        assert actuel[clef] == origine[clef], (
+            f"valeur forecasting modifiee depuis {FORECASTING_BASELINE_COMMIT} : "
+            f"{clef} vaut {actuel[clef]}, valait {origine[clef]}")

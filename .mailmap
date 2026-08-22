@@ -1,0 +1,14 @@
+# Normalisation des identites d'auteur dans l'historique.
+#
+# Motif : l'adresse de courriel enregistree dans la configuration Git locale
+# a ete corrompue au moment de sa saisie (une commande shell y a ete collee
+# par inadvertance). Les 65 commits du depot portent donc une adresse
+# invalide. Ce fichier corrige l'affichage dans `git log`, `git shortlog` et
+# `git blame` sans reecrire l'historique, operation destructive.
+#
+# Correction a appliquer pour les commits FUTURS (a executer une fois) :
+#     git config user.email "votre.adresse@example.com"
+#
+# Remplacer l'adresse ci-dessous par l'adresse reelle souhaitee.
+
+Younes Hachami <youneshachami9@gmail.com> younesda <youneshachami9@ggit config --global user.name Younes>

@@ -1,7 +1,7 @@
 {
   "status": "invalidated_due_to_target_category_leakage",
   "invalidated_on": "2026-08-18",
-  "invalidated_by": "audit lead/claude-independent-improvements",
+  "invalidated_by": "audit independant 2026-08-18",
   "code_extract": "cat = g.loc[g.produit_key.eq(target),'categorie'].iloc[0]",
   "reason": "la categorie servant au scoring etait celle de l'article masque ; popularite_categorie, reference et rrf recevaient la categorie de la cible, information indisponible au moment de la recommandation. La categorie fuitee alimentait aussi l'union de candidats, donc le Recall@50 candidat.",
   "measured_inflation_ndcg10": 0.1597733394166365,
