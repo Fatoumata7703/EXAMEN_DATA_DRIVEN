@@ -242,17 +242,19 @@ function afficherPricing(conteneur, donnees) {
       "remise de " + nombre(donnees.remise_proposee_pct, 0) + " %"],
     ["Cout unitaire", xof(donnees.cout_xof), null],
     ["Marge unitaire", xof(donnees.marge_unitaire_xof), "prix simule moins cout"],
-    ["Volume estime 7 j",
-      donnees.volume_nul ? "non exploitable" : nombre(donnees.volume_estime_unites_7j, 2) + " unites",
+    // Un volume nul est une valeur reellement predite : elle est affichee comme
+    // telle. La masquer derriere une mention "non exploitable" reviendrait a
+    // cacher un resultat que le modele produit effectivement.
+    ["Volume estime 7 j", nombre(donnees.volume_estime_unites_7j, 2) + " unites",
       donnees.volume_nul ? "mediane historique nulle" : "mediane historique par produit"],
-    ["Chiffre d'affaires estime",
-      donnees.volume_nul ? "non exploitable" : xof(donnees.chiffre_affaires_estime_xof),
+    ["Chiffre d'affaires estime", xof(donnees.chiffre_affaires_estime_xof),
       "volume x prix simule"],
-    ["Marge estimee",
-      donnees.volume_nul ? "non exploitable" : xof(donnees.marge_estimee_xof),
+    ["Marge estimee", xof(donnees.marge_estimee_xof),
       "volume x marge unitaire"],
   ].forEach(([etiquette, valeur, precision]) => {
-    const bloc = creer("div", "mesure" + (valeur === "non exploitable" ? " indisponible" : ""));
+    const bloc = creer("div", "mesure"
+      + (donnees.volume_nul && etiquette !== "Prix catalogue" && etiquette !== "Prix simule"
+         && etiquette !== "Cout unitaire" && etiquette !== "Marge unitaire" ? " valeur-nulle" : ""));
     bloc.innerHTML = '<span class="valeur">' + valeur + "</span>"
       + '<span class="etiquette">' + etiquette + "</span>"
       + (precision ? '<span class="precision">' + precision + "</span>" : "");

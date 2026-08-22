@@ -249,3 +249,7 @@ footer a { color: var(--accent); }
 .etiquette-statut.reference { background: #e4edf7; color: #1f5f8b; }
 .etiquette-statut.simulation { background: #f0ecf7; color: #5b4a86; }
 .etiquette-statut.indisponible { background: #eceff3; color: var(--texte-doux); }
+
+/* Valeur reellement nulle : affichee, mais signalee comme peu informative. */
+.mesure.valeur-nulle { border-left: 3px solid var(--exploratoire); }
+.mesure.valeur-nulle .valeur { color: var(--exploratoire); }

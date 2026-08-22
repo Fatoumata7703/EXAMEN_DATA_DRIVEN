@@ -201,3 +201,28 @@ def test_la_console_expose_un_exemple_de_produit_a_volume_non_nul():
                         json={"produit_key": exemple, "discount_proposed": 10}).json()
     assert corps["volume_estime_unites_7j"] > 0, (
         f"l'exemple {exemple} propose par la console a un volume nul")
+
+
+def test_la_console_affiche_toujours_la_valeur_reelle_meme_nulle():
+    """Une prediction de zero est une valeur reelle : la console doit l'afficher,
+    et non la remplacer par une mention du type "non exploitable"."""
+    from api_v4.config import STATIC_DIR
+    script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    # Les commentaires citent volontairement la formulation ecartee pour
+    # expliquer le choix : le controle porte sur le code executable.
+    code = "\n".join(ligne for ligne in script.splitlines()
+                     if not ligne.strip().startswith("//"))
+    assert "non exploitable" not in code, (
+        "la console masque une valeur reellement predite au lieu de l'afficher")
+    assert "nombre(donnees.volume_estime_unites_7j, 2)" in code
+    assert "xof(donnees.chiffre_affaires_estime_xof)" in code
+    assert "xof(donnees.marge_estimee_xof)" in code
+
+
+def test_un_volume_nul_reste_signale_sans_effacer_les_chiffres():
+    """Le signalement passe par le message et un marqueur visuel, jamais par
+    la suppression de la valeur."""
+    from api_v4.config import STATIC_DIR
+    script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    assert "valeur-nulle" in script, "marqueur visuel absent"
+    assert "donnees.message" in script, "message explicatif absent"
