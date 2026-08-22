@@ -1,6 +1,6 @@
 # E-commerce — Forecasting, Pricing et Recommandation
 
-> ## ⚠️ AVERTISSEMENT — résultats partiellement invalidés le 2026-08-18
+> ##  AVERTISSEMENT — résultats partiellement invalidés le 2026-08-18
 >
 > Un audit indépendant a identifié **trois fuites de données**. Deux des trois
 > références historiquement publiées sont **invalides** et ne doivent plus servir
@@ -8,14 +8,14 @@
 >
 > | Domaine | Score publié | Statut |
 > |---|---:|---|
-> | Forecasting 30 j | WAPE 0,25831 | ✅ **valide**, reproduit à l'identique |
-> | Pricing | WAPE **0,4164** | ❌ `invalidated_due_to_target_leakage` — niveau honnête : **0,5526** |
-> | Complément panier | Recall@10 **0,437** / NDCG@10 **0,213** | ❌ `invalidated_due_to_target_category_leakage` — niveau honnête : **0,0556 / 0,0240** |
-> | Complément panier (hérité) | Recall@10 **0,1006** / NDCG@10 **0,0485** | ❌ `invalidated_due_to_in_sample_evaluation_without_temporal_split` |
+> | Forecasting 30 j | WAPE 0,25831 |  **valide**, reproduit à l'identique |
+> | Pricing | WAPE **0,4164** |  `invalidated_due_to_target_leakage` — niveau honnête : **0,5526** |
+> | Complément panier | Recall@10 **0,437** / NDCG@10 **0,213** |  `invalidated_due_to_target_category_leakage` — niveau honnête : **0,0556 / 0,0240** |
+> | Complément panier (hérité) | Recall@10 **0,1006** / NDCG@10 **0,0485** |  `invalidated_due_to_in_sample_evaluation_without_temporal_split` |
 >
 > **Aucun modèle n'est promu sur aucun domaine.**
 >
-> 👉 Lire d'abord [`SUPERSEDED_RESULTS.md`](SUPERSEDED_RESULTS.md), puis la série
+>  Lire d'abord [`SUPERSEDED_RESULTS.md`](SUPERSEDED_RESULTS.md), puis la série
 > « correction » : [17 — fuites](reports/42_leakage_correction_report.md) ·
 > [18 — pricing](reports/43_corrected_pricing_results.md) ·
 > [19 — recommandation](reports/44_corrected_recommendation_results.md) ·
@@ -37,10 +37,10 @@ Livraison finale reconstruite à partir d'une extraction Supabase fraîche, cont
 | Domaine | Sélection finale | Validation temporelle | Résultat principal | Usage autorisé |
 |---|---|---|---|---|
 | Forecasting quotidien | `CrostonOptimized` | 6 fenêtres non chevauchantes de 30 jours | WAPE 1,0945; 4 victoires sur 6 | Prévision quotidienne supervisée |
-| Forecasting cumulé 30 j | `LightGBM_Tweedie` | mêmes 6 fenêtres | WAPE cumulée 0,3106 | ✅ valide — **supersédé** par `LightGBM_direct_per_horizon`, WAPE30 0,25831 |
-| Pricing | `LightGBM_calibre` | 3 fenêtres temporelles, calibration antérieure séparée | ~~WAPE 0,4164~~ | ❌ **INVALIDÉ** — fuite `n_lignes`; sans la fuite : 0,5625. Modèle de volume officiel : `lgbm_tweedie_moyenne`, WAPE 0,5526, biais +0,0013 |
-| Recommandation — prochain achat | baseline `popularite_globale`; hybride `challenger_exploratoire` | 3 fenêtres, bootstrap client-fenêtre | ΔNDCG hybride +0,00095, IC95 % contenant zéro | ✅ valide — baseline contrôlée |
-| Recommandation — complément panier | ~~`popularite_categorie`~~ | leave-one-item-out F2–F4 | ~~Recall@10 0,437 / NDCG@10 0,213~~ | ❌ **INVALIDÉ** — fuite catégorie cible. Statut : `none_validated`, baseline `popularite_globale` (0,0556 / 0,0240) |
+| Forecasting cumulé 30 j | `LightGBM_Tweedie` | mêmes 6 fenêtres | WAPE cumulée 0,3106 |  valide — **supersédé** par `LightGBM_direct_per_horizon`, WAPE30 0,25831 |
+| Pricing | `LightGBM_calibre` | 3 fenêtres temporelles, calibration antérieure séparée | ~~WAPE 0,4164~~ |  **INVALIDÉ** — fuite `n_lignes`; sans la fuite : 0,5625. Modèle de volume officiel : `lgbm_tweedie_moyenne`, WAPE 0,5526, biais +0,0013 |
+| Recommandation — prochain achat | baseline `popularite_globale`; hybride `challenger_exploratoire` | 3 fenêtres, bootstrap client-fenêtre | ΔNDCG hybride +0,00095, IC95 % contenant zéro |  valide — baseline contrôlée |
+| Recommandation — complément panier | ~~`popularite_categorie`~~ | leave-one-item-out F2–F4 | ~~Recall@10 0,437 / NDCG@10 0,213~~ | **INVALIDÉ** — fuite catégorie cible. Statut : `none_validated`, baseline `popularite_globale` (0,0556 / 0,0240) |
 
 Ces métriques mesurent des tâches différentes et ne doivent pas être comparées entre domaines. Aucun modèle forecasting n'est déclaré vainqueur global. Le gain de l'hybride de recommandation n'est pas statistiquement établi.
 
@@ -100,10 +100,10 @@ Le fichier `.env` est exclu par `.gitignore`. Ne jamais l'afficher, le journalis
 
 - Audit des données : [`reports/final/01_data_audit.md`](reports/final/01_data_audit.md)
 - Forecasting : [`reports/final/02_forecasting.md`](reports/final/02_forecasting.md), `models/forecasting/`
-- Pricing : ⚠️ [`reports/final/03_pricing.md`](reports/final/03_pricing.md) **invalidé** → [`reports/43_corrected_pricing_results.md`](reports/43_corrected_pricing_results.md), `models/advanced/pricing_corrected/`
-- Recommandation : ⚠️ [`reports/final/04_recommendation.md`](reports/final/04_recommendation.md) **partiellement invalidé** → [`reports/44_corrected_recommendation_results.md`](reports/44_corrected_recommendation_results.md), `models/advanced/complement_honest/`
+- Pricing :  [`reports/final/03_pricing.md`](reports/final/03_pricing.md) **invalidé** → [`reports/43_corrected_pricing_results.md`](reports/43_corrected_pricing_results.md), `models/advanced/pricing_corrected/`
+- Recommandation :  [`reports/final/04_recommendation.md`](reports/final/04_recommendation.md) **partiellement invalidé** → [`reports/44_corrected_recommendation_results.md`](reports/44_corrected_recommendation_results.md), `models/advanced/complement_honest/`
 - Synthèse exécutive : [`reports/final/05_executive_summary.md`](reports/final/05_executive_summary.md)
-- Addendum méthodologique : ⚠️ [`reports/final/06_methodology_addendum.md`](reports/final/06_methodology_addendum.md) **partiellement invalidé** (NDCG@10 0,0485)
+- Addendum méthodologique :  [`reports/final/06_methodology_addendum.md`](reports/final/06_methodology_addendum.md) **partiellement invalidé** (NDCG@10 0,0485)
 - Matrice des contrôles actifs : [`reports/final/07_active_test_matrix.md`](reports/final/07_active_test_matrix.md)
 
 Chaque répertoire de modèles contient des métadonnées et un manifeste SHA-256. Les anciens rapports V1 restent versionnés pour traçabilité.
