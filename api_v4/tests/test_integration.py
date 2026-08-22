@@ -116,7 +116,48 @@ def test_final_status_sha256_matches_actual_model_files_on_disk():
     assert checked == 6, "les 3 cibles pricing et les 3 cibles recommandation doivent avoir une empreinte"
 
 
-def test_forecasting_is_not_exposed_by_this_product():
+def test_forecast_is_exposed_in_read_only_mode():
+    """La prevision est desormais consultable, mais en lecture seule.
+
+    Ce test remplace un controle anterieur qui exigeait l'absence totale de
+    route de prevision. L'invariant qui compte n'est pas l'absence de route :
+    c'est qu'aucun modele de forecasting ne soit charge, reentraine ou
+    modifie par ce service. Les routes servent un instantane deja calcule.
+    """
     from api_v4.main import app
     paths = {route.path for route in app.routes}
-    assert not any("forecast" in path.lower() for path in paths)
+    assert "/forecast" in paths
+    assert "/forecast/{produit_key}" in paths
+
+
+def test_no_forecasting_model_is_loaded_by_this_service():
+    """Le service ne doit charger aucun artefact de forecasting : la prevision
+    provient d'un instantane JSON, jamais d'un modele reexecute."""
+    from api_v4.registry import REGISTRY
+    charges = set(REGISTRY.recommendation_models) | set(REGISTRY.pricing_models)
+    assert not any("forecast" in nom.lower() for nom in charges)
+
+    import sys
+    modules_forecasting = [m for m in sys.modules
+                           if m.startswith(("src.forecasting", "src.experiments.advanced_forecasting",
+                                            "src.pipelines.final_forecasting"))]
+    assert not modules_forecasting, (
+        f"modules d'entrainement forecasting importes : {modules_forecasting}")
+
+
+def test_forecast_snapshot_metrics_match_the_validated_decision():
+    """Les metriques servies doivent etre exactement celles de la decision V2
+    deja validee, sans recalcul ni derive."""
+    import json
+
+    from fastapi.testclient import TestClient
+
+    from api_v4.main import app
+
+    statut_v2 = json.loads(
+        (PROJECT_ROOT / "models" / "FINAL_STATUS.json").read_text(encoding="utf-8"))["status"]
+    servi = TestClient(app).get("/forecast").json()
+    assert servi["modele_planification_30j"] == statut_v2["forecasting_30d_model"]
+    assert servi["modele_quotidien"] == statut_v2["forecasting_daily_model"]
+    assert servi["metriques"]["wape30_macro"] == statut_v2["forecasting_wape30_macro"]
+    assert servi["metriques"]["forecast_bias_macro"] == statut_v2["forecasting_bias"]

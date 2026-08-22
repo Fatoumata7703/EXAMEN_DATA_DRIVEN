@@ -11,13 +11,16 @@ import os
 import time
 
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 
+from api_v4.config import STATIC_DIR
 from api_v4.registry import REGISTRY
 from api_v4.schemas import (
     HealthResponse, PricingSimulationRequest, PricingSimulationResponse,
     RecommendationItem, RecommendationRequest, RecommendationResponse,
 )
+from api_v4.services import forecast as forecast_service
 from api_v4.services import pricing as pricing_service
 from api_v4.services import recommendation as recommendation_service
 
@@ -63,6 +66,16 @@ async def _count_requests(request: Request, call_next):
     if response.status_code >= 400:
         METRICS["errors_total"] += 1
     return response
+
+
+STATIC_DIR.mkdir(parents=True, exist_ok=True)
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
+
+@app.get("/", include_in_schema=False)
+def console() -> FileResponse:
+    """Console web de demonstration. La documentation OpenAPI reste sur /docs."""
+    return FileResponse(STATIC_DIR / "index.html")
 
 
 @app.get("/health", response_model=HealthResponse)
@@ -133,6 +146,56 @@ def recommendations_panier(request: RecommendationRequest) -> RecommendationResp
     """Recommandation d'ajout au panier (`added_to_cart_after`) :
     `pointwise_conversion`, repli automatique sur `popularite_globale_v1`."""
     return _handle_recommendation("added_to_cart_after", request)
+
+
+@app.get("/catalogue")
+def catalogue() -> dict:
+    """Listes de produits alimentant les menus de la console.
+
+    Les deux catalogues different : la recommandation ne couvre que les
+    produits reellement exposes pendant l'experience (208 sur 300), le
+    pricing couvre les 300 produits ayant fait l'objet d'une decision.
+    """
+    return {
+        "recommandation": sorted(REGISTRY.recommendation_catalog.keys()),
+        "pricing": sorted(REGISTRY.pricing_catalog.keys()),
+    }
+
+
+@app.get("/forecast")
+def forecast_summary() -> dict:
+    """Synthese de la prevision 30 jours deja validee.
+
+    Lecture seule : aucun modele de forecasting n'est charge ni reentraine.
+    Les valeurs proviennent du backtest hors echantillon du modele V2.
+    """
+    try:
+        return forecast_service.summary()
+    except forecast_service.ForecastUnavailableError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+
+@app.get("/forecast/produits")
+def forecast_products(limite: int = 300) -> dict:
+    """Produits couverts par la prevision, avec leur ecart cumule sur 30 jours."""
+    try:
+        return {"n_produits": len(forecast_service.product_list(limite)),
+                "produits": forecast_service.product_list(limite)}
+    except forecast_service.ForecastUnavailableError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+
+@app.get("/forecast/{produit_key}")
+def forecast_by_product(produit_key: str) -> dict:
+    """Courbe realise contre prevu, horizon 1 a 30, pour un produit."""
+    try:
+        return forecast_service.product_forecast(produit_key)
+    except forecast_service.ForecastUnavailableError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except forecast_service.UnknownForecastProductError as exc:
+        raise HTTPException(
+            status_code=404,
+            detail=f"produit inconnu de l'instantane de prevision : {exc}") from exc
 
 
 @app.post("/pricing/simulation", response_model=PricingSimulationResponse)

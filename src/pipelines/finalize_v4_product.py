@@ -250,6 +250,74 @@ def build_final_status() -> dict:
     }
 
 
+# Instantane forecasting, en lecture seule
+# --------------------------------------------------------------------------
+
+FORECAST_SOURCE = PROJECT_ROOT / "models" / "advanced" / "forecasting" / "direct_lightgbm_predictions.parquet"
+
+
+def build_forecast_snapshot() -> dict:
+    """Instantane de la prevision 30 jours deja validee, pour affichage.
+
+    Lecture seule stricte : aucun modele de forecasting n'est reentraine et
+    aucun artefact de `models/forecasting/` ou `models/advanced/forecasting/`
+    n'est modifie. Seule la derniere fenetre de backtest est reprise, au grain
+    produit x horizon, avec le realise et le prevu.
+
+    Les metriques globales proviennent de `models/FINAL_STATUS.json`, source de
+    verite de la decision forecasting V2.
+    """
+    predictions = pd.read_parquet(FORECAST_SOURCE)
+    derniere = predictions[predictions.window.eq(predictions.window.max())].copy()
+    derniere = derniere.sort_values(["produit_key", "horizon"])
+
+    produits = pd.read_parquet(LEGACY_DIR / "dim_produit.parquet").set_index("produit_key")
+    statut_v2 = json.loads((PROJECT_ROOT / "models" / "FINAL_STATUS.json").read_text(encoding="utf-8"))["status"]
+
+    horizons = sorted(derniere.horizon.unique().tolist())
+    dates = [str(d)[:10] for d in derniere[derniere.produit_key.eq(derniere.produit_key.iloc[0])]
+             .sort_values("horizon").ds.tolist()]
+
+    par_produit = {}
+    for produit_key, groupe in derniere.groupby("produit_key"):
+        groupe = groupe.sort_values("horizon")
+        reel = [float(v) for v in groupe.y]
+        prevu = [round(float(v), 4) for v in groupe.pred]
+        total_reel, total_prevu = sum(reel), sum(prevu)
+        par_produit[produit_key] = {
+            "nom": str(produits.loc[produit_key, "product_name"]) if produit_key in produits.index else produit_key,
+            "categorie": str(produits.loc[produit_key, "categorie"]) if produit_key in produits.index else "inconnue",
+            "reel": reel,
+            "prevu": prevu,
+            "total_reel_30j": round(total_reel, 2),
+            "total_prevu_30j": round(total_prevu, 2),
+            "ecart_absolu_30j": round(abs(total_reel - total_prevu), 2),
+        }
+
+    return {
+        "statut": "validated",
+        "avertissement": (
+            "Prevision issue du modele V2 deja valide, reprise en lecture seule et "
+            "jamais reentrainee. Les valeurs affichees proviennent de la derniere "
+            "fenetre de backtest hors echantillon, pas d'une prevision du futur."),
+        "modele_planification_30j": statut_v2["forecasting_30d_model"],
+        "modele_quotidien": statut_v2["forecasting_daily_model"],
+        "metriques": {
+            "wape30_macro": statut_v2["forecasting_wape30_macro"],
+            "wape30_micro": 0.25743,
+            "forecast_bias_macro": statut_v2["forecasting_bias"],
+        },
+        "fenetre": {
+            "index": int(derniere.window.iloc[0]),
+            "debut": str(derniere.test_start.iloc[0])[:10],
+            "horizons": horizons,
+            "dates": dates,
+        },
+        "n_produits": len(par_produit),
+        "produits": par_produit,
+    }
+
+
 def main() -> None:
     API_DATA_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -274,6 +342,11 @@ def main() -> None:
         json.dumps(pricing_catalog, indent=2, ensure_ascii=False, default=str) + "\n",
         encoding="utf-8", newline="\n")
 
+    forecast = build_forecast_snapshot()
+    (API_DATA_DIR / "forecast_snapshot.json").write_text(
+        json.dumps(forecast, indent=2, ensure_ascii=False, default=str) + "\n",
+        encoding="utf-8", newline="\n")
+
     final_status = build_final_status()
     (MODELS_DIR / "FINAL_STATUS.json").write_text(
         json.dumps(final_status, indent=2, ensure_ascii=False, default=str) + "\n",
@@ -283,8 +356,12 @@ def main() -> None:
     print(" -", API_DATA_DIR / "recommendation_catalog.json", f"({len(recommendation_catalog)} produits)")
     print(" -", API_DATA_DIR / "categorical_mappings.json")
     print(" -", API_DATA_DIR / "pricing_catalog.json", f"({len(pricing_catalog)} produits)")
+    print(" -", API_DATA_DIR / "forecast_snapshot.json", f"({forecast['n_produits']} produits, lecture seule)")
     print(" -", MODELS_DIR / "FINAL_STATUS.json", f"({len(final_status['models'])} entrees)")
 
 
 if __name__ == "__main__":
     main()
+
+
+# --------------------------------------------------------------------------

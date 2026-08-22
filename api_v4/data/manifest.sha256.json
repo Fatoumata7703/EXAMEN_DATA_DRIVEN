@@ -1,5 +1,6 @@
 {
-  "recommendation_catalog.json": "a868fe9de9ef1bfc0a40be68d8d12e2b57f849692ff4129d54aaa0c0062a2455",
   "categorical_mappings.json": "2c2889f7b3ff9713c124c70eba14241057f96879f091aa977b910dfb31a14d01",
-  "pricing_catalog.json": "4cb16a5199113fa0d12ec63270f3ea1d169ca4d0abccc539fca3f6cbe8783fca"
+  "forecast_snapshot.json": "41ccabcae132ac7b611117d47690e726d2ec497aa21557950bc4366132d46409",
+  "pricing_catalog.json": "4cb16a5199113fa0d12ec63270f3ea1d169ca4d0abccc539fca3f6cbe8783fca",
+  "recommendation_catalog.json": "a868fe9de9ef1bfc0a40be68d8d12e2b57f849692ff4129d54aaa0c0062a2455"
 }

@@ -5,7 +5,8 @@
 #   - `Dockerfile`         -> api.main:app        (V2, service existant)
 #   - `Dockerfile.api_v4`  -> api_v4.main:app     (V4, service separe)
 #
-# Ce conteneur copie exclusivement `api_v4/`, `models/v4/` et les modules
+# Ce conteneur copie exclusivement `api_v4/` (code, console web et instantanes,
+# dont `data/forecast_snapshot.json`), `models/v4/` et les modules
 # `src/` necessaires au rechargement des modeles. Il ne copie ni `api/`, ni
 # `models/api_bundle/`, ni les CSV de reproductibilite (environ 104 Mo,
 # inutiles au service).

@@ -20,7 +20,7 @@ from typing import Any, Optional
 import joblib
 
 from api_v4.config import (
-    CATEGORICAL_MAPPINGS_PATH, FINAL_STATUS_PATH, MODELS_DIR,
+    CATEGORICAL_MAPPINGS_PATH, FINAL_STATUS_PATH, FORECAST_SNAPSHOT_PATH, MODELS_DIR,
     PRICING_CATALOG_PATH, PRICING_TARGETS, RECOMMENDATION_CATALOG_PATH,
     RECOMMENDATION_TARGETS,
 )
@@ -34,6 +34,7 @@ class ModelRegistry:
         self.recommendation_catalog: dict = {}
         self.pricing_catalog: dict = {}
         self.categorical_mappings: dict = {"device": {}, "source": {}, "channel": {}}
+        self.forecast_snapshot: dict = {}
         self.load_errors: dict[str, str] = {}
         self.started_at = time.time()
         self.loaded = False
@@ -49,7 +50,8 @@ class ModelRegistry:
 
         for path, attr in ((RECOMMENDATION_CATALOG_PATH, "recommendation_catalog"),
                           (PRICING_CATALOG_PATH, "pricing_catalog"),
-                          (CATEGORICAL_MAPPINGS_PATH, "categorical_mappings")):
+                          (CATEGORICAL_MAPPINGS_PATH, "categorical_mappings"),
+                          (FORECAST_SNAPSHOT_PATH, "forecast_snapshot")):
             try:
                 setattr(self, attr, json.loads(path.read_text(encoding="utf-8")))
             except Exception as exc:  # noqa: BLE001
