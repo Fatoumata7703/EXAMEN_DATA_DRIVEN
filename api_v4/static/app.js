@@ -461,6 +461,20 @@ function limite(texte) {
   return p;
 }
 
+/* Carte de metrique avec definition. Une valeur absente est affichee comme
+   telle, avec son motif : elle n'est jamais remplacee par un nombre. */
+function carteMetrique(etiquette, valeur, definition, decimales, indisponibleMotif) {
+  const disponible = valeur !== null && valeur !== undefined;
+  const bloc = creer("div", "mesure" + (disponible ? "" : " indisponible"));
+  const texte = disponible ? nombre(valeur, decimales === undefined ? 5 : decimales)
+                           : "non calcule";
+  bloc.innerHTML = '<span class="valeur">' + texte + "</span>"
+    + '<span class="etiquette">' + etiquette + "</span>"
+    + '<span class="precision">' + (disponible ? definition : indisponibleMotif) + "</span>";
+  if (definition) bloc.title = definition;
+  return bloc;
+}
+
 async function chargerModeles() {
   const conteneur = $("#modeles-resultat");
   try {
@@ -475,82 +489,177 @@ async function chargerModeles() {
       + "</p><p><strong>Statut des donnees :</strong> " + scores.statut_donnees + "</p>";
     conteneur.appendChild(entete);
 
-    /* ---------------------------------------------------------- forecasting */
-    const f = scores.forecasting;
-    const carteF = creer("div", "carte");
-    const sectionF = bloc("Forecasting");
-    sectionF.appendChild(tableauDe(
-      ["Element", "Valeur"],
-      [
-        ["Modele de planification 30 jours", f.planning_model || "non disponible"],
-        ["Modele quotidien", f.daily_model || "non disponible"],
-        ["WAPE30 macro", valeurOuIndisponible(f.wape30_macro, 5)],
-        ["WAPE30 micro", valeurOuIndisponible(f.wape30_micro, 5)],
-        ["Forecast Bias macro", valeurOuIndisponible(f.forecast_bias_macro, 5)],
-        ["Statut", badgeStatut(f.status)],
-        ["Usage", f.usage || "non disponible"],
-      ]));
-    sectionF.appendChild(limite(
-      "Limite : une WAPE30 de " + valeurOuIndisponible(f.wape30_macro, 5)
-      + " ne signifie pas une exactitude de 90 pour cent. La demande est fortement "
-      + "intermittente : de nombreux produits ne se vendent pas chaque jour, ce qui "
-      + "gonfle mecaniquement l'erreur relative. Modele repris en lecture seule, "
-      + "jamais reentraine par ce service."));
-    carteF.appendChild(sectionF);
-    conteneur.appendChild(carteF);
-
-    /* -------------------------------------------------------------- pricing */
-    const pr = scores.pricing;
-    const carteP = creer("div", "carte");
-    const sectionP = bloc("Pricing");
-    const enteteP = creer("p");
-    enteteP.appendChild(document.createTextNode("Modele : " + (pr.model || "non disponible") + " — "));
-    enteteP.appendChild(badgeStatut(pr.status));
-    sectionP.appendChild(enteteP);
-
-    const lignesP = Object.keys(pr.targets).map((cible) => {
-      const c = pr.targets[cible];
-      return [cible, valeurOuIndisponible(c.wape_macro, 4),
-              valeurOuIndisponible(c.bias_macro, 4), badgeStatut(c.status)];
-    });
-    sectionP.appendChild(tableauDe(["Cible", "WAPE macro", "Biais macro", "Statut"], lignesP));
-    sectionP.appendChild(limite(
-      "Limites : aucun effet causal n'est estime (causal_effect_estimated = "
-      + pr.causal_effect_estimated + ") et aucun prix optimal n'est calcule "
-      + "automatiquement (automatic_optimal_price = " + pr.automatic_optimal_price + "). "
-      + "Aucun modele d'apprentissage n'a battu la mediane par produit : la baseline "
-      + "reste la reference. Usage autorise : simulation academique uniquement."));
-    carteP.appendChild(sectionP);
-    conteneur.appendChild(carteP);
-
-    /* ------------------------------------------------------- recommandation */
-    const r = scores.recommendation;
-    const carteR = creer("div", "carte");
-    const sectionR = bloc("Recommandation");
-    const roles = { purchase: "Achat", add_to_cart: "Ajout au panier", view: "Consultation" };
-    const lignesR = Object.keys(roles).map((role) => {
-      const e = r[role] || {};
-      return [roles[role], e.target || "non disponible", e.model || "non disponible",
-              pourcentage(e.ndcg10_gain_relative),
-              valeurOuIndisponible(e.holm_pvalue_independent, 5),
-              badgeStatut(e.status),
-              e.used_by_default === true ? "oui" : (e.used_by_default === false ? "non" : "-"),
-              e.fallback || "-"];
-    });
-    sectionR.appendChild(tableauDe(
-      ["Role", "Cible", "Modele", "Gain NDCG@10", "p Holm independante",
-       "Statut", "Par defaut", "Repli"], lignesR));
-    sectionR.appendChild(limite(
-      "Limites : gains mesures hors ligne sur des slates fermees de 5 candidats ; "
-      + "Recall@k y est invariant au reclassement, seul NDCG@10 discrimine. Le modele "
-      + "de consultation reste exploratoire : son gain n'est pas significatif apres "
-      + "correction, il n'est donc jamais servi par defaut. Repli general : "
-      + "popularite_globale_v1."));
-    carteR.appendChild(sectionR);
-    conteneur.appendChild(carteR);
+    conteneur.appendChild(sectionForecasting(scores.forecasting));
+    conteneur.appendChild(sectionRecommandation(scores.recommendation));
+    conteneur.appendChild(sectionPricing(scores.pricing));
   } catch (erreur) {
     messageErreur(conteneur, erreur.message);
   }
+}
+
+/* ------------------------------------------------- 1. Forecasting V2 */
+
+function sectionForecasting(f) {
+  const carte = creer("div", "carte carte-principale");
+  const section = bloc("1. Forecasting V2 — prevision de la demande");
+
+  const modeles = creer("p");
+  modeles.appendChild(document.createTextNode(
+    "Modeles retenus : " + (f.planning_model || "non disponible")
+    + " (planification 30 jours), " + (f.daily_model || "non disponible")
+    + " (quotidien) — "));
+  modeles.appendChild(badgeStatut(f.status));
+  section.appendChild(modeles);
+
+  const principales = creer("div", "cartes");
+  principales.appendChild(carteMetrique(
+    "WAPE30 macro", f.wape30_macro,
+    "moyenne des erreurs relatives par produit, cumul 30 jours", 5));
+  principales.appendChild(carteMetrique(
+    "WAPE30 micro", f.wape30_micro,
+    "erreur relative calculee sur le total agrege, cumul 30 jours", 5));
+  principales.appendChild(carteMetrique(
+    "Forecast Bias macro", f.forecast_bias_macro,
+    "biais moyen ; negatif = sous-estimation", 5));
+  section.appendChild(principales);
+
+  const titreHorizons = creer("p", "sous-titre");
+  titreHorizons.textContent = "Erreur par horizon d'agregation";
+  section.appendChild(titreHorizons);
+
+  const horizons = creer("div", "cartes");
+  const h = f.horizons || {};
+  [["Quotidienne", h.quotidien], ["Cumul 7 jours", h.cumule_7j],
+   ["Cumul 14 jours", h.cumule_14j], ["Cumul 30 jours", h.cumule_30j]]
+    .forEach(function (paire) {
+      const etiquette = paire[0];
+      const entree = paire[1];
+      if (!entree) return;
+      horizons.appendChild(carteMetrique(
+        "WAPE " + etiquette, entree.disponible ? entree.wape : null,
+        entree.definition, 5,
+        entree.raison_indisponibilite || "valeur non calculee"));
+    });
+  section.appendChild(horizons);
+
+  if (f.daily_model_metrics) {
+    const q = f.daily_model_metrics;
+    const titreQ = creer("p", "sous-titre");
+    titreQ.textContent = "Modele operationnel quotidien : " + q.modele;
+    section.appendChild(titreQ);
+    const cartesQ = creer("div", "cartes");
+    cartesQ.appendChild(carteMetrique("WAPE quotidienne", q.wape_quotidienne,
+      "erreur relative ponderee, prevision a un jour", 5));
+    cartesQ.appendChild(carteMetrique("WAPE cumul 30 jours", q.wape_cumulee_30j,
+      "erreur du modele quotidien agrege sur 30 jours", 5));
+    cartesQ.appendChild(carteMetrique("Biais", q.biais,
+      "biais moyen du modele quotidien", 5));
+    section.appendChild(cartesQ);
+  }
+
+  const w = f.windows || {};
+  const titreF = creer("p", "sous-titre");
+  titreF.textContent = "Fenetres d'evaluation";
+  section.appendChild(titreF);
+
+  const cartesF = creer("div", "cartes");
+  cartesF.appendChild(carteMetrique("Fenetres evaluees", w.evaluated,
+    "nombre de fenetres de test hors echantillon", 0));
+  cartesF.appendChild(carteMetrique("Victoires planification", w.won_planning_30d,
+    "fenetres gagnees contre " + (w.reference_planning || "la reference"), 0));
+  cartesF.appendChild(carteMetrique("Victoires quotidien", w.won_daily,
+    "fenetres gagnees contre " + (w.reference_daily || "la reference"), 0));
+  cartesF.appendChild(carteMetrique("Horizons evalues", f.horizons_evaluated,
+    "nombre d'horizons de prevision evalues", 0));
+  section.appendChild(cartesF);
+
+  if (w.detail && w.detail.length) {
+    section.appendChild(tableauDe(
+      ["Fenetre", "Debut", "WAPE quotidienne", "WAPE 7 j", "WAPE 30 j", "Biais"],
+      w.detail.map(function (d) {
+        return [String(d.fenetre), d.debut,
+                nombre(d.wape_quotidienne, 5), nombre(d.wape_cumulee_7j, 5),
+                nombre(d.wape_cumulee_30j, 5), nombre(d.biais, 5)];
+      })));
+  }
+
+  const liens = creer("p", "liens");
+  liens.innerHTML =
+    '<a class="lien-bouton" href="/forecast" target="_blank" rel="noopener">Voir /forecast</a>'
+    + '<a class="lien-bouton" href="/forecast/produits" target="_blank" rel="noopener">Voir /forecast/produits</a>';
+  section.appendChild(liens);
+
+  section.appendChild(limite(f.note));
+  carte.appendChild(section);
+  return carte;
+}
+
+/* --------------------------------------------- 2. Recommandation V4 */
+
+function sectionRecommandation(r) {
+  const carte = creer("div", "carte");
+  const section = bloc("2. Recommandation V4 — gains de classement");
+
+  const avert = creer("p", "sous-titre");
+  avert.textContent = "Ces valeurs sont des gains de CLASSEMENT par rapport a la "
+    + "popularite globale, jamais une exactitude.";
+  section.appendChild(avert);
+
+  const roles = { purchase: "Achat", add_to_cart: "Ajout au panier", view: "Consultation" };
+  const lignes = Object.keys(roles).map(function (role) {
+    const e = r[role] || {};
+    return [roles[role], e.target || "non disponible", e.model || "non disponible",
+            pourcentage(e.ndcg10_gain_relative),
+            valeurOuIndisponible(e.holm_pvalue_independent, 5),
+            badgeStatut(e.status),
+            e.used_by_default === true ? "oui" : (e.used_by_default === false ? "non" : "-"),
+            e.fallback || "-"];
+  });
+  section.appendChild(tableauDe(
+    ["Role", "Cible", "Modele", "Gain NDCG@10", "p Holm independante",
+     "Statut", "Par defaut", "Repli"], lignes));
+
+  section.appendChild(limite(
+    "NDCG@10 mesure la qualite de l'ORDRE d'une liste, pas un taux de bonnes "
+    + "reponses. Gains mesures hors ligne sur des listes fermees de 5 candidats ; "
+    + "Recall@k y est invariant au reclassement, seul NDCG@10 discrimine. Le "
+    + "modele de consultation reste exploratoire : son gain n'est pas significatif "
+    + "apres correction, il n'est donc jamais servi par defaut. Repli general : "
+    + "popularite_globale_v1."));
+  carte.appendChild(section);
+  return carte;
+}
+
+/* ---------------------------------------------------- 3. Pricing V4 */
+
+function sectionPricing(pr) {
+  const carte = creer("div", "carte");
+  const section = bloc("3. Pricing V4 — simulation");
+
+  const entete = creer("p");
+  entete.appendChild(document.createTextNode(
+    "Modele : " + (pr.model || "non disponible") + " — "));
+  entete.appendChild(badgeStatut(pr.status));
+  section.appendChild(entete);
+
+  const lignes = Object.keys(pr.targets).map(function (cible) {
+    const c = pr.targets[cible];
+    return [cible, valeurOuIndisponible(c.wape_macro, 4),
+            valeurOuIndisponible(c.wape_micro_pooled, 4),
+            valeurOuIndisponible(c.bias_macro, 4), badgeStatut(c.status)];
+  });
+  section.appendChild(tableauDe(
+    ["Cible", "WAPE macro", "WAPE micro", "Biais macro", "Statut"], lignes));
+
+  section.appendChild(limite(
+    "WAPE macro : moyenne des erreurs relatives par produit. WAPE micro : erreur "
+    + "calculee sur le total agrege. Aucun effet causal n'est estime "
+    + "(causal_effect_estimated = " + pr.causal_effect_estimated + ") et aucun prix "
+    + "optimal n'est calcule automatiquement (automatic_optimal_price = "
+    + pr.automatic_optimal_price + "). Aucun modele d'apprentissage n'a battu la "
+    + "mediane par produit. Usage autorise : simulation academique uniquement."));
+  carte.appendChild(section);
+  return carte;
 }
 
 /* --------------------------------------------------------- initialisation */

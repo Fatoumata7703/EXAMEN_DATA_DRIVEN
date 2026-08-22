@@ -160,8 +160,10 @@ def test_la_console_ne_code_aucun_score_en_dur():
 
 
 def test_la_console_affiche_les_trois_domaines():
+    """Les trois domaines sont presents, desormais en sections numerotees avec
+    le forecasting en tete."""
     script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
-    for titre in ('bloc("Forecasting")', 'bloc("Pricing")', 'bloc("Recommandation")'):
+    for titre in ("1. Forecasting V2", "2. Recommandation V4", "3. Pricing V4"):
         assert titre in script, f"domaine absent de la console : {titre}"
 
 
@@ -184,3 +186,105 @@ def test_la_console_utilise_des_badges_de_statut():
     script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
     for statut in ("validated_academic", "exploratory", "simulation_only", "validated"):
         assert statut in script, f"badge manquant pour le statut {statut}"
+
+
+# ------------------------------------------- forecasting detaille (section 1)
+
+
+def test_metrics_expose_les_metriques_forecasting_detaillees(scores):
+    f = scores["forecasting"]
+    assert f["daily_model"] == "CrostonOptimized"
+    assert f["planning_model"] == "LightGBM_direct_per_horizon"
+    assert f["wape30_macro"] == 0.25831
+    assert f["wape30_micro"] == 0.25743
+    assert f["forecast_bias_macro"] == -0.02589
+    assert f["status"] == "validated"
+
+
+def test_metrics_expose_les_horizons_forecasting(scores):
+    h = scores["forecasting"]["horizons"]
+    for cle in ("quotidien", "cumule_7j", "cumule_14j", "cumule_30j"):
+        assert cle in h, f"horizon manquant : {cle}"
+        assert "definition" in h[cle], f"definition manquante pour {cle}"
+
+
+def test_horizon_14_jours_declare_indisponible_sans_valeur_inventee(scores):
+    """Le backtest n'a pas calcule la WAPE a 14 jours : elle doit etre
+    declaree absente, jamais remplacee par un nombre."""
+    quatorze = scores["forecasting"]["horizons"]["cumule_14j"]
+    assert quatorze["disponible"] is False
+    assert quatorze["wape"] is None
+    assert quatorze["raison_indisponibilite"]
+
+
+def test_metrics_expose_les_fenetres_et_victoires_forecasting(scores):
+    w = scores["forecasting"]["windows"]
+    assert w["evaluated"] == 6
+    assert w["won_planning_30d"] is not None
+    assert w["won_daily"] is not None
+    assert len(w["detail"]) == 6
+    for fenetre in w["detail"]:
+        for cle in ("fenetre", "debut", "wape_quotidienne",
+                    "wape_cumulee_7j", "wape_cumulee_30j", "biais"):
+            assert cle in fenetre, f"champ manquant dans une fenetre : {cle}"
+
+
+def test_metriques_forecasting_coherentes_avec_l_instantane():
+    """Les valeurs servies doivent egaler celles de l'instantane de backtest,
+    lui-meme derive des metadonnees de prevision."""
+    from api_v4.config import FORECAST_SNAPSHOT_PATH
+    instantane = json.loads(FORECAST_SNAPSHOT_PATH.read_text(encoding="utf-8"))
+    servi = client.get("/metrics").json()["forecasting"]
+    metriques = instantane["metriques"]
+    assert servi["horizons"]["quotidien"]["wape"] == metriques["wape_quotidienne"]
+    assert servi["horizons"]["cumule_7j"]["wape"] == metriques["wape_cumulee_7j"]
+    assert servi["horizons"]["cumule_30j"]["wape"] == metriques["wape_cumulee_30j"]
+    assert servi["daily_model_metrics"] == instantane["modele_quotidien_metriques"]
+
+
+def test_forecasting_ne_revendique_aucune_exactitude(scores):
+    note = scores["forecasting"]["note"].lower()
+    assert "backtest" in note
+    assert "sans reentrainement" in note
+    assert "aucune exactitude" in note
+
+
+# ----------------------------------------------------- console : 3 sections
+
+
+def test_la_console_organise_les_scores_en_trois_sections():
+    script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    for fonction in ("sectionForecasting", "sectionRecommandation", "sectionPricing"):
+        assert fonction in script, f"section manquante : {fonction}"
+    assert '"1. Forecasting V2' in script
+    assert '"2. Recommandation V4' in script
+    assert '"3. Pricing V4' in script
+
+
+def test_la_console_propose_les_liens_forecast():
+    script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    assert 'href="/forecast"' in script
+    assert 'href="/forecast/produits"' in script
+
+
+def test_la_console_ne_code_aucune_metrique_forecasting_en_dur():
+    script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    for valeur in ("0.25743", "0,25743", "1.0869", "1,0869", "0.4545", "0,4545",
+                   "1.0945", "1,0945", "0.3699", "0,3699"):
+        assert valeur not in script, (
+            f"metrique forecasting {valeur} ecrite en dur dans la console")
+
+
+def test_la_console_conserve_les_metriques_de_recommandation():
+    """Regression : la mise en avant du forecasting ne doit pas evincer les
+    scores de recommandation."""
+    script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    assert "ndcg10_gain_relative" in script
+    assert "holm_pvalue_independent" in script
+    assert "Gain NDCG@10" in script
+
+
+def test_la_console_ne_parle_jamais_d_exactitude():
+    script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    assert "accuracy" not in script.lower()
+    assert "exactitude" in script, "la mise en garde sur l'exactitude doit rester"

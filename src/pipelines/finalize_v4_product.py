@@ -262,6 +262,64 @@ def build_final_status() -> dict:
 FORECAST_SOURCE = PROJECT_ROOT / "models" / "advanced" / "forecasting" / "direct_lightgbm_predictions.parquet"
 
 
+def _forecast_detailed_metrics() -> dict:
+    """Metriques detaillees du backtest de prevision, lues telles quelles.
+
+    Lecture seule stricte : aucun recalcul, aucun reentrainement. Les
+    metriques absentes du backtest ne sont pas fabriquees — elles sont
+    declarees explicitement comme non calculees, afin que l'interface ne
+    puisse pas afficher une valeur qui n'existe pas.
+    """
+    source = PROJECT_ROOT / "models" / "advanced" / "forecasting" / "metadata.json"
+    metadata = json.loads(source.read_text(encoding="utf-8"))
+    resume = metadata["summary"]
+    comparaison = metadata["comparison"]
+    reference = metadata["reference"]["summary"]
+
+    quotidien = next((r for r in reference
+                      if r["model"] == metadata["decisions"]["operational_daily_model"]), {})
+
+    fenetres = [
+        {
+            "fenetre": f["window"],
+            "debut": str(f["test_start"])[:10],
+            "wape_quotidienne": round(float(f["wape_daily"]), 6),
+            "wape_cumulee_7j": round(float(f["wape_cum_7"]), 6),
+            "wape_cumulee_30j": round(float(f["wape_cum_30"]), 6),
+            "biais": round(float(f["bias"]), 6),
+        }
+        for f in metadata["window_metrics"]
+    ]
+
+    return {
+        "agregat": {
+            "wape_quotidienne": round(float(resume["wape_daily"]), 6),
+            "wape_cumulee_7j": round(float(resume["wape_cum_7"]), 6),
+            "wape_cumulee_30j": round(float(resume["wape_cum_30"]), 6),
+            # La WAPE cumulee a 14 jours n'a pas ete calculee lors du backtest :
+            # elle est declaree absente plutot que remplacee par une valeur.
+            "wape_cumulee_14j": None,
+            "wape_cumulee_14j_disponible": False,
+        },
+        "quotidien": {
+            "modele": metadata["decisions"]["operational_daily_model"],
+            "wape_quotidienne": round(float(quotidien["wape"]), 6) if quotidien else None,
+            "wape_cumulee_30j": round(float(quotidien["wape30"]), 6) if quotidien else None,
+            "biais": round(float(quotidien["bias"]), 6) if quotidien else None,
+            "ecart_type": round(float(quotidien["std"]), 6) if quotidien else None,
+        },
+        "fenetres": fenetres,
+        "victoires": {
+            "n_fenetres_evaluees": len(fenetres),
+            "planification_30j": comparaison["cumulative_30d_windows_won_vs_validated_lightgbm"],
+            "quotidien": comparaison["daily_windows_won_vs_croston"],
+            "reference_planification": "LightGBM_Tweedie",
+            "reference_quotidien": "CrostonOptimized",
+        },
+        "horizons_evalues": len(metadata["methodology"]["horizons"]),
+    }
+
+
 def build_forecast_snapshot() -> dict:
     """Instantane de la prevision 30 jours deja validee, pour affichage.
 
@@ -300,6 +358,8 @@ def build_forecast_snapshot() -> dict:
             "ecart_absolu_30j": round(abs(total_reel - total_prevu), 2),
         }
 
+    metriques_detaillees = _forecast_detailed_metrics()
+
     return {
         "statut": "validated",
         "avertissement": (
@@ -312,7 +372,12 @@ def build_forecast_snapshot() -> dict:
             "wape30_macro": statut_v2["forecasting_wape30_macro"],
             "wape30_micro": 0.25743,
             "forecast_bias_macro": statut_v2["forecasting_bias"],
+            **metriques_detaillees["agregat"],
         },
+        "modele_quotidien_metriques": metriques_detaillees["quotidien"],
+        "fenetres": metriques_detaillees["fenetres"],
+        "victoires": metriques_detaillees["victoires"],
+        "horizons_evalues": metriques_detaillees["horizons_evalues"],
         "fenetre": {
             "index": int(derniere.window.iloc[0]),
             "debut": str(derniere.test_start.iloc[0])[:10],

@@ -122,6 +122,52 @@ qui ont conditionné ces décisions.
 | WAPE30 micro | 0,25743 |
 | Forecast Bias macro | **−0,02589** |
 
+**Erreur par horizon d'agrégation** (modèle de planification) :
+
+| Horizon | WAPE |
+|---|---:|
+| Quotidienne | 1,08698 |
+| Cumul 7 jours | 0,45457 |
+| Cumul 14 jours | *non calculée* |
+| Cumul 30 jours | 0,25831 |
+
+La WAPE à 14 jours n'a pas été évaluée lors du backtest. Elle est déclarée
+absente partout où elle apparaît, et n'est jamais remplacée par une valeur
+approchée.
+
+**Modèle opérationnel quotidien** (`CrostonOptimized`) :
+
+| Métrique | Valeur |
+|---|---:|
+| WAPE quotidienne | 1,09452 |
+| WAPE cumul 30 jours | 0,36996 |
+| Biais | −0,05959 |
+
+**Protocole d'évaluation** : 6 fenêtres de test hors échantillon, 30 horizons
+évalués. Le modèle de planification gagne **6 fenêtres sur 6** contre la
+référence `LightGBM_Tweedie` ; le modèle quotidien en gagne **5 sur 6**.
+
+| Fenêtre | Début | WAPE quotidienne | WAPE 7 j | WAPE 30 j | Biais |
+|---:|---|---:|---:|---:|---:|
+| 1 | 2026-02-02 | 1,09011 | 0,43817 | 0,26794 | +0,01667 |
+| 2 | 2026-03-04 | 1,11513 | 0,47627 | 0,28876 | −0,05035 |
+| 3 | 2026-04-03 | 1,08440 | 0,46897 | 0,24895 | −0,05805 |
+| 4 | 2026-05-03 | 1,06114 | 0,45155 | 0,25868 | −0,06135 |
+| 5 | 2026-06-02 | 1,07112 | 0,43348 | 0,25282 | −0,04841 |
+| 6 | 2026-07-02 | 1,09996 | 0,45898 | 0,23274 | +0,04611 |
+
+### Pourquoi la WAPE quotidienne dépasse 1
+
+Une WAPE quotidienne de 1,087 signifie que l'erreur absolue moyenne dépasse
+le niveau moyen de la demande d'un jour donné. Ce n'est pas une anomalie :
+sur une demande très intermittente, où de nombreux produits enregistrent zéro
+vente un jour donné, le dénominateur est faible et le rapport explose.
+
+C'est précisément pourquoi la décision de promotion porte sur le **cumul à 30
+jours** (WAPE 0,25831) et non sur la prévision quotidienne : à cet horizon,
+l'agrégation lisse l'intermittence et l'erreur relative redevient
+interprétable.
+
 ### Lecture correcte de ces chiffres
 
 Une WAPE30 de 0,25831 **ne signifie pas une exactitude de 90 %**, ni de

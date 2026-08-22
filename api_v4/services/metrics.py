@@ -41,18 +41,65 @@ def _ou_null(source: dict, clef: str) -> Optional[Any]:
 
 
 def forecasting_scores() -> dict:
-    """Decision forecasting V2, reprise telle quelle. Aucun modele n'est charge."""
+    """Decision forecasting V2, reprise telle quelle. Aucun modele n'est charge.
+
+    Les metriques detaillees proviennent de l'instantane de backtest ; celles
+    qui n'ont pas ete calculees restent a `null` et sont signalees comme
+    indisponibles, jamais remplacees par une valeur.
+    """
     statut = _statut_v2()
+    instantane = REGISTRY.forecast_snapshot or {}
+    metriques = instantane.get("metriques", {}) or {}
+    victoires = instantane.get("victoires", {}) or {}
+
     return {
         "daily_model": _ou_null(statut, "forecasting_daily_model"),
         "planning_model": _ou_null(statut, "forecasting_30d_model"),
         "wape30_macro": _ou_null(statut, "forecasting_wape30_macro"),
-        "wape30_micro": (REGISTRY.forecast_snapshot.get("metriques", {}) or {}).get("wape30_micro"),
+        "wape30_micro": _ou_null(metriques, "wape30_micro"),
         "forecast_bias_macro": _ou_null(statut, "forecasting_bias"),
         "status": _ou_null(statut, "forecasting_status"),
         "usage": "planification_30j_et_quotidien",
-        "note": ("Modele V2 valide, ni rejoue ni modifie par ce service. "
-                 "Une WAPE30 de 0,25831 n'est pas une exactitude de 90 pour cent."),
+        "horizons": {
+            "quotidien": {
+                "wape": _ou_null(metriques, "wape_quotidienne"),
+                "definition": "erreur relative ponderee, prevision a un jour",
+                "disponible": metriques.get("wape_quotidienne") is not None,
+            },
+            "cumule_7j": {
+                "wape": _ou_null(metriques, "wape_cumulee_7j"),
+                "definition": "erreur relative ponderee sur le cumul a 7 jours",
+                "disponible": metriques.get("wape_cumulee_7j") is not None,
+            },
+            "cumule_14j": {
+                "wape": _ou_null(metriques, "wape_cumulee_14j"),
+                "definition": "erreur relative ponderee sur le cumul a 14 jours",
+                "disponible": bool(metriques.get("wape_cumulee_14j_disponible", False)),
+                "raison_indisponibilite": (
+                    None if metriques.get("wape_cumulee_14j_disponible", False)
+                    else "horizon non evalue lors du backtest ; valeur non calculee"),
+            },
+            "cumule_30j": {
+                "wape": _ou_null(metriques, "wape_cumulee_30j"),
+                "definition": "erreur relative ponderee sur le cumul a 30 jours",
+                "disponible": metriques.get("wape_cumulee_30j") is not None,
+            },
+        },
+        "daily_model_metrics": instantane.get("modele_quotidien_metriques"),
+        "windows": {
+            "evaluated": victoires.get("n_fenetres_evaluees"),
+            "won_planning_30d": victoires.get("planification_30j"),
+            "won_daily": victoires.get("quotidien"),
+            "reference_planning": victoires.get("reference_planification"),
+            "reference_daily": victoires.get("reference_quotidien"),
+            "detail": instantane.get("fenetres", []),
+        },
+        "horizons_evaluated": instantane.get("horizons_evalues"),
+        "note": ("Previsions issues d'un backtest historique, sans reentrainement "
+                 "dans l'API. Une WAPE30 de 0,25831 n'est pas une exactitude de "
+                 "90 pour cent : c'est une erreur relative ponderee, mecaniquement "
+                 "elevee sur une demande intermittente. Aucune exactitude n'est "
+                 "calculee par ce projet."),
     }
 
 

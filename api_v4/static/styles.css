@@ -253,3 +253,11 @@ footer a { color: var(--accent); }
 /* Valeur reellement nulle : affichee, mais signalee comme peu informative. */
 .mesure.valeur-nulle { border-left: 3px solid var(--exploratoire); }
 .mesure.valeur-nulle .valeur { color: var(--exploratoire); }
+
+/* Section principale mise en avant sur la page Scores et validation. */
+.carte-principale { border-left: 4px solid var(--accent); }
+.sous-titre {
+  margin: 1rem 0 .5rem; font-size: .88rem; font-weight: 600;
+  color: var(--texte-doux); text-transform: uppercase; letter-spacing: .03em;
+}
+.mesure.indisponible .precision { font-style: italic; }

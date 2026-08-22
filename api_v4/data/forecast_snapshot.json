@@ -6,8 +6,78 @@
   "metriques": {
     "wape30_macro": 0.25831,
     "wape30_micro": 0.25743,
-    "forecast_bias_macro": -0.02589
+    "forecast_bias_macro": -0.02589,
+    "wape_quotidienne": 1.086976,
+    "wape_cumulee_7j": 0.454569,
+    "wape_cumulee_30j": 0.258314,
+    "wape_cumulee_14j": null,
+    "wape_cumulee_14j_disponible": false
   },
+  "modele_quotidien_metriques": {
+    "modele": "CrostonOptimized",
+    "wape_quotidienne": 1.094521,
+    "wape_cumulee_30j": 0.369956,
+    "biais": -0.059588,
+    "ecart_type": 0.027612
+  },
+  "fenetres": [
+    {
+      "fenetre": 1,
+      "debut": "2026-02-02",
+      "wape_quotidienne": 1.090108,
+      "wape_cumulee_7j": 0.438165,
+      "wape_cumulee_30j": 0.267937,
+      "biais": 0.016674
+    },
+    {
+      "fenetre": 2,
+      "debut": "2026-03-04",
+      "wape_quotidienne": 1.115125,
+      "wape_cumulee_7j": 0.476268,
+      "wape_cumulee_30j": 0.288756,
+      "biais": -0.050347
+    },
+    {
+      "fenetre": 3,
+      "debut": "2026-04-03",
+      "wape_quotidienne": 1.084403,
+      "wape_cumulee_7j": 0.468972,
+      "wape_cumulee_30j": 0.248945,
+      "biais": -0.058049
+    },
+    {
+      "fenetre": 4,
+      "debut": "2026-05-03",
+      "wape_quotidienne": 1.06114,
+      "wape_cumulee_7j": 0.451553,
+      "wape_cumulee_30j": 0.258679,
+      "biais": -0.061354
+    },
+    {
+      "fenetre": 5,
+      "debut": "2026-06-02",
+      "wape_quotidienne": 1.07112,
+      "wape_cumulee_7j": 0.433475,
+      "wape_cumulee_30j": 0.252823,
+      "biais": -0.048408
+    },
+    {
+      "fenetre": 6,
+      "debut": "2026-07-02",
+      "wape_quotidienne": 1.099957,
+      "wape_cumulee_7j": 0.458978,
+      "wape_cumulee_30j": 0.232744,
+      "biais": 0.046115
+    }
+  ],
+  "victoires": {
+    "n_fenetres_evaluees": 6,
+    "planification_30j": 6,
+    "quotidien": 5,
+    "reference_planification": "LightGBM_Tweedie",
+    "reference_quotidien": "CrostonOptimized"
+  },
+  "horizons_evalues": 30,
   "fenetre": {
     "index": 6,
     "debut": "2026-07-02",
