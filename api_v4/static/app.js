@@ -79,6 +79,7 @@ async function chargerEtat() {
 
 /* -------------------------------------------------------- recommandation */
 
+const EXEMPLE_PRICING = "PRD000002";
 let produitsRecommandation = [];
 const selectionnes = [];
 
@@ -225,38 +226,59 @@ $("#form-pricing").addEventListener("submit", async (evenement) => {
 function afficherPricing(conteneur, donnees) {
   conteneur.innerHTML = "";
 
+  // Un volume nul est une prediction reelle, pas un echec : il est affiche
+  // comme tel, avec son explication. Un echec de prediction ne passe jamais
+  // par ici, il remonte en erreur HTTP explicite.
+  if (donnees.volume_nul) {
+    const alerte = creer("div", "message alerte");
+    alerte.textContent = donnees.message;
+    conteneur.appendChild(alerte);
+  }
+
   const mesures = creer("div", "cartes");
   [
-    ["Prix catalogue", xof(donnees.prix_catalogue_xof)],
-    ["Prix simule", xof(donnees.prix_simule_xof)],
-    ["Cout", xof(donnees.cout_xof)],
-    ["Volume estime 7 j", nombre(donnees.volume_estime_unites_7j, 2) + " unites"],
-    ["Chiffre d'affaires estime", xof(donnees.chiffre_affaires_estime_xof)],
-    ["Marge estimee", xof(donnees.marge_estimee_xof)],
-  ].forEach(([etiquette, valeur]) => {
-    const bloc = creer("div", "mesure");
-    bloc.innerHTML = '<span class="valeur">' + valeur
-      + '</span><span class="etiquette">' + etiquette + "</span>";
+    ["Prix catalogue", xof(donnees.prix_catalogue_xof), null],
+    ["Prix simule", xof(donnees.prix_simule_xof),
+      "remise de " + nombre(donnees.remise_proposee_pct, 0) + " %"],
+    ["Cout unitaire", xof(donnees.cout_xof), null],
+    ["Marge unitaire", xof(donnees.marge_unitaire_xof), "prix simule moins cout"],
+    ["Volume estime 7 j",
+      donnees.volume_nul ? "non exploitable" : nombre(donnees.volume_estime_unites_7j, 2) + " unites",
+      donnees.volume_nul ? "mediane historique nulle" : "mediane historique par produit"],
+    ["Chiffre d'affaires estime",
+      donnees.volume_nul ? "non exploitable" : xof(donnees.chiffre_affaires_estime_xof),
+      "volume x prix simule"],
+    ["Marge estimee",
+      donnees.volume_nul ? "non exploitable" : xof(donnees.marge_estimee_xof),
+      "volume x marge unitaire"],
+  ].forEach(([etiquette, valeur, precision]) => {
+    const bloc = creer("div", "mesure" + (valeur === "non exploitable" ? " indisponible" : ""));
+    bloc.innerHTML = '<span class="valeur">' + valeur + "</span>"
+      + '<span class="etiquette">' + etiquette + "</span>"
+      + (precision ? '<span class="precision">' + precision + "</span>" : "");
     mesures.appendChild(bloc);
   });
   conteneur.appendChild(mesures);
 
   const carte = creer("div", "carte");
+
   const gardeFous = creer("div", "message "
-    + (donnees.garde_fous.prix_sous_cout || donnees.garde_fous.marge_negative
+    + (donnees.garde_fous.prix_sous_cout || donnees.garde_fous.marge_unitaire_negative
        ? "erreur" : "succes"));
-  gardeFous.textContent = donnees.garde_fous.prix_sous_cout
-    ? "Garde-fou declenche : prix sous le cout."
-    : (donnees.garde_fous.marge_negative
-       ? "Garde-fou declenche : marge negative."
-       : "Garde-fous respectes : prix superieur au cout, marge positive.");
+  gardeFous.textContent = donnees.garde_fous.marge_unitaire_negative
+    ? "Garde-fou declenche : marge unitaire negative."
+    : "Garde-fous respectes : prix simule superieur au cout, marge unitaire positive.";
   carte.appendChild(gardeFous);
 
   const detail = creer("p");
   detail.innerHTML = "<strong>Produit :</strong> " + donnees.produit_key
-    + " (" + donnees.categorie + ", classe " + donnees.classe_abc + ")"
-    + " &nbsp;|&nbsp; <strong>Modele :</strong> " + donnees.modele;
+    + " (" + donnees.categorie + ", classe " + donnees.classe_abc + ")";
   carte.appendChild(detail);
+
+  const ligneModele = creer("p");
+  ligneModele.appendChild(document.createTextNode("Modele : " + donnees.modele + " — statut "));
+  ligneModele.appendChild(etiquetteStatut(donnees.modele_statut));
+  carte.appendChild(ligneModele);
 
   const note = creer("p", "note");
   note.textContent = donnees.avertissement;
@@ -377,45 +399,153 @@ function tracerCourbe(reel, prevu, horizons) {
 
 /* ---------------------------------------------------------------- modeles */
 
+function badge(texte, classe) {
+  const span = creer("span", "etiquette-statut " + classe);
+  span.textContent = texte;
+  return span;
+}
+
+function badgeStatut(statut) {
+  if (statut === "validated_academic") return badge("valide (academique)", "valide");
+  if (statut === "exploratory") return badge("exploratoire", "exploratoire");
+  if (statut === "validated") return badge("reference validee", "reference");
+  if (statut === "simulation_only") return badge("simulation uniquement", "simulation");
+  return badge(statut || "indisponible", "indisponible");
+}
+
+/* Valeur numerique, ou mention explicite si la metrique n'existe pas.
+   Ne substitue jamais un zero a une valeur absente. */
+function valeurOuIndisponible(valeur, decimales) {
+  return (valeur === null || valeur === undefined)
+    ? "non disponible" : nombre(valeur, decimales);
+}
+
+function pourcentage(valeur) {
+  return (valeur === null || valeur === undefined)
+    ? "non disponible" : (valeur >= 0 ? "+" : "") + nombre(valeur * 100, 2) + " %";
+}
+
+function bloc(titre) {
+  const section = creer("div", "domaine");
+  const h3 = creer("h3");
+  h3.textContent = titre;
+  section.appendChild(h3);
+  return section;
+}
+
+function tableauDe(entetes, lignes) {
+  const table = creer("table");
+  table.innerHTML = "<thead><tr>" + entetes.map((e) => "<th>" + e + "</th>").join("") + "</tr></thead>";
+  const corps = creer("tbody");
+  lignes.forEach((cellules) => {
+    const tr = creer("tr");
+    cellules.forEach((cellule) => {
+      const td = creer("td");
+      if (cellule instanceof Node) td.appendChild(cellule);
+      else td.textContent = cellule;
+      tr.appendChild(td);
+    });
+    corps.appendChild(tr);
+  });
+  table.appendChild(corps);
+  const defilant = creer("div", "tableau-defilant");
+  defilant.appendChild(table);
+  return defilant;
+}
+
+function limite(texte) {
+  const p = creer("p", "limite");
+  p.textContent = texte;
+  return p;
+}
+
 async function chargerModeles() {
   const conteneur = $("#modeles-resultat");
   try {
-    const donnees = await appeler("/metadata");
+    const scores = await appeler("/metrics");
+    const meta = await appeler("/metadata");
     conteneur.innerHTML = "";
 
     const entete = creer("div", "carte");
-    entete.innerHTML = "<p><strong>Service :</strong> " + donnees.service
+    entete.innerHTML = "<p><strong>Service :</strong> " + meta.service
       + " &nbsp;|&nbsp; <strong>Version deployee :</strong> "
-      + (donnees.deployed_commit || "inconnue")
-      + "</p><p><strong>Statut des donnees :</strong> " + donnees.status + "</p>";
+      + (meta.deployed_commit || "inconnue")
+      + "</p><p><strong>Statut des donnees :</strong> " + scores.statut_donnees + "</p>";
     conteneur.appendChild(entete);
 
-    const tableau = creer("table");
-    tableau.innerHTML = "<thead><tr><th>Domaine</th><th>Cible</th><th>Modele</th>"
-      + "<th>Statut</th><th>Par defaut</th><th>Repli</th></tr></thead>";
-    const corps = creer("tbody");
-    donnees.models.forEach((modele) => {
-      const tr = creer("tr");
-      tr.innerHTML = "<td>" + modele.domain + "</td><td>" + modele.target
-        + "</td><td>" + modele.model_name + "</td>";
-      const tdStatut = creer("td");
-      tdStatut.appendChild(etiquetteStatut(modele.status));
-      tr.appendChild(tdStatut);
-      const tdDefaut = creer("td");
-      tdDefaut.textContent = modele.used_by_default === true ? "oui"
-        : (modele.used_by_default === false ? "non" : "-");
-      tr.appendChild(tdDefaut);
-      const tdRepli = creer("td");
-      tdRepli.textContent = modele.fallback || "-";
-      tr.appendChild(tdRepli);
-      corps.appendChild(tr);
+    /* ---------------------------------------------------------- forecasting */
+    const f = scores.forecasting;
+    const carteF = creer("div", "carte");
+    const sectionF = bloc("Forecasting");
+    sectionF.appendChild(tableauDe(
+      ["Element", "Valeur"],
+      [
+        ["Modele de planification 30 jours", f.planning_model || "non disponible"],
+        ["Modele quotidien", f.daily_model || "non disponible"],
+        ["WAPE30 macro", valeurOuIndisponible(f.wape30_macro, 5)],
+        ["WAPE30 micro", valeurOuIndisponible(f.wape30_micro, 5)],
+        ["Forecast Bias macro", valeurOuIndisponible(f.forecast_bias_macro, 5)],
+        ["Statut", badgeStatut(f.status)],
+        ["Usage", f.usage || "non disponible"],
+      ]));
+    sectionF.appendChild(limite(
+      "Limite : une WAPE30 de " + valeurOuIndisponible(f.wape30_macro, 5)
+      + " ne signifie pas une exactitude de 90 pour cent. La demande est fortement "
+      + "intermittente : de nombreux produits ne se vendent pas chaque jour, ce qui "
+      + "gonfle mecaniquement l'erreur relative. Modele repris en lecture seule, "
+      + "jamais reentraine par ce service."));
+    carteF.appendChild(sectionF);
+    conteneur.appendChild(carteF);
+
+    /* -------------------------------------------------------------- pricing */
+    const pr = scores.pricing;
+    const carteP = creer("div", "carte");
+    const sectionP = bloc("Pricing");
+    const enteteP = creer("p");
+    enteteP.appendChild(document.createTextNode("Modele : " + (pr.model || "non disponible") + " — "));
+    enteteP.appendChild(badgeStatut(pr.status));
+    sectionP.appendChild(enteteP);
+
+    const lignesP = Object.keys(pr.targets).map((cible) => {
+      const c = pr.targets[cible];
+      return [cible, valeurOuIndisponible(c.wape_macro, 4),
+              valeurOuIndisponible(c.bias_macro, 4), badgeStatut(c.status)];
     });
-    tableau.appendChild(corps);
-    const defilant = creer("div", "tableau-defilant");
-    defilant.appendChild(tableau);
-    const carte = creer("div", "carte");
-    carte.appendChild(defilant);
-    conteneur.appendChild(carte);
+    sectionP.appendChild(tableauDe(["Cible", "WAPE macro", "Biais macro", "Statut"], lignesP));
+    sectionP.appendChild(limite(
+      "Limites : aucun effet causal n'est estime (causal_effect_estimated = "
+      + pr.causal_effect_estimated + ") et aucun prix optimal n'est calcule "
+      + "automatiquement (automatic_optimal_price = " + pr.automatic_optimal_price + "). "
+      + "Aucun modele d'apprentissage n'a battu la mediane par produit : la baseline "
+      + "reste la reference. Usage autorise : simulation academique uniquement."));
+    carteP.appendChild(sectionP);
+    conteneur.appendChild(carteP);
+
+    /* ------------------------------------------------------- recommandation */
+    const r = scores.recommendation;
+    const carteR = creer("div", "carte");
+    const sectionR = bloc("Recommandation");
+    const roles = { purchase: "Achat", add_to_cart: "Ajout au panier", view: "Consultation" };
+    const lignesR = Object.keys(roles).map((role) => {
+      const e = r[role] || {};
+      return [roles[role], e.target || "non disponible", e.model || "non disponible",
+              pourcentage(e.ndcg10_gain_relative),
+              valeurOuIndisponible(e.holm_pvalue_independent, 5),
+              badgeStatut(e.status),
+              e.used_by_default === true ? "oui" : (e.used_by_default === false ? "non" : "-"),
+              e.fallback || "-"];
+    });
+    sectionR.appendChild(tableauDe(
+      ["Role", "Cible", "Modele", "Gain NDCG@10", "p Holm independante",
+       "Statut", "Par defaut", "Repli"], lignesR));
+    sectionR.appendChild(limite(
+      "Limites : gains mesures hors ligne sur des slates fermees de 5 candidats ; "
+      + "Recall@k y est invariant au reclassement, seul NDCG@10 discrimine. Le modele "
+      + "de consultation reste exploratoire : son gain n'est pas significatif apres "
+      + "correction, il n'est donc jamais servi par defaut. Repli general : "
+      + "popularite_globale_v1."));
+    carteR.appendChild(sectionR);
+    conteneur.appendChild(carteR);
   } catch (erreur) {
     messageErreur(conteneur, erreur.message);
   }
@@ -439,6 +569,11 @@ async function chargerCatalogues() {
     produitsRecommandation = pricing.recommandation;
     remplirListe($("#reco-produits"), produitsRecommandation);
     remplirListe($("#pricing-produit"), pricing.pricing);
+    // Exemple connu a volume non nul, pour que la page ne s'ouvre pas sur
+    // un produit a rotation lente dont toutes les valeurs valent zero.
+    if (pricing.pricing.includes(EXEMPLE_PRICING)) {
+      $("#pricing-produit").value = EXEMPLE_PRICING;
+    }
   } catch (erreur) {
     $("#reco-produits").innerHTML = "<option>catalogue indisponible</option>";
     $("#pricing-produit").innerHTML = "<option>catalogue indisponible</option>";

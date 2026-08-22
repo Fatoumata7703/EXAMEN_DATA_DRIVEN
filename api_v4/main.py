@@ -21,6 +21,7 @@ from api_v4.schemas import (
     RecommendationItem, RecommendationRequest, RecommendationResponse,
 )
 from api_v4.services import forecast as forecast_service
+from api_v4.services import metrics as metrics_service
 from api_v4.services import pricing as pricing_service
 from api_v4.services import recommendation as recommendation_service
 
@@ -112,7 +113,14 @@ def metadata() -> dict:
 
 @app.get("/metrics")
 def metrics() -> dict:
-    return {**METRICS, "uptime_seconds": round(time.time() - START_TIME, 3)}
+    """Scores des trois domaines, plus les compteurs operationnels.
+
+    Toutes les valeurs de score proviennent des metadonnees finales ; aucune
+    n'est ecrite en dur. Une metrique absente vaut `null`, jamais zero.
+    Les compteurs operationnels restent disponibles sous la clef `service`.
+    """
+    compteurs = {**METRICS, "uptime_seconds": round(time.time() - START_TIME, 3)}
+    return metrics_service.tous_les_scores(compteurs)
 
 
 def _handle_recommendation(target: str, request: RecommendationRequest) -> RecommendationResponse:
@@ -210,6 +218,13 @@ def pricing_simulation(request: PricingSimulationRequest) -> PricingSimulationRe
         raise HTTPException(
             status_code=422,
             detail=f"prix simule ({exc.prix_simule:.2f} XOF) inferieur au cout produit ({exc.cout:.2f} XOF)",
+        ) from exc
+    except pricing_service.VolumeUnavailableError as exc:
+        # Jamais converti en zero : un volume indisponible est une erreur
+        # explicite, distincte d'une prediction reellement nulle.
+        raise HTTPException(
+            status_code=503,
+            detail=f"volume non disponible pour {exc.produit_key} : {exc.raison}",
         ) from exc
     return PricingSimulationResponse(**outcome.__dict__)
 

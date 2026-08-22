@@ -29,7 +29,7 @@
   <button class="onglet actif" data-page="recommandation" role="tab">Recommandation</button>
   <button class="onglet" data-page="pricing" role="tab">Simulation de remise</button>
   <button class="onglet" data-page="prevision" role="tab">Prevision 30 jours</button>
-  <button class="onglet" data-page="modeles" role="tab">Etat des modeles</button>
+  <button class="onglet" data-page="modeles" role="tab">Scores et validation</button>
 </nav>
 
 <main>
@@ -123,10 +123,17 @@
 
   <!-- ----------------------------------------------------------- Modeles -->
   <section class="page" id="page-modeles">
-    <h2>Etat des modeles</h2>
+    <h2>Scores et validation</h2>
     <p class="intro">
-      Source unique de verite du service. Un modele au statut
-      <strong>exploratoire</strong> n'est jamais servi par defaut.
+      Source unique de verite du service, pour les trois domaines. Toutes les
+      valeurs sont lues depuis les metadonnees finales : aucune n'est ecrite
+      dans cette page. Un modele au statut <strong>exploratoire</strong> n'est
+      jamais servi par defaut.
+    </p>
+    <p class="liens">
+      <a class="lien-bouton" href="/metrics" target="_blank" rel="noopener">Voir /metrics (JSON)</a>
+      <a class="lien-bouton" href="/metadata" target="_blank" rel="noopener">Voir /metadata (JSON)</a>
+      <a class="lien-bouton" href="/docs" target="_blank" rel="noopener">Documentation /docs</a>
     </p>
     <div class="resultat" id="modeles-resultat">Chargement...</div>
   </section>

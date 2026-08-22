@@ -100,11 +100,18 @@ def test_docs_endpoint_available():
 
 
 def test_metrics_endpoint_reports_counters():
+    """Les compteurs operationnels restent exposes, sous la clef `service`.
+
+    `/metrics` a ete etendu pour servir aussi les scores des trois domaines ;
+    les compteurs ont donc ete deplaces a la racine `service` plutot que
+    supprimes.
+    """
     response = client.get("/metrics")
     assert response.status_code == 200
     body = response.json()
-    assert "requests_total" in body
-    assert body["requests_total"] >= 1
+    assert "service" in body
+    assert body["service"]["requests_total"] >= 1
+    assert "uptime_seconds" in body["service"]
 
 
 # ------------------------------------------------------------ recommandation

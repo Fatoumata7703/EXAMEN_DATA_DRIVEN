@@ -163,6 +163,10 @@ def _pricing_entry(target: str, commit: str, generated_at: str) -> dict:
                   "confusion structurelle remise/produit sur cette experience synthetique ; "
                   "aucun prix optimal automatique, simulation uniquement."),
         "status": "validated_academic",
+        # Statut d'usage distinct du statut de validation : la baseline est une
+        # reference validee, mais son seul usage autorise est la simulation.
+        "usage": "simulation_only",
+        "causal_effect_estimated": False,
         "fallback": None,
         "generated_at": generated_at,
         "sha256": manifest.get("model.joblib"),
@@ -177,6 +181,7 @@ def _recommendation_entry(target: str, commit: str, generated_at: str,
     selected_name = metadata["selected_model"]
     summary_row = next(row for row in metadata["summary"] if row["model"] == selected_name)
     comparison = independent["recalcul_recommandation"]["comparaisons"].get(target, {})
+    candidat = next((c for c in metadata["candidates"] if c["model"] == selected_name), {})
 
     status = "validated_academic" if target in ("purchased_after", "added_to_cart_after") else "exploratory"
     default_use = target in ("purchased_after", "added_to_cart_after")
@@ -189,6 +194,7 @@ def _recommendation_entry(target: str, commit: str, generated_at: str,
         "version": metadata.get("code_version_git_commit", commit),
         "metrics": {
             "ndcg@10": summary_row.get("ndcg@10_mean"),
+            "relative_ndcg_gain": candidat.get("relative_ndcg_gain"),
             "recall@10": summary_row.get("recall@10_mean"),
             "coverage_catalogue": summary_row.get("coverage_catalogue_mean"),
             "diversite": summary_row.get("diversite_mean"),

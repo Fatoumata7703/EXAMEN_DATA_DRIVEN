@@ -84,21 +84,36 @@ class PricingSimulationResponse(BaseModel):
     cout_xof: float
     remise_proposee_pct: float
     prix_simule_xof: float
-    volume_estime_unites_7j: float
-    chiffre_affaires_estime_xof: float
-    marge_estimee_xof: float
+    volume_estime_unites_7j: float = Field(
+        ..., description="Volume median hebdomadaire predit par la baseline. "
+                         "Une valeur nulle est une prediction reelle (produit a "
+                         "rotation lente), jamais un echec masque : un echec leve "
+                         "une erreur HTTP explicite.")
+    chiffre_affaires_estime_xof: float = Field(
+        ..., description="Derive : volume_estime x prix_simule.")
+    marge_estimee_xof: float = Field(
+        ..., description="Derive : volume_estime x (prix_simule - cout).")
+    marge_unitaire_xof: float = Field(
+        ..., description="prix_simule - cout. Reagit directement a la remise.")
+    volume_nul: bool = Field(
+        ..., description="Vrai si le volume predit vaut exactement zero.")
     modele: str
+    modele_statut: str
     version: str
     garde_fous: dict
+    message: Optional[str] = Field(
+        None, description="Explication affichee lorsque la prediction merite une "
+                          "mise en garde, notamment un volume reellement nul.")
     avertissement: str = (
         "Simulation academique sur donnees synthetiques : aucune revendication "
-        "causale, aucune application automatique du prix simule. Volume, chiffre "
-        "d'affaires et marge estimes sont des medianes historiques par produit "
-        "(baseline_mediane_produit) : ils ne varient PAS avec la remise proposee "
-        "ci-dessus, car aucun modele valide ne relie la remise a ces cibles sur "
-        "cette experience synthetique (remise confondue avec l'identite produit, "
-        "cf. reports/v4_training/01_pricing_results.md). Seul le prix simule et le "
-        "controle de garde-fou repondent a la remise proposee."
+        "causale, aucune application automatique du prix simule. Le volume provient "
+        "de la mediane historique par produit (baseline_mediane_produit) et ne varie "
+        "donc pas avec la remise : aucun modele valide ne relie la remise au volume "
+        "sur cette experience synthetique (remise confondue avec l'identite produit, "
+        "cf. reports/v4_training/01_pricing_results.md). Le chiffre d'affaires, la "
+        "marge et la marge unitaire sont derives du volume et du prix simule : eux "
+        "reagissent a la remise, par construction comptable et non par un effet "
+        "de demande estime."
     )
 
 
