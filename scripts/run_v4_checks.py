@@ -29,6 +29,8 @@ STEPS: list[tuple[str, list[str]]] = [
      [sys.executable, "-m", "pytest", "tests/test_v4_recommendation.py", "-q"]),
     ("Configuration de deploiement V4",
      [sys.executable, "-m", "pytest", "api_v4/tests/test_deployment_config.py", "-q"]),
+    ("Contexte de construction (chemins COPY)",
+     [sys.executable, "-m", "pytest", "api_v4/tests/test_docker_context.py", "-q"]),
     ("Tests API produit V4",
      [sys.executable, "-m", "pytest", "api_v4/tests/test_api.py", "-q"]),
     ("Tests d'integration produit V4",
