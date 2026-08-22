@@ -288,3 +288,27 @@ def test_la_console_ne_parle_jamais_d_exactitude():
     script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
     assert "accuracy" not in script.lower()
     assert "exactitude" in script, "la mise en garde sur l'exactitude doit rester"
+
+
+def test_la_console_masque_les_metriques_non_calculees():
+    """Une metrique non calculee ne doit pas produire de carte vide dans la
+    page Scores. L'information reste disponible dans /metrics : c'est
+    l'affichage qui est allege, pas la donnee qui est supprimee."""
+    script = (STATIC_DIR / "app.js").read_text(encoding="utf-8")
+    code = "\n".join(ligne for ligne in script.splitlines()
+                     if not ligne.strip().startswith("//"))
+    assert "non calcule" not in code, (
+        "la console affiche encore une mention pour une metrique absente")
+    assert "if (valeur === null || valeur === undefined) return null;" in code, (
+        "carteMetrique doit renoncer a construire la carte si la valeur manque")
+    assert "!entree.disponible) return;" in code, (
+        "un horizon non evalue doit etre ignore, pas rendu")
+
+
+def test_metrics_continue_d_exposer_les_metriques_non_calculees(scores):
+    """Contrepartie du test precedent : masquer dans l'interface ne doit pas
+    revenir a supprimer l'information de l'API."""
+    quatorze = scores["forecasting"]["horizons"]["cumule_14j"]
+    assert quatorze["disponible"] is False
+    assert quatorze["wape"] is None
+    assert quatorze["raison_indisponibilite"]

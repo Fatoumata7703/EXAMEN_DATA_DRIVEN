@@ -461,18 +461,28 @@ function limite(texte) {
   return p;
 }
 
-/* Carte de metrique avec definition. Une valeur absente est affichee comme
-   telle, avec son motif : elle n'est jamais remplacee par un nombre. */
-function carteMetrique(etiquette, valeur, definition, decimales, indisponibleMotif) {
-  const disponible = valeur !== null && valeur !== undefined;
-  const bloc = creer("div", "mesure" + (disponible ? "" : " indisponible"));
-  const texte = disponible ? nombre(valeur, decimales === undefined ? 5 : decimales)
-                           : "non calcule";
-  bloc.innerHTML = '<span class="valeur">' + texte + "</span>"
+/* Carte de metrique avec definition.
+
+   Une metrique qui n'a pas ete calculee n'est PAS affichee : la carte n'est
+   pas creee du tout, pour ne pas encombrer la page de mentions vides. Cela
+   ne masque aucune information : /metrics continue d'exposer la metrique
+   avec `disponible: false` et son motif d'indisponibilite. Le principe reste
+   inchange : une valeur reellement mesuree est toujours affichee, y compris
+   lorsqu'elle vaut zero. */
+function carteMetrique(etiquette, valeur, definition, decimales) {
+  if (valeur === null || valeur === undefined) return null;
+  const bloc = creer("div", "mesure");
+  bloc.innerHTML = '<span class="valeur">'
+    + nombre(valeur, decimales === undefined ? 5 : decimales) + "</span>"
     + '<span class="etiquette">' + etiquette + "</span>"
-    + '<span class="precision">' + (disponible ? definition : indisponibleMotif) + "</span>";
-  if (definition) bloc.title = definition;
+    + '<span class="precision">' + definition + "</span>";
+  bloc.title = definition;
   return bloc;
+}
+
+/* Ajoute une carte seulement si elle a pu etre construite. */
+function ajouterCarte(conteneur, carte) {
+  if (carte) conteneur.appendChild(carte);
 }
 
 async function chargerModeles() {
@@ -512,13 +522,13 @@ function sectionForecasting(f) {
   section.appendChild(modeles);
 
   const principales = creer("div", "cartes");
-  principales.appendChild(carteMetrique(
+  ajouterCarte(principales, carteMetrique(
     "WAPE30 macro", f.wape30_macro,
     "moyenne des erreurs relatives par produit, cumul 30 jours", 5));
-  principales.appendChild(carteMetrique(
+  ajouterCarte(principales, carteMetrique(
     "WAPE30 micro", f.wape30_micro,
     "erreur relative calculee sur le total agrege, cumul 30 jours", 5));
-  principales.appendChild(carteMetrique(
+  ajouterCarte(principales, carteMetrique(
     "Forecast Bias macro", f.forecast_bias_macro,
     "biais moyen ; negatif = sous-estimation", 5));
   section.appendChild(principales);
@@ -534,11 +544,10 @@ function sectionForecasting(f) {
     .forEach(function (paire) {
       const etiquette = paire[0];
       const entree = paire[1];
-      if (!entree) return;
-      horizons.appendChild(carteMetrique(
-        "WAPE " + etiquette, entree.disponible ? entree.wape : null,
-        entree.definition, 5,
-        entree.raison_indisponibilite || "valeur non calculee"));
+      // Un horizon non evalue lors du backtest n'est pas affiche.
+      if (!entree || !entree.disponible) return;
+      ajouterCarte(horizons, carteMetrique(
+        "WAPE " + etiquette, entree.wape, entree.definition, 5));
     });
   section.appendChild(horizons);
 
@@ -548,11 +557,11 @@ function sectionForecasting(f) {
     titreQ.textContent = "Modele operationnel quotidien : " + q.modele;
     section.appendChild(titreQ);
     const cartesQ = creer("div", "cartes");
-    cartesQ.appendChild(carteMetrique("WAPE quotidienne", q.wape_quotidienne,
+    ajouterCarte(cartesQ, carteMetrique("WAPE quotidienne", q.wape_quotidienne,
       "erreur relative ponderee, prevision a un jour", 5));
-    cartesQ.appendChild(carteMetrique("WAPE cumul 30 jours", q.wape_cumulee_30j,
+    ajouterCarte(cartesQ, carteMetrique("WAPE cumul 30 jours", q.wape_cumulee_30j,
       "erreur du modele quotidien agrege sur 30 jours", 5));
-    cartesQ.appendChild(carteMetrique("Biais", q.biais,
+    ajouterCarte(cartesQ, carteMetrique("Biais", q.biais,
       "biais moyen du modele quotidien", 5));
     section.appendChild(cartesQ);
   }
@@ -563,13 +572,13 @@ function sectionForecasting(f) {
   section.appendChild(titreF);
 
   const cartesF = creer("div", "cartes");
-  cartesF.appendChild(carteMetrique("Fenetres evaluees", w.evaluated,
+  ajouterCarte(cartesF, carteMetrique("Fenetres evaluees", w.evaluated,
     "nombre de fenetres de test hors echantillon", 0));
-  cartesF.appendChild(carteMetrique("Victoires planification", w.won_planning_30d,
+  ajouterCarte(cartesF, carteMetrique("Victoires planification", w.won_planning_30d,
     "fenetres gagnees contre " + (w.reference_planning || "la reference"), 0));
-  cartesF.appendChild(carteMetrique("Victoires quotidien", w.won_daily,
+  ajouterCarte(cartesF, carteMetrique("Victoires quotidien", w.won_daily,
     "fenetres gagnees contre " + (w.reference_daily || "la reference"), 0));
-  cartesF.appendChild(carteMetrique("Horizons evalues", f.horizons_evaluated,
+  ajouterCarte(cartesF, carteMetrique("Horizons evalues", f.horizons_evaluated,
     "nombre d'horizons de prevision evalues", 0));
   section.appendChild(cartesF);
 
