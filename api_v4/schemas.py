@@ -104,6 +104,11 @@ class PricingSimulationResponse(BaseModel):
 
 class HealthResponse(BaseModel):
     status: str
+    service: str = Field(
+        ..., description="Identifiant du service. Vaut `api_v4` : permet de "
+                         "distinguer cette API de l'API V2 deployee separement.")
+    deployed_commit: str = Field(
+        ..., description="Commit reellement deploye, ou `unknown` en execution locale.")
     product: str
     data_status: str
     models_loaded: dict

@@ -7,6 +7,7 @@ automatique d'un prix ou d'une recommandation.
 """
 from __future__ import annotations
 
+import os
 import time
 
 from fastapi import FastAPI, HTTPException, Request
@@ -23,6 +24,22 @@ from api_v4.services import recommendation as recommendation_service
 START_TIME = time.time()
 METRICS = {"requests_total": 0, "fallback_triggered_total": 0, "errors_total": 0,
           "by_endpoint": {}}
+
+#: Identifiant stable du service, permettant de distinguer sans ambiguite cette
+#: API de l'API V2 deployee separement (qui expose des routes `/api/v1/...`).
+SERVICE_NAME = "api_v4"
+
+
+def deployed_commit() -> str:
+    """Commit reellement deploye.
+
+    Lit en priorite la variable injectee par la plateforme de deploiement, puis
+    celle fixee au build du conteneur. Retourne `unknown` en execution locale,
+    ou aucune des deux n'est definie.
+    """
+    return (os.environ.get("RENDER_GIT_COMMIT")
+            or os.environ.get("DEPLOYED_GIT_COMMIT")
+            or "unknown")
 
 app = FastAPI(
     title="API produit V4 - pricing et recommandation",
@@ -52,6 +69,8 @@ async def _count_requests(request: Request, call_next):
 def health() -> HealthResponse:
     return HealthResponse(
         status="ok",
+        service=SERVICE_NAME,
+        deployed_commit=deployed_commit(),
         product=REGISTRY.final_status.get("product", "v4_pricing_recommendation"),
         data_status=REGISTRY.final_status.get("status", "synthetic_academic_experiment"),
         models_loaded={
@@ -65,7 +84,17 @@ def health() -> HealthResponse:
 
 @app.get("/metadata")
 def metadata() -> dict:
-    return REGISTRY.final_status
+    """Fiche de statut consolidee, enrichie de l'identite du service deploye.
+
+    `service` et `deployed_commit` permettent de verifier, depuis l'exterieur,
+    que c'est bien cette API (et non l'API V2) qui repond, et sur quelle
+    version du code.
+    """
+    return {
+        "service": SERVICE_NAME,
+        "deployed_commit": deployed_commit(),
+        **REGISTRY.final_status,
+    }
 
 
 @app.get("/metrics")

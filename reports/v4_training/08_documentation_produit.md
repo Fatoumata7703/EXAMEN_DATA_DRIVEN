@@ -278,6 +278,39 @@ instantanes de catalogue et la fiche de statut consolidee —
 python -m src.pipelines.finalize_v4_product
 ```
 
+### Deploiement en service distant
+
+Le depot contient deux images distinctes, qui ne doivent pas etre confondues :
+
+| Fichier | Application servie | Service |
+|---|---|---|
+| `Dockerfile` | `api.main:app` | API V2, service existant, a ne pas modifier |
+| `Dockerfile.api_v4` | `api_v4.main:app` | API V4, service separe |
+
+Le `Dockerfile` a la racine construit l'API V2 : il copie `api/` et
+`models/api_bundle/` et sonde `/ready`. Une plateforme qui detecte
+automatiquement ce fichier deploie donc la V2 en croyant deployer la V4 —
+c'est precisement l'incident observe lors du premier deploiement. Le fichier
+`render.yaml` designe explicitement `dockerfilePath: ./Dockerfile.api_v4`
+pour lever cette ambiguite.
+
+L'image V4 embarque uniquement `api_v4/`, les modules `src/` necessaires au
+rechargement des modeles, et les six fichiers `model.joblib` (environ 0,7 Mo
+au total). Les CSV de reproductibilite (environ 104 Mo) restent hors de
+l'image : ils servent l'audit, jamais le service.
+
+**Identifier la version reellement en ligne.** `/health` et `/metadata`
+exposent deux champs dedies :
+
+```json
+{"service": "api_v4", "deployed_commit": "<sha du commit deploye>"}
+```
+
+Le critere fiable pour distinguer les deux services n'est pas `/health`
+(present dans les deux) mais la presence des routes V4 (`/metadata`,
+`/recommendations/cart`, `/pricing/simulation`) et l'absence des routes V2
+(`/api/v1/...`, `/ready`).
+
 ---
 
 ## 7. Procedure de test

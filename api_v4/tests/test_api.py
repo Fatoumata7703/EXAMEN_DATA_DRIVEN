@@ -42,6 +42,32 @@ def test_health_returns_ok_and_loaded_models():
     assert "added_to_cart_after" in body["models_loaded"]["recommendation"]
 
 
+def test_health_identifies_the_v4_service_and_deployed_commit():
+    """Permet de verifier depuis l'exterieur que c'est bien l'API V4 qui
+    repond, et non l'API V2 deployee separement."""
+    body = client.get("/health").json()
+    assert body["service"] == "api_v4"
+    assert "deployed_commit" in body
+
+
+def test_metadata_identifies_the_v4_service_and_deployed_commit():
+    body = client.get("/metadata").json()
+    assert body["service"] == "api_v4"
+    assert "deployed_commit" in body
+
+
+def test_no_v2_route_is_exposed_by_this_service():
+    """L'API V2 expose des routes `/api/v1/...` et une sonde `/ready` ; aucune
+    ne doit exister ici. C'est le critere d'identification fiable, plus sur
+    qu'un simple `/health` present dans les deux services."""
+    paths = {route.path for route in app.routes}
+    assert not any(p.startswith("/api/v1") for p in paths)
+    assert "/ready" not in paths
+    for expected in ("/health", "/metadata", "/metrics",
+                     "/recommendations", "/recommendations/cart", "/pricing/simulation"):
+        assert expected in paths, f"route V4 manquante : {expected}"
+
+
 def test_metadata_lists_all_models_with_required_fields():
     response = client.get("/metadata")
     assert response.status_code == 200
