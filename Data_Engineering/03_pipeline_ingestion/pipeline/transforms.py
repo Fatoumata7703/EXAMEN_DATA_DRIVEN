@@ -14,6 +14,7 @@ appelée comme un gate à l'intérieur de `load_silver`.
 
 from __future__ import annotations
 
+import os
 import shutil
 from pathlib import Path
 
@@ -22,8 +23,12 @@ import pandas as pd
 # ----------------------------------------------------------------------------
 # Config
 # ----------------------------------------------------------------------------
-SOURCE_DIR = Path("/home/claude/airflow_project/source_exports")
-LAKE_ROOT = Path("/home/claude/airflow_project/lake")
+SOURCE_DIR = Path(os.environ.get(
+    "SOURCE_DIR", str(Path(__file__).resolve().parent.parent.parent / "02_jeu_de_donnees" / "donnees")
+))
+LAKE_ROOT = Path(os.environ.get(
+    "LAKE_ROOT", str(Path(__file__).resolve().parent.parent / "lake")
+))
 
 SOURCE_FILES = {
     "dim_products": "dim_products.csv",

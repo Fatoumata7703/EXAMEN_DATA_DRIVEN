@@ -24,6 +24,7 @@ Lignage :
             dim_promotion.csv (Gold, v3 pipeline)
 """
 import hashlib
+import os
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
@@ -32,8 +33,10 @@ from pathlib import Path
 SEED = 48
 rng = np.random.default_rng(SEED)
 
-STAR_DIR = Path("/home/claude/airflow_project/lake/gold/star_schema")
-V4_DIR = Path("/home/claude/journal_v4")
+STAR_DIR = Path(os.environ.get(
+    "STAR_DIR", str(Path(__file__).resolve().parent.parent / "03_pipeline_ingestion" / "lake" / "gold" / "star_schema")
+))
+V4_DIR = Path(os.environ.get("OUT_DIR", str(Path(__file__).resolve().parent / "donnees")))
 
 print("Chargement des données existantes (inchangées)...")
 dim_produit = pd.read_csv(STAR_DIR / "dim_produit.csv")

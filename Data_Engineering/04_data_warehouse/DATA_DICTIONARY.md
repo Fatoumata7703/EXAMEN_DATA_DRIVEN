@@ -13,8 +13,10 @@ avant sa transformation en schéma en étoile. Les noms de tables ci-dessous son
 | `dim_date` | 546 | 1 ligne = 1 jour (2025-02-01 → 2026-07-31) |
 | `dim_promotion` | 120 | 1 ligne = 1 campagne de remise |
 | `fact_ventes` | 84 319 | 1 ligne = 1 produit vendu dans une commande (plusieurs lignes peuvent partager le même `order_id` si panier multi-produits) |
-| `fact_evenements_web` | 657 480 | 1 ligne = 1 événement de navigation |
+| `fact_evenements_web` | 657 392 | 1 ligne = 1 événement de navigation |
 | `fact_stock` | 117 763 | 1 ligne = niveau de stock d'un produit en fin de journée |
+| `fact_experimentation_prix` | 11 799 | 1 ligne = une décision de prix évaluée pour un produit, une semaine donnée |
+| `fact_exposition_reco` | 221 080 | 1 ligne = une recommandation affichée à un visiteur, dans une liste |
 
 ## `dim_produit`
 
@@ -108,6 +110,59 @@ Réconciliation exacte : `niveau_stock(t) = niveau_stock(t-1) - quantite_vendue(
 vérifiée à résidu zéro sur les 117 763 lignes. Le stock est décrémenté à l'achat quel que
 soit le statut final de la commande — aucune réintégration en stock au moment d'une
 annulation/retour n'est modélisée dans cette version.
+
+## `fact_experimentation_prix`
+
+Grain : une décision de prix évaluée pour un produit, une semaine donnée. Table conçue
+comme une expérience randomisée synthétique (statut `synthetic_academic_experiment`) :
+assignation persistante par produit à un groupe de traitement, pour permettre une
+analyse causale de l'effet d'une remise, indépendamment des promotions historiques
+(non randomisées).
+
+| Colonne | Type | Description |
+|---|---|---|
+| decision_id | text (PK) | Identifiant unique de la décision |
+| experiment_id | text | Identifiant de la vague hebdomadaire d'expérimentation |
+| produit_key | text (FK → dim_produit) | |
+| decision_timestamp | timestamptz | Horodatage de la décision, UTC |
+| treatment_group | text | `controle_0pct` / `traitement_5pct` / `traitement_10pct` / `traitement_15pct` — assignation persistante par produit sur toute l'expérience, stratifiée par catégorie et classe ABC |
+| eligible_for_discount | boolean | Vrai si le prix respecte le plancher (prix ≥ coût) et la marge minimale (5%) |
+| discount_proposed / discount_applied | int / int | Remise du groupe assigné, et remise réellement appliquée (0 si le garde-fou bloque la proposition) |
+| prix_applique_xof | numeric | Prix recalculé après le contrôle d'éligibilité, à partir de `discount_applied` |
+| propensity_score | numeric | Probabilité d'assignation au groupe (0,25 — 4 groupes équiprobables) |
+| product_impressions | int | Cumul d'expositions recommandation strictement antérieur à `decision_timestamp` |
+| stock_at_decision | int | Stock de clôture de la veille (jamais le jour même de la décision) |
+| categorie / classe_abc | text / text | Classe ABC calculée sur une fenêtre de warm-up de 90 jours, strictement antérieure au début de l'expérience |
+| cold_start_warmup | boolean | Vrai si le produit n'a eu aucune vente confirmée pendant le warm-up |
+| units_sold_window_7j / revenue_window_xof_7j / margin_window_xof_7j | int / numeric / numeric | Résultats simulés comme fonction causale de `discount_applied` (élasticité documentée et bruit contrôlé) |
+| fenetre_observation_debut / fin | timestamptz / timestamptz | Bornes explicites de la fenêtre d'observation de 7 jours |
+| statut_experience | text | Toujours `synthetic_academic_experiment` |
+
+## `fact_exposition_reco`
+
+Grain : une recommandation affichée à un visiteur, dans une liste (slate). Chaque
+liste est construite exclusivement avec des informations disponibles strictement
+avant l'impression.
+
+| Colonne | Type | Description |
+|---|---|---|
+| recommendation_id | text (PK) | Identifiant unique de l'exposition |
+| slate_id | text | Identifiant partagé par tous les produits d'une même liste affichée |
+| experiment_id / assignment_id | text / text | Identifiants de l'expérience et de l'assignation persistante du visiteur |
+| client_key / anonymous_id | text / text | Mutuellement exclusifs — visiteur connu ou anonyme |
+| session_id | text (FK → fact_evenements_web) | Session réelle correspondante, toujours renseignée |
+| model_version | text | `popularite_globale_v1` (contrôle) ou `challenger_affinite_categorie_v1` (traitement) |
+| model_score | numeric | Score calculé par le modèle correspondant, à partir d'informations strictement antérieures à l'impression |
+| produit_key | text (FK → dim_produit) | Produit recommandé |
+| rank | int | Position dans la liste, dérivée du tri par `model_score` |
+| impression_timestamp | timestamptz | Horodatage de l'affichage, UTC — toujours dans les bornes réelles de la session |
+| viewed_after_impression / view_timestamp | boolean / timestamptz | Vue postérieure à l'impression (la source ne distingue pas un clic d'une vue) |
+| added_to_cart_after / add_to_cart_timestamp | boolean / timestamptz | Ajout au panier postérieur à l'impression |
+| purchased_after / purchase_timestamp | boolean / timestamptz | Achat postérieur à l'impression |
+| experiment_group | text | `controle` / `traitement`, assignation persistante par client ou visiteur anonyme |
+| group_assignment_propensity | numeric | Probabilité d'assignation au groupe d'expérience |
+| session_selection_probability | numeric | Probabilité que cette session ait été échantillonnée |
+| product_exposure_probability | numeric | Probabilité que ce produit précis figure dans la liste |
 
 ## Ce qui n'est PAS dans Supabase
 

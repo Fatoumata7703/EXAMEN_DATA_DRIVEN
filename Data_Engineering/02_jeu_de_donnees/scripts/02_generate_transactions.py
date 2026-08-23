@@ -27,8 +27,8 @@ from pathlib import Path
 SEED = 42
 rng = np.random.default_rng(SEED)
 
-SOURCE_DIR = Path(os.environ.get("SOURCE_DIR", "/home/claude/livrables_finaux/jeu_de_donnees/donnees"))
-OUT_DIR = Path(os.environ.get("OUT_DIR", "/home/claude/livrables_finaux/jeu_de_donnees/donnees"))
+SOURCE_DIR = Path(os.environ.get("SOURCE_DIR", str(Path(__file__).resolve().parent.parent / "donnees")))
+OUT_DIR = Path(os.environ.get("OUT_DIR", str(Path(__file__).resolve().parent.parent / "donnees")))
 OUT_DIR.mkdir(exist_ok=True)
 
 START_DATE = datetime(2025, 2, 1)

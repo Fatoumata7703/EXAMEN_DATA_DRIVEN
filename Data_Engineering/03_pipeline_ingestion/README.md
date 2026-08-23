@@ -3,96 +3,70 @@
 ## Contenu
 
 ```
-pipeline/transforms.py          Logique métier (extraction, typage, gate qualité, agrégation).
-                                 Ne dépend pas d'Airflow — testable en local.
-dags/ecommerce_lake_ingestion_dag.py   Le DAG Airflow : orchestration fine au-dessus de transforms.py.
-run_local_test.py               Exécute la même séquence que le DAG, sans Airflow, pour valider la logique.
-source_exports/                 Jeu de données synthétique (simulateur des exports amont).
-lake/                            Résultat de l'exécution locale : raw/, bronze/, silver/, silver_rejects/, gold/.
+pipeline/transforms.py                 Logique métier (extraction, typage, contrôle qualité,
+                                        agrégation). Indépendante d'Airflow, testable en local.
+dags/ecommerce_lake_ingestion_dag.py   DAG Airflow : orchestration au-dessus de transforms.py.
+run_local_test.py                      Exécute la séquence complète du pipeline sans Airflow.
 ```
 
-## Mise à jour (17 août) — pipeline aligné avec les données livrées (v3)
+## Principe d'architecture
 
-Le pipeline (`pipeline/transforms.py`) a été mis en cohérence avec les données réellement
-livrées dans Supabase : `source_exports/` contient maintenant les fichiers v3 (paniers
-multi-produits, sessions web enrichies, `fact_stock` réconciliable), remplaçant les
-anciens fichiers v1/v2. Une exécution complète (`run_local_test.py`) confirme que le
-pipeline produit désormais exactement les mêmes volumes et passe les 4 vérifications de
-l'audit du data scientist (0 partout). Les anciens fichiers sont conservés dans
-`source_exports_OLD_backup/` par précaution.
+La logique métier est isolée dans `pipeline/transforms.py`, indépendamment d'Airflow.
+Le DAG (`dags/ecommerce_lake_ingestion_dag.py`) se limite à orchestrer ces fonctions :
+déclarer les tâches, leurs dépendances, et laisser Airflow gérer les reprises et le
+parallélisme. Cette séparation permet de valider l'intégralité de la logique du
+pipeline (`run_local_test.py`) indépendamment d'un environnement Airflow installé,
+ce qui facilite les tests et le développement.
 
-## À propos du stockage du Lake (raw/bronze/silver/gold)
+## Stockage du Data Lake
 
-Dans ce projet, les 4 zones du Data Lake sont matérialisées comme un **dossier local**
-(`lake/`), qui sert de prototype. En production, ce même chemin serait un bucket
-**S3 ou MinIO** (stockage objet) — le code de `pipeline/transforms.py` est écrit pour
-que ce changement se limite à remplacer `LAKE_ROOT`/`SOURCE_DIR` par un client S3
-(`boto3` ou équivalent), sans toucher à la logique métier. Le dossier local n'est donc
-pas un raccourci pris à la légère : c'est l'implémentation prototype d'une architecture
-documentée pour du stockage objet (voir `Architecture_Technique_Schema_Donnees.docx`,
-section "Choix techniques").
+Les quatre zones du Data Lake (Raw, Bronze, Silver, Gold) sont matérialisées comme un
+dossier local dans cette implémentation, qui sert de prototype. En production, ce même
+emplacement serait un bucket de stockage objet (S3 ou MinIO) — le code de
+`pipeline/transforms.py` est structuré pour que ce changement se limite à remplacer
+les variables `LAKE_ROOT`/`SOURCE_DIR` par un client de stockage objet, sans modifier
+la logique métier.
 
-## Pourquoi ce découpage
+## Le contrôle qualité
 
-Toute la logique métier est dans `pipeline/transforms.py`, indépendante d'Airflow. Le DAG
-(`dags/ecommerce_lake_ingestion_dag.py`) ne fait qu'orchestrer ces fonctions : déclarer les
-tâches, leurs dépendances, et laisser Airflow gérer les reprises et le parallélisme.
+La tâche `silver` du DAG appelle `load_silver()`, qui applique `run_dq_checkpoint()` —
+le contrôle qualité s'exécute à l'intérieur du pipeline, entre Bronze et Silver, pas
+après. Les règles actuelles (doublons, valeurs hors plage, clés orphelines, valeurs
+manquantes) sont codées directement dans `transforms.py`. Une suite `great_expectations`
+équivalente et plus formelle est disponible séparément dans `06_qualite_donnees/` ;
+son intégration directe dans le DAG (remplacement de `run_dq_checkpoint()`) reste une
+évolution possible, sans changement de structure du pipeline.
 
-Avantage concret : `run_local_test.py` exécute exactement la même séquence
-(`extract → bronze → silver → gold`) sans avoir besoin d'un environnement Airflow. C'est ce qui
-a permis de valider tout le pipeline dans cet environnement, où Airflow n'est pas installable
-(pas d'accès réseau pour pip). Le DAG a été vérifié syntaxiquement (`python -m py_compile`) mais
-n'a pas pu être exécuté ici — il devra être testé dans ton environnement Airflow réel.
+Comportement du contrôle qualité :
+- les lignes en anomalie sont isolées dans une partition dédiée (`silver_rejects`), pas supprimées ;
+- si le taux d'erreur dépasse un seuil configurable (10 % par défaut), la tâche échoue
+  explicitement plutôt que de laisser passer des données dégradées vers Silver et Gold.
 
-## Le gate qualité
+## Résultat d'une exécution complète
 
-La tâche `silver` (dans le DAG) appelle `load_silver()`, qui elle-même appelle
-`run_dq_checkpoint()` — c'est le point d'insertion du contrôle qualité, **à l'intérieur** du
-pipeline, pas après. Pour l'instant `run_dq_checkpoint()` contient des règles codées à la main
-(doublons, quantités négatives, product_id orphelins, valeurs manquantes, casse incohérente).
-À la prochaine étape, cette fonction sera remplacée par une vraie suite `great_expectations`,
-sans que le DAG n'ait besoin de changer.
+| Table | Bronze | Silver (valides) | Rejetées |
+|---|---|---|---|
+| dim_products | 300 | 300 | 0 |
+| dim_customers | 5 000 | 5 000 | 0 |
+| promotions | 120 | 120 | 0 |
+| fact_transactions | 84 319 | 84 319 | 0 |
+| stock_daily | 117 763 | 117 763 | 0 |
+| web_events | 657 392 | 657 392 | 0 |
 
-Comportement actuel :
-- les lignes en anomalie sont isolées dans `lake/silver_rejects/<table>/ds=.../`, pas perdues ;
-- si le taux d'erreur dépasse 10 % (configurable), la tâche échoue explicitement plutôt que de
-  laisser passer des données trop dégradées vers Silver/Gold.
+`dim_products` et `dim_customers` conservent des anomalies volontaires (casse
+incohérente sur les catégories, valeurs manquantes sur la région et la tranche d'âge)
+— signalées par le contrôle qualité mais non bloquantes, pour illustrer la détection
+sans perte de données. Le détail figure dans `02_jeu_de_donnees/SOURCE_DATA_DICTIONARY.md`.
 
-## Résultat de l'exécution locale (validation, données v3 — paniers + sessions + corrections d'audit)
+La zone Gold produit également deux tables agrégées : `daily_sales_by_product` (grain
+jour × produit) et `product_performance` (grain produit), utilisées pour la prévision
+de la demande et l'analyse de performance produit.
 
-| Table | Bronze | Silver (valides) | Rejetées | Raison |
-|---|---|---|---|---|
-| dim_products | 300 | 300 | 0 | 15 catégories en casse incohérente (signalées, non bloquantes) |
-| dim_customers | 5 000 | 5 000 | 0 | 293 valeurs manquantes (signalées, non bloquantes) |
-| promotions | 120 | 120 | 0 | — |
-| fact_transactions | 84 319 | 84 319 | 0 | Paniers multi-produits (order_id partagé), promotions correctement ciblées |
-| stock_daily | 117 763 | 117 763 | 0 | Réconciliation exacte (quantite_vendue, quantite_reapprovisionnee) |
-| web_events | 657 392 | 657 392 | 0 | Sessions bornées (≤30 min), funnel toujours vue→achat |
+## Déploiement sur un environnement Airflow
 
-Les 4 anomalies remontées par l'audit du data scientist (ciblage promo, réconciliation
-stock, durée de session, ordre du funnel) ont été corrigées directement dans cette
-version du pipeline — voir `pipeline/transforms.py`, fonctions `run_dq_checkpoint` et
-`build_star_schema`.
-
-Les 425 doublons injectés dans le jeu de données synthétique sont absorbés dès l'étape Bronze
-(hygiène technique de base, avant même le gate qualité).
-
-Gold produit deux tables : `daily_sales_by_product.csv` (grain jour × produit, pour le
-forecasting) et `product_performance.csv` (grain produit, pour le pricing et le dashboard BI).
-
-## Déployer dans un vrai Airflow
-
-1. Installer Airflow (ex: `pip install apache-airflow` ou via `docker-compose` — voir la doc
-   officielle Airflow pour la version recommandée).
-2. Copier `pipeline/` et `dags/ecommerce_lake_ingestion_dag.py` dans le dossier `dags/` de ton
-   installation Airflow (ou monter `pipeline/` comme package importable, ex: via `PYTHONPATH`
-   ou `sys.path.insert` déjà présent en haut du DAG — adapter le chemin à ton déploiement).
-3. Adapter `SOURCE_DIR` et `LAKE_ROOT` dans `pipeline/transforms.py` pour pointer vers de vrais
-   emplacements (S3/MinIO plutôt que des chemins locaux, une fois hors du prototypage).
-4. Activer le DAG `ecommerce_lake_ingestion` dans l'UI Airflow.
-
-## Prochaine étape
-
-Remplacer `run_dq_checkpoint()` par une vraie suite `great_expectations` (expectations
-déclaratives, checkpoint, data docs générés automatiquement) — sans changer la structure du
-pipeline ni du DAG.
+1. Installer Airflow (voir la documentation officielle pour la version recommandée).
+2. Copier `pipeline/` et `dags/ecommerce_lake_ingestion_dag.py` dans le dossier `dags/`
+   de l'installation Airflow cible (ou exposer `pipeline/` comme package importable).
+3. Adapter `SOURCE_DIR` et `LAKE_ROOT` dans `pipeline/transforms.py` pour pointer vers
+   les emplacements de stockage cibles.
+4. Activer le DAG `ecommerce_lake_ingestion` dans l'interface Airflow.

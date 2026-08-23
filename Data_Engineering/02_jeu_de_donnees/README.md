@@ -1,14 +1,12 @@
-# Jeu de données synthétique documenté + scripts de génération
-
-Livrable : "Jeu de données (synthétique documenté) et scripts d'ingestion".
+# Jeu de données synthétique documenté et scripts de génération
 
 ## Contenu
 
 ```
 scripts/
   01_generate_dimensions.py     dim_products, dim_customers, promotions
-  02_generate_transactions.py   fact_transactions, stock_daily (paniers réels, audité)
-  03_generate_web_events.py     web_events (sessions, funnel, anonymes, bots)
+  02_generate_transactions.py   fact_transactions, stock_daily
+  03_generate_web_events.py     web_events
 donnees/
   dim_products.csv
   dim_customers.csv
@@ -19,33 +17,36 @@ donnees/
 SOURCE_DATA_DICTIONARY.md       dictionnaire complet des 6 tables ci-dessus
 ```
 
-## Pourquoi 3 scripts et pas 1
+## Organisation des scripts
 
-`dim_products`/`dim_customers`/`promotions` ne dépendent d'aucun panier ni d'aucune
-session — ils n'ont jamais changé depuis la première génération. `fact_transactions`,
-`stock_daily` et `web_events` ont en revanche été régénérés le 16-17 août suite à un
-audit du data scientist qui a révélé 4 bugs (paniers non natifs, promotions mal
-ciblées, stock non réconciliable, sessions incohérentes) — tous corrigés et vérifiés.
-Séparer en 3 scripts numérotés documente cette histoire au lieu de la cacher dans un
-seul fichier monolithique où la moitié du code serait obsolète sans que ce soit visible.
+`dim_products`, `dim_customers` et `promotions` sont générés indépendamment de la
+logique transactionnelle : ils ne dépendent d'aucun panier ni d'aucune session
+utilisateur. `fact_transactions`, `stock_daily` et `web_events` reposent en revanche
+sur une simulation de paniers et de sessions de navigation cohérente entre elles
+(un produit acheté dans une session doit correspondre à un événement de navigation
+réel, un panier peut contenir plusieurs produits, le stock doit se réconcilier avec
+les ventes). Séparer la génération en trois scripts numérotés, exécutés dans l'ordre,
+reflète cette dépendance et permet de régénérer uniquement la partie transactionnelle
+si nécessaire, sans retoucher aux référentiels produit/client/promotion.
 
-## Reproductibilité — vérifiée, pas supposée
+## Reproductibilité
 
-Une exécution complète (01 → 02 → 03) dans un environnement propre produit des
-fichiers **identiques au bit près** à ceux du dossier `donnees/` (vérifié avec
-`DataFrame.equals()` sur les 6 tables avant cette livraison, seed=42 partout).
+Une exécution complète (01 → 02 → 03) produit des fichiers identiques bit à bit à
+ceux du dossier `donnees/` (seed fixée à 42 dans l'ensemble des trois scripts).
 
 ```bash
-export OUT_DIR=./donnees
-export SOURCE_DIR=./donnees
 cd scripts
 python3 01_generate_dimensions.py
 python3 02_generate_transactions.py
 python3 03_generate_web_events.py
 ```
 
-## Ce jeu de données alimente directement
+Les scripts écrivent par défaut dans `../donnees/` (relatif à leur propre
+emplacement). Un autre répertoire de sortie peut être précisé via la variable
+d'environnement `OUT_DIR`.
 
-- Le pipeline d'ingestion (livrable séparé : Raw → Bronze → Silver → Gold)
-- Le schéma en étoile dans Supabase (voir `DATA_DICTIONARY.md`, livrable séparé)
-- Le journal d'exposition/expérimentation (voir `README_journal_v2.md`, livrable séparé)
+## Utilisation en aval
+
+- Pipeline d'ingestion : voir `03_pipeline_ingestion/`
+- Schéma en étoile (Supabase) : voir `04_data_warehouse/`
+- Journal d'expérimentation et d'exposition : voir `05_journal_experimentation_v4/`

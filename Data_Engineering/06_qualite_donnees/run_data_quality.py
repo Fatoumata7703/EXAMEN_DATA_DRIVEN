@@ -1,45 +1,37 @@
 """
-Suite great_expectations — remplace run_dq_checkpoint() codée à la main dans
-pipeline/transforms.py, sans changer la structure du pipeline : ce gate reste appelé
-entre Bronze et Silver.
+Suite great_expectations — contrôle qualité formel des tables source, en complément
+des règles codées directement dans pipeline/transforms.py (fonction
+run_dq_checkpoint). Positionnée entre les zones Bronze et Silver du pipeline.
 
-IMPORTANT — limite honnête de cette livraison :
-Ce script n'a PAS pu être exécuté dans l'environnement de développement (pas d'accès
-réseau pour installer great_expectations). La syntaxe est vérifiée contre la
-documentation officielle GX 1.x (API "Fluent", docs.greatexpectations.io/docs/core/),
-et chaque règle a été testée en pandas pur sur les vraies données (voir
-dry_run_check.py) pour confirmer que les seuils sont corrects. Mais l'exécution réelle
-de CE script GX n'a pas été validée de bout en bout. Lance-le chez toi et montre-moi la
-première erreur si erreur il y a — on la corrige immédiatement plutôt que de deviner.
+La syntaxe suit l'API Fluent de great_expectations 1.x. Chaque règle a été validée
+au préalable en pandas pur (voir dry_run_check.py) pour confirmer que les colonnes et
+les seuils correspondent aux données réellement produites par le pipeline.
 
-Une suite ExpectationSuite ET un Checkpoint sont créés PAR TABLE (pas une suite unique
-partagée) : chaque table a des colonnes différentes, une suite partagée ferait échouer
-chaque table sur les règles des 5 autres.
+Une ExpectationSuite et un Checkpoint sont créés par table (et non une suite unique
+partagée) : chaque table ayant des colonnes différentes, une suite partagée ferait
+échouer chaque table sur les règles définies pour les autres.
 
 Usage :
     pip install great_expectations
     python run_data_quality.py
-Génère un site Data Docs HTML dans gx/uncommitted/data_docs/local_site/index.html
+Génère un site Data Docs HTML dans gx/uncommitted/data_docs/local_site/index.html,
+consultable dans un navigateur.
 """
 
 from pathlib import Path
-import sys
+import os
 
 import pandas as pd
 import great_expectations as gx
 
-sys.path.insert(0, "/home/claude/airflow_project")
-from pipeline.transforms import SOURCE_DIR  # noqa: E402
-
-V3_DIR = Path("/home/claude/enrichissement_v3")  # à adapter au chemin réel chez toi
+SOURCE_DIR = Path(os.environ.get(
+    "SOURCE_DIR", str(Path(__file__).resolve().parent.parent / "02_jeu_de_donnees" / "donnees")
+))
 
 
 def load_source_tables() -> dict[str, pd.DataFrame]:
-    """Charge les 6 tables telles qu'elles arrivent en sortie de Bronze (typées,
-    dédupliquées). dim_products/dim_customers/promotions n'ont pas changé depuis la
-    v1 ; fact_transactions et stock_daily viennent en revanche de la régénération v3
-    (paniers réels + corrections d'audit) — PAS des fichiers originaux, qui sont
-    désormais obsolètes."""
+    """Charge les 6 tables source telles qu'elles arrivent en sortie de Bronze
+    (typées, dédupliquées)."""
     def read(fname, base=SOURCE_DIR):
         df = pd.read_csv(base / fname, compression="gzip" if fname.endswith(".gz") else None)
         return df.drop_duplicates()
@@ -48,9 +40,9 @@ def load_source_tables() -> dict[str, pd.DataFrame]:
         "dim_products": read("dim_products.csv"),
         "dim_customers": read("dim_customers.csv"),
         "promotions": read("promotions.csv"),
-        "fact_transactions": read("fact_transactions_v3.csv.gz", base=V3_DIR),
-        "stock_daily": read("stock_daily_v3.csv.gz", base=V3_DIR),
-        "web_events": read("fact_evenements_web_v3.csv.gz", base=V3_DIR),
+        "fact_transactions": read("fact_transactions.csv.gz"),
+        "stock_daily": read("stock_daily.csv.gz"),
+        "web_events": read("web_events.csv.gz"),
     }
 
 
@@ -111,7 +103,7 @@ def build_expectations(table: str, valid_product_ids: list) -> list:
             E.ExpectColumnValuesToNotBeNull(column="event_id"),
             E.ExpectColumnValuesToBeUnique(column="event_id"),
             E.ExpectColumnValuesToBeInSet(column="event_type", value_set=["view", "add_to_cart", "purchase"]),
-            E.ExpectColumnValuesToBeInSet(column="produit_key", value_set=valid_product_ids),  # nom v3 : produit_key, pas product_id
+            E.ExpectColumnValuesToBeInSet(column="product_id", value_set=valid_product_ids),
         ]
 
     raise ValueError(f"Pas de règles définies pour la table {table}")

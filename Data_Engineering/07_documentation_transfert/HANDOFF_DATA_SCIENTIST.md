@@ -1,78 +1,87 @@
 # Handoff — Schéma en étoile pour l'entraînement des modèles
 
-**Destinataire :** Data Scientist
-**Version :** v1 — 2026-08-12
-**Contenu :** `lake/gold/star_schema/` — 6 tables prêtes à l'emploi
+**Destinataire :** équipe data science
+**Contenu :** entrepôt de données Supabase (PostgreSQL) — 9 tables
 
-## En bref
+## Vue d'ensemble
 
-Ce sont des données **synthétiques mais cohérentes** (saisonnalité, élasticité prix,
-funnel de navigation, ruptures de stock — tout est calibré et documenté). Elles ont
-traversé le pipeline complet Raw → Bronze → Silver → Gold : dédupliquées, typées,
-et les anomalies volontaires (doublons, FK orphelines, quantités négatives) ont été
-isolées avant d'arriver ici. Tu peux les utiliser directement, sans retravail de nettoyage.
+Les données sont synthétiques mais cohérentes (saisonnalité, élasticité prix, funnel
+de navigation, ruptures de stock) et ont traversé le pipeline complet Raw → Bronze →
+Silver → Gold : typées, dédupliquées, avec un contrôle qualité appliqué avant leur
+matérialisation dans le schéma en étoile. Le dictionnaire de données complet figure
+dans `04_data_warehouse/DATA_DICTIONARY.md`.
 
-## Les 6 tables
+## Les 9 tables
 
-| Table | Lignes | Grain | Sert pour |
-|---|---|---|---|
-| `fact_ventes` | 85 419 | 1 ligne = 1 produit vendu dans une commande | Forecasting, pricing |
-| `fact_evenements_web` | 374 792 | 1 ligne = 1 événement (view/cart/purchase) | Recommandation |
-| `dim_produit` | 300 | 1 ligne = 1 produit (SCD2, voir plus bas) | Features produit, jointure avec les 2 faits |
-| `dim_client` | 5 000 | 1 ligne = 1 client (SCD2) | Segmentation, jointure avec les 2 faits |
-| `dim_date` | 546 | 1 ligne = 1 jour, du 2025-02-01 au 2026-07-31 | Saisonnalité, jointure par date_key |
-| `dim_promotion` | 120 | 1 ligne = 1 campagne de remise | Élasticité prix (jointure optionnelle sur fact_ventes) |
+| Table | Lignes | Grain |
+|---|---|---|
+| `dim_produit` | 300 | 1 ligne = 1 produit |
+| `dim_client` | 5 000 | 1 ligne = 1 client |
+| `dim_date` | 546 | 1 ligne = 1 jour (2025-02-01 → 2026-07-31) |
+| `dim_promotion` | 120 | 1 ligne = 1 campagne de remise |
+| `fact_ventes` | 84 319 | 1 ligne = 1 produit vendu dans une commande |
+| `fact_evenements_web` | 657 392 | 1 ligne = 1 événement de navigation |
+| `fact_stock` | 117 763 | 1 ligne = niveau de stock d'un produit en fin de journée |
+| `fact_experimentation_prix` | 11 799 | 1 ligne = une décision de prix pour un produit, une semaine |
+| `fact_exposition_reco` | 221 080 | 1 ligne = une recommandation affichée à un visiteur |
 
-## Comment joindre
+## Règles de jointure
 
-Toutes les clés sont des clés de substitution (`produit_key`, `client_key`, `date_key`,
-`promo_key`) — pas les identifiants métier (`product_id`, `customer_id`). C'est voulu :
-ça prépare le terrain pour l'historisation (voir SCD2 ci-dessous), donc joins-toi
-toujours sur les clés `_key`, pas sur `product_id`/`customer_id` directement.
+Toutes les jointures se font sur les clés de substitution (`produit_key`,
+`client_key`, `date_key`, `promo_key`), jamais sur les identifiants métier
+(`product_id`, `customer_id`). Cette convention prépare l'historisation des
+dimensions produit et client (SCD Type 2).
 
 ```
-fact_ventes.produit_key       -> dim_produit.produit_key
-fact_ventes.client_key        -> dim_client.client_key
-fact_ventes.date_key          -> dim_date.date_key
-fact_ventes.promo_key         -> dim_promotion.promo_key   (nullable : pas de promo)
+fact_ventes.produit_key             -> dim_produit.produit_key
+fact_ventes.client_key              -> dim_client.client_key
+fact_ventes.date_key                -> dim_date.date_key
+fact_ventes.promo_key               -> dim_promotion.promo_key      (nullable)
 
-fact_evenements_web.produit_key -> dim_produit.produit_key
-fact_evenements_web.client_key  -> dim_client.client_key
-fact_evenements_web.date_key    -> dim_date.date_key
+fact_evenements_web.produit_key     -> dim_produit.produit_key
+fact_evenements_web.client_key      -> dim_client.client_key
+fact_evenements_web.date_key        -> dim_date.date_key
+
+fact_experimentation_prix.produit_key -> dim_produit.produit_key
+
+fact_exposition_reco.produit_key    -> dim_produit.produit_key
+fact_exposition_reco.client_key     -> dim_client.client_key        (nullable)
+fact_exposition_reco.session_id     -> fact_evenements_web.session_id
 ```
 
-100 % des clés de `fact_ventes` et `fact_evenements_web` sont résolues (vérifié — voir
-la section anomalies plus bas pour comprendre pourquoi ce n'était pas le cas au premier
-run).
+100 % des clés sont résolues (vérifié).
 
-## ⚠️ Point important : SCD Type 2 pas encore alimenté dans le temps
+## Historisation (SCD Type 2)
 
-`dim_produit` et `dim_client` ont les colonnes `valid_from`, `valid_to`, `is_current`
-— la structure est prête pour l'historisation (garder trace des changements de prix ou
-de segment client dans le temps). **Mais à ce stade il n'y a qu'un seul snapshot** :
-toutes les lignes ont `is_current=True` et `valid_to` vide. Si tu as besoin de savoir
-"quel était le prix à la date X" pour du feature engineering historique, ce n'est pas
-encore fiable — considère `prix_base_xof` comme le prix actuel, pas un historique.
-Je te préviendrai quand l'historisation réelle sera branchée.
+`dim_produit` et `dim_client` portent les colonnes `valid_from`, `valid_to`,
+`is_current`, préparant la traçabilité des changements de prix ou de segment client
+dans le temps. À ce stade, un seul snapshot existe par entité : toutes les lignes ont
+`is_current = true` et `valid_to` vide. Le champ `prix_base_xof` doit être considéré
+comme le prix catalogue actuel, pas comme un historique de prix.
 
-## Anomalies déjà traitées (pour info, pas pour toi à re-découvrir)
+## Tables d'expérimentation et d'exposition
 
-| Anomalie | Où | Volume | Traitement |
+`fact_experimentation_prix` et `fact_exposition_reco` portent le statut
+`synthetic_academic_experiment` : ce sont des expériences randomisées entièrement
+simulées, pas des expériences réellement exécutées en production. Elles permettent de
+tester un pipeline d'analyse causale de bout en bout (assignation randomisée,
+garde-fous, contrôle des fuites de cible, inférence statistique au grain correct),
+sans revendiquer d'effet commercial réel. Le détail de leur construction et des
+corrections apportées au fil des audits figure dans
+`05_journal_experimentation_v4/README_journal_v4.md`.
+
+Trois champs demandés lors de la spécification initiale (prix concurrents, budget de
+campagne marketing, ventes perdues) ne sont pas inclus, faute de source fiable pour
+les renseigner dans ce projet — choix documenté plutôt que colonnes vides.
+
+## Anomalies connues sur les dimensions
+
+| Anomalie | Table | Volume | Traitement |
 |---|---|---|---|
-| Doublons exacts | toutes tables | ~425 lignes (fact_transactions) | Supprimés dès l'étape Bronze |
-| Quantités négatives | fact_ventes | 85 lignes | Isolées, exclues de fact_ventes |
-| `product_id` orpheline (`P99999`) | fact_ventes ET fact_evenements_web | 42 + 72 lignes | Isolées, exclues des deux tables de faits |
-| Casse incohérente sur les catégories | dim_produit | 15 lignes | Corrigée (mappée vers la forme canonique) |
-| Valeurs manquantes région/âge | dim_client | 293 lignes | Conservées avec le libellé "Non renseigné" plutôt que supprimées — traite ça comme une catégorie à part entière si tu fais du feature engineering catégoriel |
+| Casse incohérente sur les catégories | `dim_produit` | 15 lignes | Normalisée vers la forme canonique |
+| Valeurs manquantes (région, tranche d'âge) | `dim_client` | 293 lignes | Conservées avec le libellé "Non renseigné" |
 
-Le point `product_id` orpheline vaut le détour : la même anomalie injectée dans les
-transactions s'est propagée naturellement jusque dans les logs de navigation (une
-session d'achat sur ce produit fantôme avait bien généré des vues avant l'achat). Les
-deux tables de faits l'ont donc filtrée indépendamment.
-
-## Suite
-
-Je finalise en parallèle la suite `great_expectations` (règles de qualité formalisées,
-remplaçant les vérifications codées à la main utilisées pour produire cette version) et
-je te enverrai une v2 si des lignes supplémentaires changent de statut. Rien ne devrait
-changer structurellement (mêmes tables, mêmes clés).
+Ces deux anomalies sont volontaires, injectées pour démontrer la capacité du
+pipeline à les détecter. Elles ne concernent que les dimensions produit et client ;
+les tables de faits ne présentent pas d'anomalie résiduelle après le passage par le
+contrôle qualité (Bronze → Silver).

@@ -1,16 +1,19 @@
 """
-Exécute la même séquence que le DAG Airflow (extract -> bronze -> silver -> gold),
-mais en appel direct Python, pour valider la logique métier sans avoir Airflow installé.
-Utile en local pendant le développement ; le DAG réel fera exactement ce que fait ce script,
-avec en plus l'orchestration, les reprises et le parallélisme gérés par Airflow.
+Exécute la séquence complète du pipeline d'ingestion (extract -> bronze -> silver ->
+gold) par appel direct des fonctions Python, indépendamment d'un environnement
+Airflow installé. Le DAG Airflow orchestre exactement la même logique, en ajoutant
+la gestion des reprises et du parallélisme.
 """
 
 import sys
-sys.path.insert(0, "/home/claude/airflow_project")
+from pathlib import Path
+from datetime import date
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from pipeline.transforms import RAW_TABLES, extract_to_raw, load_bronze, load_silver, build_gold_tables
 
-DS = "2026-08-12"
+DS = date.today().isoformat()
 
 print(f"=== Pipeline d'ingestion — run local (ds={DS}) ===\n")
 

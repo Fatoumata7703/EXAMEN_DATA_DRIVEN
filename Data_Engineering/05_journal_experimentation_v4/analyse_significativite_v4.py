@@ -14,6 +14,7 @@ exclusions lancement/promo, d'où l'usage d'une MOYENNE et non d'une somme).
 controle_0pct. Correction de Holm sur les 3 p-values de chaque outcome (9 tests au
 total, 3 familles de 3 comparaisons).
 """
+import os
 import numpy as np
 import pandas as pd
 from pathlib import Path
@@ -23,7 +24,7 @@ rng = np.random.default_rng(SEED)
 N_BOOTSTRAP = 10000
 N_PERMUTATIONS = 10000
 
-V4_DIR = Path("/home/claude/journal_v4")
+V4_DIR = Path(os.environ.get("OUT_DIR", str(Path(__file__).resolve().parent / "donnees")))
 ep = pd.read_csv(V4_DIR / "fact_experimentation_prix_v4.csv")
 
 # ----------------------------------------------------------------------------

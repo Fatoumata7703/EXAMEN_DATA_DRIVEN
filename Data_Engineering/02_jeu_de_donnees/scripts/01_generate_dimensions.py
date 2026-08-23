@@ -53,9 +53,6 @@ END_DATE = datetime(2026, 7, 31)
 DATES = pd.date_range(START_DATE, END_DATE, freq="D")
 N_DAYS = len(DATES)
 
-OUT_DIR = "/home/claude/output"
-os.makedirs(OUT_DIR, exist_ok=True)
-
 CURRENCY = "XOF"
 
 # ----------------------------------------------------------------------------
@@ -189,7 +186,8 @@ promotions = pd.DataFrame(promos)
 # Écriture des fichiers de sortie
 # ----------------------------------------------------------------------------
 import os
-OUT_DIR = os.environ.get("OUT_DIR", "/home/claude/livrables_finaux/jeu_de_donnees/donnees")
+from pathlib import Path
+OUT_DIR = os.environ.get("OUT_DIR", str(Path(__file__).resolve().parent.parent / "donnees"))
 os.makedirs(OUT_DIR, exist_ok=True)
 
 dim_products.to_csv(f"{OUT_DIR}/dim_products.csv", index=False)

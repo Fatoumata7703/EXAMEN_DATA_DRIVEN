@@ -23,8 +23,8 @@ from pathlib import Path
 SEED = 42
 rng = np.random.default_rng(SEED)
 
-SOURCE_DIR = Path(os.environ.get("SOURCE_DIR", "/home/claude/livrables_finaux/jeu_de_donnees/donnees"))
-ENRICH_DIR = Path(os.environ.get("OUT_DIR", "/home/claude/livrables_finaux/jeu_de_donnees/donnees"))
+SOURCE_DIR = Path(os.environ.get("SOURCE_DIR", str(Path(__file__).resolve().parent.parent / "donnees")))
+ENRICH_DIR = Path(os.environ.get("OUT_DIR", str(Path(__file__).resolve().parent.parent / "donnees")))
 
 DEVICES = ["mobile", "desktop", "tablet"]
 DEVICE_WEIGHTS = [0.72, 0.22, 0.06]

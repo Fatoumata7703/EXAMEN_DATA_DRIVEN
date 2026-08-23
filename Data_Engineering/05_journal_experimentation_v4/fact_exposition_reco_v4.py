@@ -25,6 +25,7 @@ Lignage :
   entrees : dim_produit.csv, fact_ventes.csv, fact_evenements_web.csv (Gold, v3 pipeline)
 """
 import hashlib
+import os
 import numpy as np
 import pandas as pd
 from datetime import datetime
@@ -33,8 +34,10 @@ from pathlib import Path
 SEED = 47
 rng = np.random.default_rng(SEED)
 
-STAR_DIR = Path("/home/claude/airflow_project/lake/gold/star_schema")
-OUT_DIR = Path("/home/claude/journal_v4")
+STAR_DIR = Path(os.environ.get(
+    "STAR_DIR", str(Path(__file__).resolve().parent.parent / "03_pipeline_ingestion" / "lake" / "gold" / "star_schema")
+))
+OUT_DIR = Path(os.environ.get("OUT_DIR", str(Path(__file__).resolve().parent / "donnees")))
 OUT_DIR.mkdir(exist_ok=True)
 
 TOP_K = 5              # taille du slate

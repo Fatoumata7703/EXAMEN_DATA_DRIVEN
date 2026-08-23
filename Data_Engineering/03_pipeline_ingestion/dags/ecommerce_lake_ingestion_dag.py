@@ -18,12 +18,13 @@ de l'exécution.
 from __future__ import annotations
 
 import sys
+from pathlib import Path
 
 import pendulum
 from airflow.decorators import dag, task
 from airflow.exceptions import AirflowException
 
-sys.path.insert(0, "/home/claude/airflow_project")  # à adapter au chemin réel du projet déployé
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # ajoute le dossier contenant pipeline/ ; à adapter selon l'emplacement de déploiement Airflow
 
 from pipeline.transforms import (  # noqa: E402
     RAW_TABLES,

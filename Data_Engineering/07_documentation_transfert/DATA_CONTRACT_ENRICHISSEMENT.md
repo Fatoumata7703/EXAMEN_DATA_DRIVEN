@@ -1,18 +1,21 @@
 # Réponse à la demande du 15 août — enrichissement fact_ventes / fact_evenements_web
 
-Réponses aux questions de cadrage, à valider avant implémentation. Comme ce système est
-un jeu de données **synthétique** (pas un vrai tracking e-commerce), c'est nous qui
-définissons ces règles — donc autant les documenter clairement une bonne fois.
+**Statut : document de cadrage historique.** Les règles définies ci-dessous ont été
+implémentées et durcies au fil des versions successives du schéma (voir
+`05_journal_experimentation_v4/README_journal_v4.md` pour l'état actuel). Ce document
+est conservé pour tracer les décisions de conception prises en amont de
+l'implémentation.
+
+Réponses aux questions de cadrage, formulées avant implémentation. Le système reposant
+sur un jeu de données synthétique (pas un vrai tracking e-commerce), ces règles ont dû
+être définies explicitement plutôt qu'observées.
 
 ## Réponses aux questions de cadrage
 
 **Règle de début et de fin d'une session**
 Une session commence au premier événement d'un visiteur. Elle se termine après **30
 minutes d'inactivité** (norme courante, ex. Google Analytics) — le prochain événement
-après ce délai ouvre une nouvelle session. Cette règle est déjà implicitement respectée
-dans la génération actuelle des événements (les vues précédant un achat sont regroupées
-dans une fenêtre de quelques dizaines de minutes) ; elle sera rendue explicite dans les
-nouvelles données.
+après ce délai ouvre une nouvelle session.
 
 **Rattachement d'une session anonyme au client après connexion**
 Toute session contenant un achat est, par définition, rattachée à un `client_key` connu
