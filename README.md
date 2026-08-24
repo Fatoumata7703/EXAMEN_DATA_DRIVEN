@@ -110,9 +110,9 @@ objectif de V2, pas un défaut caché.
 
 ### Usages autorisés
 
-✅ Planification et budget à 7/14/30 jours, cumulés par produit.
-❌ Décision de réapprovisionnement quotidien automatisée sans revue humaine.
-❌ Prévisions à 90 jours présentées comme fiables.
+ Planification et budget à 7/14/30 jours, cumulés par produit.
+ Décision de réapprovisionnement quotidien automatisée sans revue humaine.
+ Prévisions à 90 jours présentées comme fiables.
 
 ### Reproduction
 
@@ -176,10 +176,10 @@ Seule la grille de remise (5-30 %) offre une variation exploitable, et uniquemen
 
 ### Usages autorisés
 
-✅ Analyse descriptive des promotions/marges (objectif A) — sans réserve.
-✅ Simulation de scénarios de remise sous contrainte de marge, **avec validation humaine systématique**.
-❌ Application automatique d'une remise simulée.
-❌ Toute affirmation d'un « prix optimal » ou d'un effet causal des promotions.
+ Analyse descriptive des promotions/marges (objectif A) — sans réserve.
+ Simulation de scénarios de remise sous contrainte de marge, **avec validation humaine systématique**.
+ Application automatique d'une remise simulée.
+ Toute affirmation d'un « prix optimal » ou d'un effet causal des promotions.
 
 ### Reproduction
 
@@ -238,10 +238,10 @@ domine clairement.
 
 ### Usages autorisés
 
-✅ Liste générique de popularité (accueil, page catégorie) — `automatic_recommendation_allowed: true`
+ Liste générique de popularité (accueil, page catégorie) — `automatic_recommendation_allowed: true`
 **uniquement pour cet usage générique**.
-❌ Toute liste présentée comme personnalisée par client.
-❌ Utilisation dans une campagne commerciale sans validation humaine (`human_validation_required: true`
+ Toute liste présentée comme personnalisée par client.
+ Utilisation dans une campagne commerciale sans validation humaine (`human_validation_required: true`
 dans ce cas précis).
 
 ### Reproduction
