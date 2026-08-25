@@ -167,3 +167,51 @@ def simulate(produit_key: str, discount_proposed_pct: float) -> PricingOutcome:
                     "marge_totale_negative": marge < 0},
         message=message,
     )
+
+
+def catalogue_complet() -> list[dict]:
+    """Liste plate des produits pricing, pour consommation analytique.
+
+    Meme source que la simulation : catalogue produit et volume median predit
+    par la baseline. Le volume est calcule en une seule passe pour les 300
+    produits. Aucune remise n'est appliquee ici : la marge unitaire donnee est
+    celle au prix catalogue, servant de point de reference.
+
+    Une valeur nulle de volume est une prediction reelle (produit a rotation
+    lente) et non un echec ; le champ `volume_nul` la signale explicitement.
+    """
+    catalogue = REGISTRY.pricing_catalog
+    if not catalogue:
+        return []
+
+    cles = sorted(catalogue)
+    modele = REGISTRY.pricing_models.get(VOLUME_TARGET)
+    volumes: dict[str, float | None] = {k: None for k in cles}
+    if modele is not None:
+        try:
+            frame = pd.DataFrame({"produit_key": cles})
+            predits = predict_pricing(modele, frame)
+            for cle, valeur in zip(cles, predits):
+                brut = float(valeur)
+                volumes[cle] = brut if math.isfinite(brut) and brut >= 0 else None
+        except Exception as exc:  # noqa: BLE001 - liste servie sans volume plutot qu'erreur globale
+            journal.erreur("pricing_catalogue_volume_indisponible", detail=str(exc))
+
+    lignes = []
+    for cle in cles:
+        entree = catalogue[cle]
+        prix = float(entree["prix_base_xof"])
+        cout = float(entree["cout_xof"])
+        volume = volumes[cle]
+        lignes.append({
+            "produit_key": cle,
+            "categorie": entree["categorie"],
+            "classe_abc": entree["classe_abc"],
+            "prix_catalogue_xof": prix,
+            "cout_xof": cout,
+            "marge_unitaire_prix_catalogue_xof": round(prix - cout, 2),
+            "taux_marge_prix_catalogue": round((prix - cout) / prix, 6) if prix else None,
+            "volume_median_estime_7j": None if volume is None else round(volume, 3),
+            "volume_nul": None if volume is None else volume == 0.0,
+        })
+    return lignes

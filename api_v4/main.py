@@ -170,6 +170,58 @@ def catalogue() -> dict:
     }
 
 
+@app.get("/pricing/produits")
+def pricing_products() -> dict:
+    """Liste plate des produits pricing, pour consommation analytique.
+
+    Pendant de `/forecast/produits` : une ligne par produit, directement
+    exploitable dans un tableur ou un outil de restitution. Contient le prix
+    catalogue, le cout, la marge unitaire au prix catalogue et le volume
+    median predit par la baseline.
+
+    Aucune remise n'y est appliquee : pour simuler une remise, utiliser
+    `POST /pricing/simulation`.
+    """
+    lignes = pricing_service.catalogue_complet()
+    return {
+        "n_produits": len(lignes),
+        "modele": "baseline_mediane_produit",
+        "statut": "simulation_only",
+        "produits": lignes,
+        "avertissement": (
+            "Volumes issus de la mediane historique par produit. Aucun effet "
+            "causal n'est estime et aucun prix optimal n'est calcule. Un volume "
+            "nul est une prediction reelle, signalee par le champ volume_nul."),
+    }
+
+
+@app.get("/recommendations/produits")
+def recommendation_products() -> dict:
+    """Liste plate des produits couverts par la recommandation.
+
+    Ce ne sont PAS des recommandations : une recommandation est contextuelle
+    et reclasse des candidats pour un client donne. Cette liste expose les
+    scores de popularite alimentant le modele de repli
+    `popularite_globale_v1`, utiles pour un tableau de bord.
+
+    Pour un classement reel, utiliser `POST /recommendations` ou
+    `POST /recommendations/cart`.
+    """
+    lignes = recommendation_service.catalogue_complet()
+    return {
+        "n_produits": len(lignes),
+        "modele": "popularite_globale_v1",
+        "nature": "scores_de_popularite",
+        "produits": lignes,
+        "avertissement": (
+            "Scores de popularite figes a la fin de la fenetre d'entrainement, "
+            "issus du modele de repli. Ils ne constituent pas une recommandation "
+            "personnalisee : celle-ci depend du client et des candidats soumis. "
+            "Le catalogue de recommandation ne couvre que les produits reellement "
+            "exposes pendant l'experience, soit moins que le catalogue pricing."),
+    }
+
+
 @app.get("/forecast")
 def forecast_summary() -> dict:
     """Synthese de la prevision 30 jours deja validee.

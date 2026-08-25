@@ -312,3 +312,74 @@ def test_metrics_continue_d_exposer_les_metriques_non_calculees(scores):
     assert quatorze["disponible"] is False
     assert quatorze["wape"] is None
     assert quatorze["raison_indisponibilite"]
+
+
+# ------------------------------------------------- listes plates analytiques
+
+
+def test_pricing_produits_est_une_liste_plate_exploitable():
+    corps = client.get("/pricing/produits").json()
+    assert corps["n_produits"] == 300
+    assert corps["statut"] == "simulation_only"
+    ligne = corps["produits"][0]
+    for champ in ("produit_key", "categorie", "classe_abc", "prix_catalogue_xof",
+                  "cout_xof", "marge_unitaire_prix_catalogue_xof",
+                  "volume_median_estime_7j", "volume_nul"):
+        assert champ in ligne, f"champ manquant : {champ}"
+
+
+def test_le_volume_de_la_liste_egale_celui_de_la_simulation():
+    """Coherence stricte : la liste et la simulation doivent servir la meme
+    valeur, sinon un tableau de bord et l'API se contrediraient."""
+    liste = {l["produit_key"]: l for l in client.get("/pricing/produits").json()["produits"]}
+    for produit in ("PRD000002", "PRD000003", "PRD000004"):
+        sim = client.post("/pricing/simulation",
+                          json={"produit_key": produit, "discount_proposed": 0}).json()
+        assert liste[produit]["volume_median_estime_7j"] == sim["volume_estime_unites_7j"]
+        assert liste[produit]["prix_catalogue_xof"] == sim["prix_catalogue_xof"]
+        assert liste[produit]["cout_xof"] == sim["cout_xof"]
+
+
+def test_la_marge_unitaire_de_la_liste_est_coherente():
+    for ligne in client.get("/pricing/produits").json()["produits"][:20]:
+        attendu = ligne["prix_catalogue_xof"] - ligne["cout_xof"]
+        assert ligne["marge_unitaire_prix_catalogue_xof"] == pytest.approx(attendu, abs=0.01)
+
+
+def test_recommendations_produits_est_une_liste_plate_exploitable():
+    corps = client.get("/recommendations/produits").json()
+    assert corps["n_produits"] == 208, "le catalogue de recommandation couvre 208 produits"
+    ligne = corps["produits"][0]
+    for champ in ("produit_key", "categorie", "prix_base_xof",
+                  "popularite_globale", "popularite_recente_28j",
+                  "rang_popularite_globale"):
+        assert champ in ligne, f"champ manquant : {champ}"
+
+
+def test_la_liste_de_recommandation_ne_se_presente_pas_comme_une_recommandation():
+    """Garde-fou de sens : ces scores de popularite ne doivent jamais etre
+    presentes comme une recommandation personnalisee."""
+    corps = client.get("/recommendations/produits").json()
+    assert corps["nature"] == "scores_de_popularite"
+    assert corps["modele"] == "popularite_globale_v1"
+    avertissement = corps["avertissement"].lower()
+    assert "ne constituent pas une recommandation" in avertissement
+
+
+def test_les_rangs_de_popularite_sont_coherents():
+    lignes = client.get("/recommendations/produits").json()["produits"]
+    rangs = sorted(l["rang_popularite_globale"] for l in lignes)
+    assert rangs == list(range(1, len(lignes) + 1)), "les rangs doivent etre uniques et contigus"
+    par_rang = sorted(lignes, key=lambda l: l["rang_popularite_globale"])
+    popularites = [l["popularite_globale"] for l in par_rang]
+    assert popularites == sorted(popularites, reverse=True), "rang 1 = plus populaire"
+
+
+def test_les_deux_catalogues_ont_des_tailles_differentes_et_documentees():
+    """Piege connu pour une jointure : 300 produits cote pricing, 208 cote
+    recommandation."""
+    pricing = client.get("/pricing/produits").json()["n_produits"]
+    reco = client.get("/recommendations/produits").json()["n_produits"]
+    assert pricing == 300 and reco == 208
+    assert "moins que le catalogue pricing" in \
+        client.get("/recommendations/produits").json()["avertissement"]

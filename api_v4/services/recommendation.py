@@ -158,3 +158,37 @@ def score_target(target: str, candidate_products: list[str], context: dict) -> R
         status=target_status, version=version, target_status=target_status,
         model_requested=model_requested, served_model_status=target_status,
         results=results, dropped_products=dropped)
+
+
+def catalogue_complet() -> list[dict]:
+    """Liste plate des produits couverts par la recommandation.
+
+    ATTENTION AU SENS : ce n'est PAS une liste de recommandations. Une
+    recommandation est contextuelle — elle reclasse des candidats pour un
+    client donne — et ne se resume pas a un classement fixe de produits.
+
+    Ce que cette liste expose, ce sont les scores de POPULARITE qui
+    alimentent `popularite_globale_v1`, le modele de repli : popularite
+    cumulee et popularite recente sur 28 jours, figees a la fin de la fenetre
+    d'entrainement. Utile pour un tableau de bord, jamais a presenter comme
+    une recommandation personnalisee.
+    """
+    catalogue = REGISTRY.recommendation_catalog
+    if not catalogue:
+        return []
+
+    lignes = []
+    for cle in sorted(catalogue):
+        entree = catalogue[cle]
+        lignes.append({
+            "produit_key": cle,
+            "categorie": entree.get("categorie"),
+            "prix_base_xof": entree.get("prix_base_xof"),
+            "popularite_globale": entree.get("product_popularity_before"),
+            "popularite_recente_28j": entree.get("product_recent_popularity_28d"),
+        })
+    # Rang de popularite, pour faciliter les tris cote tableau de bord.
+    ordonnes = sorted(lignes, key=lambda l: (l["popularite_globale"] or 0), reverse=True)
+    for rang, ligne in enumerate(ordonnes, start=1):
+        ligne["rang_popularite_globale"] = rang
+    return lignes
