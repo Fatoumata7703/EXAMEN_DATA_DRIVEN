@@ -190,3 +190,51 @@ def test_heavy_reproducibility_artefacts_stay_out_of_the_context():
 def test_sensitive_paths_stay_out_of_the_context():
     for chemin in (".env", ".git/config", "data/raw/dim_produit.parquet"):
         assert _is_excluded(chemin), f"devrait etre exclu du contexte : {chemin}"
+
+
+# ------------------------------- fichiers lus au runtime vs fichiers copies
+
+
+def _copied_paths_v4() -> set[str]:
+    """Ensemble des chemins reellement embarques dans l'image V4."""
+    embarques = set()
+    for source in _copy_sources(DOCKERFILES["V4"]):
+        for fichier in _files_under(source):
+            embarques.add(fichier)
+    return embarques
+
+
+def test_every_file_read_at_runtime_is_copied_into_the_image():
+    """Regression : le service lisait `models/FINAL_STATUS.json` pour servir
+    les modeles et scores de prevision, mais l'image ne le copiait pas. En
+    local le fichier existe, donc rien ne se voyait ; en production les
+    champs concernes valaient silencieusement null.
+
+    Ce controle recense les chemins que le code lit au demarrage ou pendant
+    une requete, et exige que chacun soit embarque.
+    """
+    from api_v4 import config as api_config
+    from api_v4.services import metrics as metrics_service
+
+    requis = [
+        api_config.FINAL_STATUS_PATH,
+        api_config.RECOMMENDATION_CATALOG_PATH,
+        api_config.PRICING_CATALOG_PATH,
+        api_config.CATEGORICAL_MAPPINGS_PATH,
+        api_config.FORECAST_SNAPSHOT_PATH,
+        metrics_service.STATUT_V2_PATH,
+    ]
+
+    embarques = _copied_paths_v4()
+    manquants = []
+    for chemin in requis:
+        relatif = str(chemin.relative_to(PROJECT_ROOT)).replace("\\", "/")
+        if relatif not in embarques:
+            manquants.append(relatif)
+    assert not manquants, (
+        "fichiers lus a l'execution mais absents de l'image V4 : " + str(manquants))
+
+
+def test_the_v2_decision_file_is_embedded():
+    """Controle nomme, car c'est precisement celui qui manquait."""
+    assert "models/FINAL_STATUS.json" in _copied_paths_v4()

@@ -54,6 +54,11 @@ COPY api_v4 ./api_v4
 # Artefacts strictement necessaires au service : fiche de statut et modeles
 # serialises (environ 0,7 Mo au total). Les CSV de reproductibilite restent
 # hors de l'image.
+# Decision V2 : lue par le service de metriques pour servir les modeles et
+# scores de prevision (/metrics). Sans elle, ces champs valent null en
+# production alors qu'ils fonctionnent en local, ou le fichier existe.
+COPY models/FINAL_STATUS.json ./models/
+
 COPY models/v4/FINAL_STATUS.json models/v4/FINAL_STATUS.sha256.json ./models/v4/
 COPY models/v4/pricing/units_sold_window_7j/model.joblib ./models/v4/pricing/units_sold_window_7j/
 COPY models/v4/pricing/revenue_window_xof_7j/model.joblib ./models/v4/pricing/revenue_window_xof_7j/
